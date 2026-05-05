@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { 
   CheckCircle2,
   ShieldCheck,
@@ -9,44 +12,66 @@ import {
   Lock,
   ArrowLeft,
   ChevronRight,
-  Menu
+  AlertCircle
 } from 'lucide-react';
 import Image from 'next/image';
 
+const registrationSchema = z.object({
+  name: z.string().min(3, 'Name must be at least 3 characters'),
+  mobile: z.string().regex(/^\+91\s\d{10}$/, 'Enter a valid 10-digit mobile number after +91'),
+  email: z.string().email('Enter a valid medical email address'),
+  pan: z.string().regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Enter a valid PAN number (e.g. ABCDE1234F)'),
+  clinicAddress: z.string().min(10, 'Please provide a complete clinical address'),
+  city: z.string().min(2, 'City name is required'),
+  pincode: z.string().regex(/^\d{6}$/, 'Enter a valid 6-digit pincode'),
+  bankName: z.string().min(2, 'Bank name is required'),
+  accountName: z.string().min(3, 'Account name must match bank records'),
+  accountNo: z.string().min(9, 'Enter a valid bank account number'),
+  ifsc: z.string().regex(/^[A-Z]{4}0[A-Z0-9]{6}$/, 'Enter a valid 11-digit IFSC code'),
+});
+
+type RegistrationData = z.infer<typeof registrationSchema>;
+
 const STEPS = [
-  { id: 'personal', title: 'Personal Details', description: 'Your professional identity.' },
-  { id: 'clinic', title: 'Clinic Information', description: 'Where you consult patients.' },
-  { id: 'bank', title: 'Bank Details', description: 'Secure payout configuration.' },
+  { id: 'personal', title: 'Personal Details', description: 'Your professional identity.', fields: ['name', 'mobile', 'email', 'pan'] },
+  { id: 'clinic', title: 'Clinic Information', description: 'Where you consult patients.', fields: ['clinicAddress', 'city', 'pincode'] },
+  { id: 'bank', title: 'Bank Details', description: 'Secure payout configuration.', fields: ['bankName', 'accountName', 'accountNo', 'ifsc'] },
 ];
 
 export default function DoctorRegistrationForm() {
   const [currentStep, setCurrentStep] = useState(0);
   const [mounted, setMounted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    mobile: '+91 ',
-    email: '',
-    pan: '',
-    clinicAddress: '',
-    city: '',
-    pincode: '',
-    bankName: '',
-    accountName: '',
-    accountNo: '',
-    ifsc: '',
-  });
-
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<RegistrationData>({
+    resolver: zodResolver(registrationSchema),
+    defaultValues: {
+      mobile: '+91 ',
+    },
+    mode: 'onBlur',
+  });
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const handleNext = () => {
-    if (currentStep < STEPS.length - 1) {
-      setCurrentStep(prev => prev + 1);
-    } else {
-      setIsSubmitted(true);
+  const handleNext = async () => {
+    const fieldsToValidate = STEPS[currentStep].fields as (keyof RegistrationData)[];
+    const isStepValid = await trigger(fieldsToValidate);
+    
+    if (isStepValid) {
+      if (currentStep < STEPS.length - 1) {
+        setCurrentStep(prev => prev + 1);
+      } else {
+        setIsSubmitted(true);
+      }
     }
   };
 
@@ -54,10 +79,6 @@ export default function DoctorRegistrationForm() {
     if (currentStep > 0) {
       setCurrentStep(prev => prev - 1);
     }
-  };
-
-  const updateField = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   if (!mounted) return <div className="h-screen w-full bg-white" />;
@@ -252,28 +273,36 @@ export default function DoctorRegistrationForm() {
                     <Field 
                       label="FULL LEGAL NAME" 
                       placeholder="Dr. Aditya Sharma" 
-                      value={formData.name} 
-                      onChange={(v) => updateField('name', v)} 
+                      error={errors.name?.message}
+                      {...register('name')}
                     />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                       <Field 
                         label="MOBILE" 
                         placeholder="+91" 
-                        value={formData.mobile} 
-                        onChange={(v) => updateField('mobile', v)} 
+                        error={errors.mobile?.message}
+                        {...register('mobile')}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (!val.startsWith('+91 ')) {
+                            setValue('mobile', '+91 ');
+                          } else {
+                            setValue('mobile', val);
+                          }
+                        }}
                       />
                       <Field 
                         label="EMAIL ADDRESS" 
                         placeholder="doctor@healthmetro.in" 
-                        value={formData.email} 
-                        onChange={(v) => updateField('email', v)} 
+                        error={errors.email?.message}
+                        {...register('email')}
                       />
                     </div>
                     <Field 
                       label="PAN NUMBER" 
                       placeholder="ABCDE1234F" 
-                      value={formData.pan} 
-                      onChange={(v) => updateField('pan', v)} 
+                      error={errors.pan?.message}
+                      {...register('pan')}
                     />
                   </div>
                 )}
@@ -283,21 +312,21 @@ export default function DoctorRegistrationForm() {
                     <Field 
                       label="CLINIC ADDRESS" 
                       placeholder="Enter full clinical address" 
-                      value={formData.clinicAddress} 
-                      onChange={(v) => updateField('clinicAddress', v)} 
+                      error={errors.clinicAddress?.message}
+                      {...register('clinicAddress')}
                     />
                     <div className="grid grid-cols-2 gap-6 lg:gap-8">
                       <Field 
                         label="CITY" 
                         placeholder="Mumbai" 
-                        value={formData.city} 
-                        onChange={(v) => updateField('city', v)} 
+                        error={errors.city?.message}
+                        {...register('city')}
                       />
                       <Field 
                         label="PINCODE" 
                         placeholder="400001" 
-                        value={formData.pincode} 
-                        onChange={(v) => updateField('pincode', v)} 
+                        error={errors.pincode?.message}
+                        {...register('pincode')}
                       />
                     </div>
                   </div>
@@ -308,27 +337,27 @@ export default function DoctorRegistrationForm() {
                     <Field 
                       label="BANK NAME" 
                       placeholder="e.g. HDFC Bank" 
-                      value={formData.bankName} 
-                      onChange={(v) => updateField('bankName', v)} 
+                      error={errors.bankName?.message}
+                      {...register('bankName')}
                     />
                     <Field 
                       label="ACCOUNT NAME" 
                       placeholder="As per bank records" 
-                      value={formData.accountName} 
-                      onChange={(v) => updateField('accountName', v)} 
+                      error={errors.accountName?.message}
+                      {...register('accountName')}
                     />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                       <Field 
                         label="ACCOUNT NUMBER" 
                         placeholder="0000 0000 0000" 
-                        value={formData.accountNo} 
-                        onChange={(v) => updateField('accountNo', v)} 
+                        error={errors.accountNo?.message}
+                        {...register('accountNo')}
                       />
                       <Field 
                         label="IFSC CODE" 
                         placeholder="HDFC0001234" 
-                        value={formData.ifsc} 
-                        onChange={(v) => updateField('ifsc', v)} 
+                        error={errors.ifsc?.message}
+                        {...register('ifsc')}
                       />
                     </div>
                   </div>
@@ -367,24 +396,37 @@ export default function DoctorRegistrationForm() {
   );
 }
 
-function Field({ label, placeholder, value, onChange }: { 
+const Field = React.forwardRef<HTMLInputElement, { 
   label: string; 
   placeholder: string; 
-  value: string; 
-  onChange: (v: string) => void;
-}) {
+  error?: string;
+} & React.InputHTMLAttributes<HTMLInputElement>>(({ label, placeholder, error, ...props }, ref) => {
   return (
     <div className="space-y-2">
-      <label className="text-[9px] font-black tracking-widest text-slate-400 uppercase">
-        {label}
-      </label>
+      <div className="flex justify-between items-end">
+        <label className="text-[9px] font-black tracking-widest text-slate-400 uppercase">
+          {label}
+        </label>
+        {error && (
+          <motion.p 
+            initial={{ opacity: 0, x: -5 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-[10px] text-red-500 font-bold flex items-center gap-1"
+          >
+            <AlertCircle className="w-3 h-3" />
+            {error}
+          </motion.p>
+        )}
+      </div>
       <input 
+        ref={ref}
         type="text"
         placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-white lg:bg-slate-50 border border-slate-100 lg:border-slate-100 rounded-2xl px-5 py-4 text-base focus:ring-4 focus:ring-[#d97234]/5 focus:border-[#d97234] outline-none transition-all placeholder:text-slate-300 font-semibold shadow-sm lg:shadow-none"
+        {...props}
+        className={`w-full bg-white lg:bg-slate-50 border ${error ? 'border-red-200 focus:ring-red-500/5 focus:border-red-500' : 'border-slate-100 focus:ring-[#d97234]/5 focus:border-[#d97234]'} rounded-2xl px-5 py-4 text-base outline-none transition-all placeholder:text-slate-300 font-semibold shadow-sm lg:shadow-none`}
       />
     </div>
   );
-}
+});
+
+Field.displayName = 'Field';
