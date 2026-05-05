@@ -1,0 +1,72 @@
+[
+  {
+    "city": "London",
+    "slug": "london",
+    "country": "United Kingdom",
+    "highlight": "Bridging the gap between Harley Street excellence and global patients.",
+    "hospitals": ["St Thomas' Hospital", "Royal Free Hospital", "Great Ormond Street"]
+  },
+  {
+    "city": "Dubai",
+    "slug": "dubai",
+    "country": "UAE",
+    "highlight": "Ultra-fast medical records for the world's most connected medical hub.",
+    "hospitals": ["Dubai Hospital", "Mediclinic City Hospital", "Zulekha Hospital"]
+  },
+  {
+    "city": "New York",
+    "slug": "new-york",
+    "country": "USA",
+    "highlight": "Emergency data sync across the tri-state area and beyond.",
+    "hospitals": ["Mount Sinai Hospital", "NYU Langone", "NewYork-Presbyterian"]
+  },
+  {
+    "city": "Singapore",
+    "slug": "singapore",
+    "country": "Singapore",
+    "highlight": "Zero-latency connectivity for Southeast Asia's premier health hub.",
+    "hospitals": ["Singapore General Hospital", "Tan Tock Seng", "Gleneagles"]
+  },
+  {
+    "city": "Mumbai",
+    "slug": "mumbai",
+    "country": "India",
+    "highlight": "Connecting India's top super-specialty hospitals to global coordination.",
+    "hospitals": ["Kokilaben Dhirubhai Ambani Hospital", "Nanavati Max", "Lilavati Hospital"]
+  },
+  {
+    "city": "Berlin",
+    "slug": "berlin",
+    "country": "Germany",
+    "highlight": "Advanced European data privacy standards for secure medical export.",
+    "hospitals": ["Charité – Universitätsmedizin", "Vivantes Klinikum", "Helios Hospital"]
+  },
+  {
+    "city": "Bangkok",
+    "slug": "bangkok",
+    "country": "Thailand",
+    "highlight": "The digital backbone for the world's medical tourism capital.",
+    "hospitals": ["Bumrungrad International", "Bangkok Hospital", "Samitivej"]
+  },
+  {
+    "city": "Sydney",
+    "slug": "sydney",
+    "country": "Australia",
+    "highlight": "Reliable health pipelines for the Oceanic medical corridor.",
+    "hospitals": ["Royal Prince Alfred", "St Vincent's", "Royal North Shore"]
+  },
+  {
+    "city": "Toronto",
+    "slug": "toronto",
+    "country": "Canada",
+    "highlight": "Seamless cross-border health coordination with North American providers.",
+    "hospitals": ["Toronto General", "Sunnybrook", "Mount Sinai"]
+  },
+  {
+    "city": "Tokyo",
+    "slug": "tokyo",
+    "country": "Japan",
+    "highlight": "Integrating precision medicine with global digital infrastructure.",
+    "hospitals": ["University of Tokyo Hospital", "St. Luke's International", "Keio University"]
+  }
+]
