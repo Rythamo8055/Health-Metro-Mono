@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     "international healthcare"
   ],
   authors: [{ name: "Health Metro Team" }],
-  metadataBase: new URL("https://healthmetro.com"),
+  metadataBase: new URL("https://healthmetro-landing-mono.vercel.app"),
   alternates: {
     canonical: "/",
   },
