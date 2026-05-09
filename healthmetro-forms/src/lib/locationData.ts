@@ -1,0 +1,91 @@
+export const STATES = [
+  { code: 'AP', name: 'Andhra Pradesh' },
+  { code: 'AR', name: 'Arunachal Pradesh' },
+  { code: 'AS', name: 'Assam' },
+  { code: 'BR', name: 'Bihar' },
+  { code: 'CG', name: 'Chhattisgarh' },
+  { code: 'GA', name: 'Goa' },
+  { code: 'GJ', name: 'Gujarat' },
+  { code: 'HR', name: 'Haryana' },
+  { code: 'HP', name: 'Himachal Pradesh' },
+  { code: 'JH', name: 'Jharkhand' },
+  { code: 'KA', name: 'Karnataka' },
+  { code: 'KL', name: 'Kerala' },
+  { code: 'MP', name: 'Madhya Pradesh' },
+  { code: 'MH', name: 'Maharashtra' },
+  { code: 'MN', name: 'Manipur' },
+  { code: 'ML', name: 'Meghalaya' },
+  { code: 'MZ', name: 'Mizoram' },
+  { code: 'NL', name: 'Nagaland' },
+  { code: 'OD', name: 'Odisha' },
+  { code: 'PB', name: 'Punjab' },
+  { code: 'RJ', name: 'Rajasthan' },
+  { code: 'SK', name: 'Sikkim' },
+  { code: 'TN', name: 'Tamil Nadu' },
+  { code: 'TS', name: 'Telangana' },
+  { code: 'TR', name: 'Tripura' },
+  { code: 'UP', name: 'Uttar Pradesh' },
+  { code: 'UK', name: 'Uttarakhand' },
+  { code: 'WB', name: 'West Bengal' },
+  { code: 'DL', name: 'Delhi' },
+  { code: 'JK', name: 'Jammu & Kashmir' },
+  { code: 'LA', name: 'Ladakh' },
+  { code: 'PY', name: 'Puducherry' },
+  { code: 'CH', name: 'Chandigarh' },
+  { code: 'AN', name: 'Andaman & Nicobar' },
+  { code: 'LD', name: 'Lakshadweep' },
+  { code: 'DN', name: 'Dadra & Nagar Haveli' },
+  { code: 'DD', name: 'Daman & Diu' },
+];
+
+export const CITIES_BY_STATE: Record<string, string[]> = {
+  AP: ['Visakhapatnam', 'Vijayawada', 'Guntur', 'Tirupati', 'Kurnool', 'Rajahmundry', 'Nellore', 'Kadapa'],
+  AR: ['Itanagar', 'Naharlagun', 'Tawang', 'Ziro'],
+  AS: ['Guwahati', 'Silchar', 'Dibrugarh', 'Jorhat', 'Nagaon', 'Tezpur'],
+  BR: ['Patna', 'Gaya', 'Bhagalpur', 'Muzaffarpur', 'Darbhanga', 'Purnia'],
+  CG: ['Raipur', 'Bhilai', 'Bilaspur', 'Korba', 'Durg', 'Rajnandgaon'],
+  GA: ['Panaji', 'Margao', 'Vasco da Gama', 'Mapusa', 'Ponda'],
+  GJ: ['Ahmedabad', 'Surat', 'Vadodara', 'Rajkot', 'Bhavnagar', 'Jamnagar', 'Gandhinagar', 'Anand', 'Junagadh'],
+  HR: ['Gurgaon', 'Faridabad', 'Panipat', 'Ambala', 'Yamunanagar', 'Rohtak', 'Hisar', 'Karnal'],
+  HP: ['Shimla', 'Dharamsala', 'Solan', 'Mandi', 'Kullu', 'Manali'],
+  JH: ['Ranchi', 'Jamshedpur', 'Dhanbad', 'Bokaro', 'Deoghar', 'Hazaribagh'],
+  KA: ['Bengaluru', 'Mysuru', 'Hubli', 'Mangaluru', 'Belagavi', 'Kalaburagi', 'Tumkur', 'Shivamogga', 'Udupi', 'Vijayapura'],
+  KL: ['Thiruvananthapuram', 'Kochi', 'Kozhikode', 'Thrissur', 'Kollam', 'Palakkad', 'Alappuzha', 'Malappuram', 'Kannur'],
+  MP: ['Bhopal', 'Indore', 'Jabalpur', 'Gwalior', 'Ujjain', 'Sagar', 'Dewas', 'Satna'],
+  MH: ['Mumbai', 'Pune', 'Nagpur', 'Nashik', 'Aurangabad', 'Solapur', 'Kolhapur', 'Amravati', 'Nanded', 'Thane'],
+  MN: ['Imphal', 'Thoubal', 'Bishnupur'],
+  ML: ['Shillong', 'Tura', 'Jowai'],
+  MZ: ['Aizawl', 'Lunglei', 'Champhai'],
+  NL: ['Kohima', 'Dimapur', 'Mokokchung'],
+  OD: ['Bhubaneswar', 'Cuttack', 'Rourkela', 'Berhampur', 'Sambalpur', 'Puri'],
+  PB: ['Ludhiana', 'Amritsar', 'Jalandhar', 'Patiala', 'Bathinda', 'Mohali', 'Chandigarh'],
+  RJ: ['Jaipur', 'Jodhpur', 'Udaipur', 'Kota', 'Ajmer', 'Bikaner', 'Alwar', 'Sikar'],
+  SK: ['Gangtok', 'Namchi', 'Mangan'],
+  TN: ['Chennai', 'Coimbatore', 'Madurai', 'Tiruchirappalli', 'Salem', 'Tirunelveli', 'Vellore', 'Erode', 'Thanjavur', 'Tiruppur'],
+  TS: ['Hyderabad', 'Warangal', 'Nizamabad', 'Karimnagar', 'Khammam', 'Ramagundam', 'Nalgonda'],
+  TR: ['Agartala', 'Udaipur', 'Dharmanagar'],
+  UP: ['Lucknow', 'Kanpur', 'Agra', 'Varanasi', 'Allahabad', 'Ghaziabad', 'Noida', 'Meerut', 'Bareilly', 'Moradabad', 'Gorakhpur'],
+  UK: ['Dehradun', 'Haridwar', 'Rishikesh', 'Roorkee', 'Nainital', 'Haldwani'],
+  WB: ['Kolkata', 'Howrah', 'Durgapur', 'Asansol', 'Siliguri', 'Bardhaman'],
+  DL: ['New Delhi', 'Dwarka', 'Rohini', 'Noida Extension', 'Janakpuri', 'Laxmi Nagar'],
+  JK: ['Jammu', 'Srinagar', 'Anantnag', 'Sopore'],
+  LA: ['Leh', 'Kargil'],
+  PY: ['Puducherry', 'Karaikal', 'Mahe'],
+  CH: ['Chandigarh'],
+  AN: ['Port Blair'],
+  LD: ['Kavaratti'],
+  DN: ['Silvassa'],
+  DD: ['Daman', 'Diu'],
+};
+
+export function getCitiesForState(stateCode: string): string[] {
+  return CITIES_BY_STATE[stateCode] ?? [];
+}
+
+export function getStateOptions() {
+  return STATES.map(s => ({ value: s.code, label: s.name }));
+}
+
+export function getCityOptions(stateCode: string) {
+  return getCitiesForState(stateCode).map(c => ({ value: c, label: c }));
+}

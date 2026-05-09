@@ -1,0 +1,117 @@
+'use server';
+
+import { createAdminClient } from '@/utils/supabase/admin';
+
+export async function submitCustomerRegistration(formData: FormData) {
+  const supabase = createAdminClient();
+
+  // 1. Extract JSON data
+  const dataString = formData.get('data') as string;
+  if (!dataString) throw new Error('Form data missing');
+  const data = JSON.parse(dataString);
+
+  const clientId = formData.get('clientId') as string;
+  const referralSource = formData.get('referralSource') as string;
+  
+  const gpsString = formData.get('gpsCoords') as string;
+  const gpsCoords = gpsString ? JSON.parse(gpsString) : null;
+
+  try {
+    // 2. Validate Provider & Get Provider ID
+    const { data: providerData, error: providerError } = await supabase
+      .from('providers')
+      .select('id, client_id, type_code, sequence')
+      .eq('client_id', clientId)
+      .single();
+
+    if (providerError || !providerData) {
+      throw new Error('Invalid Provider Client ID');
+    }
+
+    const year = new Date().getFullYear();
+    const clientShort = `${providerData.type_code}${providerData.sequence}`;
+
+    // Lookup state_id
+    const { data: stateData } = await supabase
+      .from('states')
+      .select('id')
+      .eq('state_code', data.state_code)
+      .single();
+
+    // 3. Generate Customer ID via RPC
+    const { data: customerId, error: rpcError } = await supabase.rpc('generate_customer_id', {
+      p_client_short: clientShort,
+      p_service_type: 'BLD',
+      p_year: year
+    });
+
+    if (rpcError) {
+      console.error('RPC generate_customer_id error:', rpcError);
+    }
+    
+    const finalCustomerId = customerId || `CUST-${clientShort}-${year}-BLD-${String(Math.floor(Math.random() * 99999)).padStart(6, '0')}`;
+
+    // 4. Insert Customer
+    const { data: customerData, error: customerError } = await supabase
+      .from('customers')
+      .insert({
+        customer_id: finalCustomerId,
+        client_id: clientId,
+        provider_id: providerData.id,
+        client_short: clientShort,
+        full_name: data.full_name,
+        gender: data.gender,
+        age: parseInt(data.age, 10),
+        mobile: data.mobile,
+        email: data.email || null,
+        address: data.address,
+        state_id: stateData?.id || null,
+        city_id: null,
+        pin_code: data.pin_code,
+        collection_type: data.collection_type,
+        home_address: data.home_address || null,
+        latitude: gpsCoords?.lat || null,
+        longitude: gpsCoords?.lng || null,
+        maps_link: data.maps_link || null,
+        service_type: 'BLD',
+        year: year,
+        referral_source: referralSource || null,
+        declaration_agreed: data.consent_accurate && data.consent_collection
+      })
+      .select()
+      .single();
+
+    if (customerError) {
+      throw new Error(`Customer Insert Failed: ${customerError.message}`);
+    }
+
+    // 5. Insert Booking
+    const { data: bookingData, error: bookingError } = await supabase
+      .from('bookings')
+      .insert({
+        customer_id: customerData.id,
+        provider_id: providerData.id,
+        slot_date: data.appointment_date,
+        slot_time: data.time_slot,
+        status: 'booked',
+        payment_status: 'PENDING',
+        activation_status: 'PENDING_PAYMENT'
+      })
+      .select()
+      .single();
+
+    if (bookingError) {
+      // Slot conflict (unique constraint violation)
+      if (bookingError.code === '23505') {
+        throw new Error('SLOT_CONFLICT: This time slot is already booked for this provider. Please select another slot.');
+      }
+      throw new Error(`Booking Insert Failed: ${bookingError.message}`);
+    }
+
+    return { success: true, customer_id: finalCustomerId, booking: bookingData };
+
+  } catch (error: any) {
+    console.error('Customer Registration failed:', error);
+    return { success: false, error: error.message || 'Registration failed' };
+  }
+}
