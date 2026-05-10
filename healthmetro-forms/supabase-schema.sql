@@ -268,3 +268,39 @@ ON CONFLICT (id) DO NOTHING;
 -- Policies for storage bucket (Allow anyone to upload & read for now during development)
 CREATE POLICY "Public Upload" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'documents');
 CREATE POLICY "Public Read" ON storage.objects FOR SELECT USING (bucket_id = 'documents');
+
+-- ==========================================
+-- SLOT CONFIGURATION (Added for Global Blocking)
+-- ==========================================
+
+CREATE TABLE public.slot_configuration (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    day_of_week TEXT NOT NULL,
+    slot_time TEXT NOT NULL,
+    is_blocked BOOLEAN NOT NULL DEFAULT false,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    UNIQUE(day_of_week, slot_time)
+);
+
+-- Enable RLS
+ALTER TABLE public.slot_configuration ENABLE ROW LEVEL SECURITY;
+
+-- Public can read
+CREATE POLICY "Public can view slot configuration"
+ON public.slot_configuration FOR SELECT
+TO public
+USING (true);
+
+-- Only service role can modify
+CREATE POLICY "Service role can modify slot configuration"
+ON public.slot_configuration FOR ALL
+TO service_role
+USING (true)
+WITH CHECK (true);
+
+-- Insert initial slots
+INSERT INTO public.slot_configuration (day_of_week, slot_time, is_blocked)
+SELECT d, s, false
+FROM unnest(ARRAY['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']) AS d
+CROSS JOIN unnest(ARRAY['07:00 AM – 09:00 AM', '09:00 AM – 11:00 AM', '11:00 AM – 01:00 PM', '04:00 PM – 06:00 PM']) AS s
+ON CONFLICT DO NOTHING;

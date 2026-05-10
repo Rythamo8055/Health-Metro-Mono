@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { StatusBadge } from '@/components/StatusBadge';
-import { CheckCircle2, XCircle, Eye, Search } from 'lucide-react';
+import { CheckCircle2, XCircle, Eye, Search, QrCode } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { approveProvider, rejectProvider } from '../actions/admin';
+import { approveProvider, rejectProvider } from '@/app/actions/admin';
+import { QRCodeDisplay } from '@/components/QRCodeDisplay';
 
 export interface Provider {
   id: string;
@@ -15,6 +16,7 @@ export interface Provider {
   city: string;
   state_code: string;
   client_id?: string;
+  qr_url?: string;
   status: 'pending' | 'approved' | 'rejected';
   submitted_at: string;
   reviewed_at?: string;
@@ -31,13 +33,16 @@ function ApprovalModal({ provider, onClose, onAction }: {
   onAction: (id: string, action: 'approved' | 'rejected', reason?: string) => void;
 }) {
   const [rejectionReason, setRejectionReason] = useState('');
-  const [mode, setMode] = useState<'view' | 'reject'>('view');
+  const [mode, setMode] = useState<'view' | 'reject' | 'qr'>('view');
   const [loading, setLoading] = useState(false);
 
   const handleAction = async (action: 'approved' | 'rejected') => {
     setLoading(true);
     if (action === 'approved') {
-      await approveProvider(provider.id, provider.state_code || 'TN', provider.provider_type);
+      const result = await approveProvider(provider.id, provider.state_code || 'TN', provider.provider_type);
+      if (result.success) {
+        setMode('qr');
+      }
     } else {
       await rejectProvider(provider.id, rejectionReason);
     }
@@ -60,78 +65,101 @@ function ApprovalModal({ provider, onClose, onAction }: {
           <StatusBadge status={provider.status} />
         </div>
 
-        <div className="p-6 space-y-4">
-          {[
-            { label: 'Contact Person', value: provider.contact_name },
-            { label: 'Mobile', value: provider.mobile },
-            { label: 'Email', value: provider.email },
-            { label: 'Submitted', value: new Date(provider.submitted_at).toLocaleString('en-IN') },
-          ].map(({ label, value }) => (
-            <div key={label} className="flex justify-between items-center text-sm border-b border-slate-50 pb-2">
-              <span className="text-slate-400 font-semibold">{label}</span>
-              <span className="font-bold text-[#1A2020]">{value}</span>
-            </div>
-          ))}
+        <div className="p-6 space-y-4 max-h-[60vh] overflow-y-auto">
+          {mode === 'qr' && provider.client_id ? (
+            <QRCodeDisplay clientId={provider.client_id} />
+          ) : (
+            <>
+              {[
+                { label: 'Contact Person', value: provider.contact_name },
+                { label: 'Mobile', value: provider.mobile },
+                { label: 'Email', value: provider.email },
+                { label: 'Submitted', value: new Date(provider.submitted_at).toLocaleString('en-IN') },
+              ].map(({ label, value }) => (
+                <div key={label} className="flex justify-between items-center text-sm border-b border-slate-50 pb-2">
+                  <span className="text-slate-400 font-semibold">{label}</span>
+                  <span className="font-bold text-[#1A2020]">{value}</span>
+                </div>
+              ))}
 
-          {provider.client_id && (
-            <div className="p-3 bg-teal-50 rounded-xl border border-teal-100">
-              <p className="text-[10px] font-black text-teal-600 uppercase tracking-widest">Client ID</p>
-              <p className="font-mono font-bold text-teal-700 mt-1">{provider.client_id}</p>
-            </div>
-          )}
+              {provider.client_id && (
+                <div className="flex items-center justify-between p-3 bg-teal-50 rounded-xl border border-teal-100">
+                  <div>
+                    <p className="text-[10px] font-black text-teal-600 uppercase tracking-widest">Client ID</p>
+                    <p className="font-mono font-bold text-teal-700 mt-1">{provider.client_id}</p>
+                  </div>
+                  <button 
+                    onClick={() => setMode('qr')}
+                    className="p-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+                    title="View QR Code"
+                  >
+                    <QrCode className="w-5 h-5" />
+                  </button>
+                </div>
+              )}
 
-          {provider.rejection_reason && (
-            <div className="p-3 bg-red-50 rounded-xl border border-red-100">
-              <p className="text-[10px] font-black text-red-600 uppercase tracking-widest">Rejection Reason</p>
-              <p className="text-sm text-red-700 font-medium mt-1">{provider.rejection_reason}</p>
-            </div>
-          )}
+              {provider.rejection_reason && (
+                <div className="p-3 bg-red-50 rounded-xl border border-red-100">
+                  <p className="text-[10px] font-black text-red-600 uppercase tracking-widest">Rejection Reason</p>
+                  <p className="text-sm text-red-700 font-medium mt-1">{provider.rejection_reason}</p>
+                </div>
+              )}
 
-          {mode === 'reject' && (
-            <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Rejection Reason *</label>
-              <textarea
-                value={rejectionReason}
-                onChange={e => setRejectionReason(e.target.value)}
-                placeholder="Explain why this application is rejected..."
-                rows={3}
-                className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none resize-none font-medium"
-              />
-            </div>
+              {mode === 'reject' && (
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Rejection Reason *</label>
+                  <textarea
+                    value={rejectionReason}
+                    onChange={e => setRejectionReason(e.target.value)}
+                    placeholder="Explain why this application is rejected..."
+                    rows={3}
+                    className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none resize-none font-medium"
+                  />
+                </div>
+              )}
+            </>
           )}
         </div>
 
         <div className="p-6 pt-0 flex gap-3">
-          <button onClick={onClose} disabled={loading} className="flex-1 bg-slate-100 text-slate-500 py-3 rounded-xl font-bold hover:bg-slate-200 transition-colors disabled:opacity-50">
-            Close
-          </button>
-          {provider.status === 'pending' && (
+          {mode === 'qr' ? (
+            <button onClick={() => setMode('view')} className="flex-1 bg-slate-100 text-slate-500 py-3 rounded-xl font-bold hover:bg-slate-200 transition-colors">
+              Back to Details
+            </button>
+          ) : (
             <>
-              {mode === 'view' ? (
+              <button onClick={onClose} disabled={loading} className="flex-1 bg-slate-100 text-slate-500 py-3 rounded-xl font-bold hover:bg-slate-200 transition-colors disabled:opacity-50">
+                Close
+              </button>
+              {provider.status === 'pending' && (
                 <>
-                  <button
-                    onClick={() => setMode('reject')}
-                    disabled={loading}
-                    className="flex-1 bg-red-50 text-red-600 py-3 rounded-xl font-bold border border-red-200 hover:bg-red-100 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                  >
-                    <XCircle className="w-4 h-4" /> Reject
-                  </button>
-                  <button
-                    onClick={() => handleAction('approved')}
-                    disabled={loading}
-                    className="flex-1 bg-[#027473] text-white py-3 rounded-xl font-bold hover:bg-[#015a59] transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
-                  >
-                    <CheckCircle2 className="w-4 h-4" /> {loading ? 'Approving...' : 'Approve'}
-                  </button>
+                  {mode === 'view' ? (
+                    <>
+                      <button
+                        onClick={() => setMode('reject')}
+                        disabled={loading}
+                        className="flex-1 bg-red-50 text-red-600 py-3 rounded-xl font-bold border border-red-200 hover:bg-red-100 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                      >
+                        <XCircle className="w-4 h-4" /> Reject
+                      </button>
+                      <button
+                        onClick={() => handleAction('approved')}
+                        disabled={loading}
+                        className="flex-1 bg-[#027473] text-white py-3 rounded-xl font-bold hover:bg-[#015a59] transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                      >
+                        <CheckCircle2 className="w-4 h-4" /> {loading ? 'Approving...' : 'Approve'}
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => rejectionReason && handleAction('rejected')}
+                      disabled={!rejectionReason || loading}
+                      className="flex-1 bg-red-500 text-white py-3 rounded-xl font-bold hover:bg-red-600 transition-colors disabled:opacity-40"
+                    >
+                      {loading ? 'Rejecting...' : 'Confirm Rejection'}
+                    </button>
+                  )}
                 </>
-              ) : (
-                <button
-                  onClick={() => rejectionReason && handleAction('rejected')}
-                  disabled={!rejectionReason || loading}
-                  className="flex-1 bg-red-500 text-white py-3 rounded-xl font-bold hover:bg-red-600 transition-colors disabled:opacity-40"
-                >
-                  {loading ? 'Rejecting...' : 'Confirm Rejection'}
-                </button>
               )}
             </>
           )}
@@ -150,7 +178,7 @@ export function ProvidersClient({ initialProviders }: { initialProviders: Provid
   const handleAction = (id: string, action: 'approved' | 'rejected', reason?: string) => {
     // We update local state optimistically, the server action already updated the DB
     setProviders(prev => prev.map(p => p.id === id
-      ? { ...p, status: action, reviewed_at: new Date().toISOString(), rejection_reason: reason ?? null }
+      ? { ...p, status: action, reviewed_at: new Date().toISOString(), rejection_reason: reason ?? undefined }
       : p
     ));
     setSelected(null);

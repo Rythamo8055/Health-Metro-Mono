@@ -98,12 +98,15 @@ function BlockedScreen() {
 }
 
 function CustomerFormInner() {
-  const { clientId, referralSource } = useReferral();
+  const { clientId, token, referralSource } = useReferral();
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(true);
+  const [isValidToken, setIsValidToken] = useState(false);
   const [customerId, setCustomerId] = useState('');
   const [gpsCoords, setGpsCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
+  const [blockedSlots, setBlockedSlots] = useState<string[]>([]);
 
   const { register, handleSubmit, trigger, control, watch, setValue, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -111,15 +114,55 @@ function CustomerFormInner() {
     mode: 'onBlur',
   });
 
+  // Verify Token on Mount
+  useEffect(() => {
+    async function checkToken() {
+      if (!clientId || !token) {
+        setIsValidToken(false);
+        setIsVerifying(false);
+        return;
+      }
+      
+      try {
+        const { verifyRegistrationToken } = await import('@/app/actions/customer');
+        const valid = await verifyRegistrationToken(clientId, token);
+        setIsValidToken(valid);
+      } catch (err) {
+        setIsValidToken(false);
+      } finally {
+        setIsVerifying(false);
+      }
+    }
+    checkToken();
+  }, [clientId, token]);
+
   const watchedState = watch('state_code');
   const collectionType = watch('collection_type');
+  const appointmentDate = watch('appointment_date');
 
   useEffect(() => {
     if (watchedState) { setCityOptions(getCityOptions(watchedState)); setValue('city', ''); }
   }, [watchedState, setValue]);
 
-  // Block access if no valid client_id
-  if (!clientId) return <BlockedScreen />;
+  useEffect(() => {
+    if (appointmentDate) {
+      const dayIndex = new Date(appointmentDate).getDay(); // 0 is Sun
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const dayOfWeek = days[dayIndex];
+      
+      import('@/app/actions/customer').then(({ getBlockedSlots }) => {
+        getBlockedSlots(dayOfWeek).then(setBlockedSlots);
+      });
+    } else {
+      setBlockedSlots([]);
+    }
+  }, [appointmentDate]);
+
+  const availableSlots = TIME_SLOTS.filter(s => !blockedSlots.includes(s.value));
+
+  // Block access if no valid client_id or token
+  if (isVerifying) return <div className="h-screen bg-[#F8FAFA]" />;
+  if (!clientId || !isValidToken) return <BlockedScreen />;
 
   const handleNext = async () => {
     const valid = await trigger(STEPS[step].fields);
@@ -350,7 +393,7 @@ function CustomerFormInner() {
                       {errors.appointment_date && <p className="text-[10px] text-red-500 font-bold">{errors.appointment_date.message}</p>}
                     </div>
                     <Controller name="time_slot" control={control} render={({ field }) => (
-                      <SelectField label="TIME SLOT" placeholder="Select preferred time" options={TIME_SLOTS} value={field.value} onChange={field.onChange} error={errors.time_slot?.message} searchable={false} />
+                      <SelectField label="TIME SLOT" placeholder={availableSlots.length > 0 ? "Select preferred time" : "No slots available this day"} options={availableSlots} value={field.value} onChange={field.onChange} error={errors.time_slot?.message} searchable={false} disabled={availableSlots.length === 0} />
                     )} />
                     <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
                       <p className="text-[11px] text-slate-500 font-medium leading-relaxed">

@@ -115,3 +115,22 @@ export async function submitCustomerRegistration(formData: FormData) {
     return { success: false, error: error.message || 'Registration failed' };
   }
 }
+
+export async function getBlockedSlots(dayOfWeek: string) {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from('slot_configuration')
+    .select('slot_time')
+    .eq('day_of_week', dayOfWeek)
+    .eq('is_blocked', true);
+
+  if (error) {
+    console.error('Error fetching blocked slots:', error);
+    return [];
+  }
+  return data.map(s => s.slot_time);
+}
+export async function verifyRegistrationToken(clientId: string, token: string) {
+  const { verifyToken } = await import('@/utils/crypto');
+  return verifyToken(clientId, token);
+}

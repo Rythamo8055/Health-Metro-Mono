@@ -1,7 +1,4 @@
-import type { ProviderStatus } from '@/data/providers';
-import type { BookingStatus, PaymentStatus, CollectionType } from '@/data/bookings';
-
-type BadgeVariant = ProviderStatus | BookingStatus | PaymentStatus | CollectionType | 'active' | 'inactive';
+type BadgeVariant = string;
 
 const CONFIG: Record<string, { label: string; classes: string }> = {
   // Provider status

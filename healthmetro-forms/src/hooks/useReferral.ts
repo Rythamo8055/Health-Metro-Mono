@@ -13,6 +13,7 @@ export function useReferral() {
 
   const referrerId = searchParams.get('ref') ?? '';
   const clientId = searchParams.get('client_id') ?? '';
+  const token = searchParams.get('token') ?? '';
 
   // Determine referral source for analytics
   const referralSource = clientId
@@ -21,5 +22,5 @@ export function useReferral() {
       : 'LINK'
     : '';
 
-  return { referrerId, clientId, referralSource };
+  return { referrerId, clientId, token, referralSource };
 }
