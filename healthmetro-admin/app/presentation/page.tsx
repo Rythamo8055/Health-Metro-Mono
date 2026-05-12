@@ -3,6 +3,7 @@
 import { 
   ExternalLink, 
   ArrowRight, 
+  Activity,
   ShieldCheck, 
   UserPlus, 
   BarChart3, 
