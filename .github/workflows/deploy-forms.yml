@@ -19,8 +19,10 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel
 
-      - name: Pull Vercel Project Settings
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Clean and Pull Vercel Project Settings
+        run: |
+          rm -rf .vercel
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
         working-directory: healthmetro-forms
 
       - name: Build Project Artifacts
