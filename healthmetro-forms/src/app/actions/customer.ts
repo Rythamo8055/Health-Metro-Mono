@@ -52,6 +52,9 @@ export async function submitCustomerRegistration(formData: FormData) {
     const finalCustomerId = customerId || `CUST-${clientShort}-${year}-BLD-${String(Math.floor(Math.random() * 99999)).padStart(6, '0')}`;
 
     // 4. Insert Customer
+    const customerParts = finalCustomerId.split('-');
+    const sequence = parseInt(customerParts[customerParts.length - 1], 10);
+
     const { data: customerData, error: customerError } = await supabase
       .from('customers')
       .insert({
@@ -75,6 +78,7 @@ export async function submitCustomerRegistration(formData: FormData) {
         maps_link: data.maps_link || null,
         service_type: 'BLD',
         year: year,
+        sequence: sequence,
         referral_source: referralSource || null,
         declaration_agreed: data.consent_accurate && data.consent_collection
       })
