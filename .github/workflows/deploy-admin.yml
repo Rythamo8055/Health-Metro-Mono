@@ -1,0 +1,26 @@
+name: Deploy Admin Dashboard
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'healthmetro-admin/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: cd healthmetro-admin && npm install
+
+      - name: Build and Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_ADMIN }}
+          working-directory: healthmetro-admin
+          vercel-args: '--prod'
