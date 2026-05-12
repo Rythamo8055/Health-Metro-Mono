@@ -19,8 +19,11 @@ jobs:
       - name: Manual Project Link
         run: |
           mkdir -p .vercel
-          echo '{"projectId":"${{ secrets.VERCEL_PROJECT_ID_LANDING }}","orgId":"${{ secrets.VERCEL_ORG_ID }}"}' > .vercel/project.json
+          echo "{\"projectId\":\"$VERCEL_PROJECT_ID\",\"orgId\":\"$VERCEL_ORG_ID\",\"projectName\":\"healthmetro-lannding\"}" > .vercel/project.json
         working-directory: "landing page"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_LANDING }}
 
       - name: Pull Vercel Project Settings
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
