@@ -30,7 +30,7 @@ type Tab = typeof TABS[number];
 function ApprovalModal({ provider, onClose, onAction }: {
   provider: Provider;
   onClose: () => void;
-  onAction: (id: string, action: 'approved' | 'rejected', reason?: string) => void;
+  onAction: (id: string, action: 'approved' | 'rejected', result?: { clientId?: string, qrUrl?: string, reason?: string }) => void;
 }) {
   const [rejectionReason, setRejectionReason] = useState('');
   const [mode, setMode] = useState<'view' | 'reject' | 'qr'>('view');
@@ -38,17 +38,38 @@ function ApprovalModal({ provider, onClose, onAction }: {
 
   const handleAction = async (action: 'approved' | 'rejected') => {
     setLoading(true);
-    if (action === 'approved') {
-      const result = await approveProvider(provider.id, provider.state_code || 'TN', provider.provider_type);
-      if (result.success) {
-        setMode('qr');
+    try {
+      if (action === 'approved') {
+        if (!provider.state_code) {
+          alert('Cannot approve: this provider has no state code stored. Please check the database record.');
+          setLoading(false);
+          return;
+        }
+        const result = await approveProvider(provider.id, provider.state_code, provider.provider_type);
+        if (result.success) {
+          setMode('qr');
+          onAction(provider.id, action, { clientId: result.clientId, qrUrl: result.qrUrl });
+        } else {
+          alert(`Error: ${result.error}`);
+        }
+      } else {
+        const result = await rejectProvider(provider.id, rejectionReason);
+        if (result.success) {
+          onAction(provider.id, action, { reason: rejectionReason });
+          onClose();
+        } else {
+          alert(`Error: ${result.error}`);
+        }
       }
-    } else {
-      await rejectProvider(provider.id, rejectionReason);
+    } catch (err) {
+      console.error(err);
+      alert('An unexpected error occurred');
+    } finally {
+      setLoading(false);
     }
-    onAction(provider.id, action, rejectionReason);
-    setLoading(false);
   };
+
+  // ... (rest of ApprovalModal)
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -175,13 +196,30 @@ export function ProvidersClient({ initialProviders }: { initialProviders: Provid
   const [providers, setProviders] = useState(initialProviders);
   const [selected, setSelected] = useState<Provider | null>(null);
 
-  const handleAction = (id: string, action: 'approved' | 'rejected', reason?: string) => {
-    // We update local state optimistically, the server action already updated the DB
+  const handleAction = (id: string, action: 'approved' | 'rejected', result?: { clientId?: string, qrUrl?: string, reason?: string }) => {
+    // Update the main providers list
     setProviders(prev => prev.map(p => p.id === id
-      ? { ...p, status: action, reviewed_at: new Date().toISOString(), rejection_reason: reason ?? undefined }
+      ? { 
+          ...p, 
+          status: action, 
+          reviewed_at: new Date().toISOString(), 
+          rejection_reason: result?.reason ?? p.rejection_reason,
+          client_id: result?.clientId ?? p.client_id,
+          qr_url: result?.qrUrl ?? p.qr_url
+        }
       : p
     ));
-    setSelected(null);
+
+    // Update the selected provider so the modal reflects the changes (e.g. shows Client ID)
+    if (selected && selected.id === id) {
+      setSelected({
+        ...selected,
+        status: action,
+        client_id: result?.clientId ?? selected.client_id,
+        qr_url: result?.qrUrl ?? selected.qr_url,
+        rejection_reason: result?.reason ?? selected.rejection_reason,
+      });
+    }
   };
 
   const filtered = providers.filter(p => {

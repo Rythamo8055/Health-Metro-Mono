@@ -11,12 +11,12 @@ colors:
   border: "#E5E7EB"
 typography:
   display:
-    fontFamily: "var(--font-geist-sans), Inter, sans-serif"
+    fontFamily: "var(--font-inter), sans-serif"
     fontSize: "clamp(2rem, 5vw, 3rem)"
     fontWeight: 700
     lineHeight: 1.2
   body:
-    fontFamily: "var(--font-geist-sans), Inter, sans-serif"
+    fontFamily: "var(--font-inter), sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.6
@@ -72,8 +72,8 @@ The palette is anchored by the deep medical teal, balanced by a vibrant orange f
 
 ## 3. Typography
 
-**Display Font:** Geist Sans (Modern, technical)
-**Body Font:** Geist Sans
+**Display Font:** Inter (Modern, professional, business)
+**Body Font:** Inter
 
 ### Hierarchy
 - **Display**: Used for page titles and hero headings. Bold, tight tracking.
@@ -101,7 +101,7 @@ The system uses **Tonal Layering** rather than traditional drop shadows. Depth i
 ### Do:
 - **Do** use Medical Teal for step indicators.
 - **Do** maintain a minimum of 40px padding between major sections.
-- **Do** use Inter/Geist for all medical data display.
+- **Do** use Inter for all medical data display.
 
 ### Don't:
 - **Don't** use border-left stripes on cards.

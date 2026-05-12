@@ -65,7 +65,7 @@ export async function submitProviderRegistration(formData: FormData) {
       'Hospital': 'HOS',
       'Clinic': 'CLI',
       'Individual Doctor': 'DOC',
-      'Pharmacy': 'PHA',
+      'Pharmacy': 'PHY',       // standardised — was 'PHA'
       'Diagnostic Center': 'DIA',
       'Other': 'OTH'
     };

@@ -198,8 +198,10 @@ export default function ProviderRegistrationForm({
     );
   }
 
+  const today = new Date().toISOString().split('T')[0];
+
   return (
-    <div className="h-screen w-full overflow-hidden flex flex-col lg:flex-row bg-white font-sans text-[#1A2020]">
+    <div className="min-h-screen lg:h-screen w-full lg:overflow-hidden flex flex-col lg:flex-row bg-white font-sans text-[#1A2020]">
 
       {/* Mobile Header */}
       <div className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-slate-100 sticky top-0 z-50">
@@ -262,7 +264,7 @@ export default function ProviderRegistrationForm({
       </div>
 
       {/* Right Panel: Form */}
-      <div className="flex-1 h-full overflow-y-auto bg-[#F8FAFA] flex flex-col p-6 lg:p-12 pb-32 lg:pb-12">
+      <div className="flex-1 min-h-0 overflow-y-auto bg-[#F8FAFA] flex flex-col p-6 lg:p-12 pb-32 lg:pb-12 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
         <div className="w-full max-w-xl mx-auto space-y-8 h-full flex flex-col justify-center">
 
           {/* Desktop back + dots */}
@@ -343,7 +345,7 @@ export default function ProviderRegistrationForm({
                       error={errors.address?.message}
                       {...register('address')}
                     />
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <Controller
                         name="state_code"
                         control={control}
@@ -381,7 +383,7 @@ export default function ProviderRegistrationForm({
                       maxLength={6}
                       {...register('pin_code')}
                     />
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <InputField
                         label="CONTACT PERSON NAME"
                         placeholder="Authorized person"
@@ -395,7 +397,7 @@ export default function ProviderRegistrationForm({
                         {...register('designation')}
                       />
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <InputField
                         label="MOBILE NUMBER"
                         placeholder="10-digit mobile"
@@ -440,11 +442,11 @@ export default function ProviderRegistrationForm({
                     <div className="pt-4 border-t border-slate-100 space-y-4">
                       <p className="text-[9px] font-black tracking-widest text-slate-400 uppercase">Bank Details (Optional)</p>
                       <p className="text-[11px] text-slate-400">Required for referral payouts. Can be added later.</p>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <InputField label="ACCOUNT HOLDER NAME" placeholder="As per bank records" {...register('account_holder_name')} />
                         <InputField label="BANK NAME" placeholder="e.g. HDFC Bank" {...register('bank_name')} />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <InputField label="ACCOUNT NUMBER" placeholder="9–18 digits" {...register('account_no')} />
                         <InputField label="IFSC CODE" placeholder="e.g. HDFC0001234" {...register('ifsc_code')} />
                       </div>
@@ -483,6 +485,8 @@ export default function ProviderRegistrationForm({
                       <label className="text-[9px] font-black tracking-widest text-slate-400 uppercase block">DATE</label>
                       <input
                         type="date"
+                        min={today}
+                        max={today}
                         {...register('declaration_date')}
                         className={`w-full bg-white lg:bg-slate-50 border ${errors.declaration_date ? 'border-red-200' : 'border-slate-100'} rounded-2xl px-5 py-4 text-base outline-none transition-all font-semibold shadow-sm`}
                       />

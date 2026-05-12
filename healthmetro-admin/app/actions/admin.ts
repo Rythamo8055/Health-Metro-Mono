@@ -7,19 +7,28 @@ export async function approveProvider(providerId: string, stateCode: string, pro
   const supabase = createAdminClient();
 
   try {
+    const year = new Date().getFullYear();
+    const typeCode = providerType === 'Hospital'          ? 'HOS'
+                   : providerType === 'Clinic'            ? 'CLI'
+                   : providerType === 'Individual Doctor' ? 'DOC'
+                   : providerType === 'Pharmacy'          ? 'PHY'
+                   : providerType === 'Diagnostic Center' ? 'DIA' : 'OTH';
+
     // 1. Call the RPC function to generate the Client ID
+    // Pass the provider UUID so the DB writes the sequence back atomically
     const { data: clientId, error: rpcError } = await supabase.rpc('generate_client_id', {
       p_state_code: stateCode,
-      p_year: new Date().getFullYear(),
-      p_type_code: providerType === 'Hospital' ? 'HOS' : 
-                   providerType === 'Clinic' ? 'CLI' :
-                   providerType === 'Individual Doctor' ? 'DOC' :
-                   providerType === 'Pharmacy' ? 'PHY' :
-                   providerType === 'Diagnostic Center' ? 'DIA' : 'OTH'
+      p_year: year,
+      p_type_code: typeCode,
+      p_provider_id: providerId,
     });
 
     if (rpcError) throw rpcError;
     if (!clientId) throw new Error('Failed to generate Client ID');
+
+    // Extract sequence from the generated ID (format: CLI-TN-2026-HOS-000145)
+    const parts = clientId.split('-');
+    const sequence = parseInt(parts[parts.length - 1], 10);
 
     // 2. Generate QR Code
     const { generateAndUploadQRCode } = await import('@/utils/qr');
@@ -32,7 +41,24 @@ export async function approveProvider(providerId: string, stateCode: string, pro
     const qrResult = await generateAndUploadQRCode(clientId, registrationUrl);
     if (!qrResult.success) throw new Error(qrResult.error);
 
-    // 3. Store QR mapping in database (Section 7)
+    // 3. Update the provider status and assign the new client ID + metadata
+    const { error: updateError } = await supabase
+      .from('providers')
+      .update({
+        status: 'approved',
+        client_id: clientId,
+        state_code: stateCode,
+        year: year,
+        type_code: typeCode,
+        sequence: sequence,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', providerId);
+
+    if (updateError) throw updateError;
+
+    // 4. Store QR mapping in database (Section 7)
+    // This must happen AFTER provider is updated because of the foreign key constraint
     const { error: qrDbError } = await supabase
       .from('qr_codes')
       .upsert({
@@ -47,18 +73,6 @@ export async function approveProvider(providerId: string, stateCode: string, pro
       // but in production we might want to.
     }
 
-    // 4. Update the provider status and assign the new client ID
-    const { error: updateError } = await supabase
-      .from('providers')
-      .update({
-        status: 'approved',
-        client_id: clientId,
-        reviewed_at: new Date().toISOString(),
-      })
-      .eq('id', providerId);
-
-    if (updateError) throw updateError;
-
     revalidatePath('/providers');
     return { success: true, clientId, qrUrl: qrResult.imageUrl };
   } catch (error: any) {
@@ -66,6 +80,7 @@ export async function approveProvider(providerId: string, stateCode: string, pro
     return { success: false, error: error.message };
   }
 }
+
 
 export async function rejectProvider(providerId: string, reason: string) {
   const supabase = createAdminClient();
@@ -76,7 +91,7 @@ export async function rejectProvider(providerId: string, reason: string) {
       .update({
         status: 'rejected',
         rejection_reason: reason,
-        reviewed_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       })
       .eq('id', providerId);
 

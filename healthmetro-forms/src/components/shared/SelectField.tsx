@@ -68,9 +68,9 @@ export const SelectField = React.forwardRef<HTMLDivElement, SelectFieldProps>(
             onClick={() => { if (!disabled) { setOpen(o => !o); setSearch(''); } }}
             className={`w-full bg-white lg:bg-slate-50 border ${
               error ? 'border-red-200 focus:ring-red-500/5' : 'border-slate-100 focus:ring-[#d97234]/5'
-            } ${disabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'} rounded-2xl px-5 py-4 text-base outline-none transition-all shadow-sm lg:shadow-none flex items-center justify-between text-left`}
+            } ${disabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'} rounded-2xl px-4 lg:px-5 py-3.5 lg:py-4 text-sm lg:text-base outline-none transition-all shadow-sm lg:shadow-none flex items-center justify-between text-left`}
           >
-            <span className={selected ? 'font-semibold text-[#1A2020]' : 'text-slate-300 font-semibold'}>
+            <span className={`block truncate ${selected ? 'font-semibold text-[#1A2020]' : 'text-slate-300 font-semibold'}`}>
               {selected ? selected.label : placeholder}
             </span>
             <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
@@ -99,7 +99,7 @@ export const SelectField = React.forwardRef<HTMLDivElement, SelectFieldProps>(
                     </div>
                   </div>
                 )}
-                <div className="max-h-52 overflow-y-auto py-1">
+                <div className="max-h-60 lg:max-h-52 overflow-y-auto py-1 overscroll-contain touch-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
                   {filtered.length === 0 ? (
                     <p className="text-center text-slate-400 text-xs py-4 font-medium">No results</p>
                   ) : (

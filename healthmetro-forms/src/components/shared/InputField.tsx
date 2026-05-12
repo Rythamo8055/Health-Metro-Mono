@@ -35,7 +35,7 @@ export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
           suppressHydrationWarning
           className={`w-full bg-white lg:bg-slate-50 border ${
             error ? 'border-red-200 focus:ring-red-500/5 focus:border-red-500' : 'border-slate-100 focus:ring-[#d97234]/5 focus:border-[#d97234]'
-          } rounded-2xl px-5 py-4 text-base outline-none transition-all placeholder:text-slate-300 font-semibold shadow-sm lg:shadow-none`}
+          } rounded-2xl px-4 lg:px-5 py-3.5 lg:py-4 text-sm lg:text-base outline-none transition-all placeholder:text-slate-300 font-semibold shadow-sm lg:shadow-none`}
           {...props}
         />
       </div>
