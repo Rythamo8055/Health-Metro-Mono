@@ -317,7 +317,7 @@ function CustomerFormInner() {
               <span className="text-[#d97234] italic font-serif font-medium">at your doorstep.</span>
             </h1>
             <p className="text-slate-500 leading-relaxed">
-              Book a blood test in minutes. We collect at your provider's clinic or right at your home.
+              Book a blood test in minutes. We collect at your provider&apos;s clinic or right at your home.
             </p>
           </div>
           <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">

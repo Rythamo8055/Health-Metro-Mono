@@ -1,0 +1,92 @@
+
+> healthmetro-forms@0.1.0 lint
+> eslint
+
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/scratch/smoke-test.ts
+  23:17  warning  'adminData' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/src/app/actions/customer.ts
+  117:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/src/app/actions/provider.ts
+   27:19  warning  'uploadData' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  110:19  error    Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/src/app/register/customer/page.tsx
+  130:16   warning  'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+  320:72   error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           react/no-unescaped-entities
+  473:131  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/src/app/register/customer/page.tsx:473:131
+  471 |                       { name: 'consent_availability' as const, label: 'I understand that services depend on slot availability.' },
+  472 |                     ].map(({ name, label }) => (
+> 473 |                       <label key={name} className={`flex items-start gap-3 p-4 rounded-2xl border cursor-pointer transition-all ${watch(name) ? 'border-[#027473]/30 bg-teal-50/30' : errors[name] ? 'border-red-200 bg-red-50/20' : 'border-slate-100 bg-white hover:border-slate-200'}`}>
+      |                                                                                                                                   ^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  474 |                         <input type="checkbox" {...register(name)} className="mt-0.5 w-4 h-4 accent-[#027473] shrink-0" />
+  475 |                         <span className="text-sm text-slate-600 font-medium leading-relaxed">{label}</span>
+  476 |                       </label>  react-hooks/incompatible-library
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/src/components/ProviderRegistrationForm.tsx
+  470:131  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/src/components/ProviderRegistrationForm.tsx:470:131
+  468 |                       { name: 'accept_process' as const, label: 'I understand that my Client ID will be issued only after successful admin approval.' },
+  469 |                     ].map(({ name, label }) => (
+> 470 |                       <label key={name} className={`flex items-start gap-3 p-4 rounded-2xl border cursor-pointer transition-all ${watch(name) ? 'border-[#027473]/30 bg-teal-50/30' : errors[name] ? 'border-red-200 bg-red-50/20' : 'border-slate-100 bg-white hover:border-slate-200'}`}>
+      |                                                                                                                                   ^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  471 |                         <input type="checkbox" {...register(name)} className="mt-0.5 w-4 h-4 accent-[#027473] shrink-0" />
+  472 |                         <span className="text-sm text-slate-600 font-medium leading-relaxed">{label}</span>
+  473 |                       </label>  react-hooks/incompatible-library
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/src/components/shared/FormShell.tsx
+  6:16  warning  'Globe2' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/src/components/test/DoctorPortal.tsx
+  26:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/src/components/test/DoctorPortal.tsx:26:7
+  24 |     const savedId = localStorage.getItem('test_doctor_id');
+  25 |     if (savedId) {
+> 26 |       setDoctorId(savedId);
+     |       ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  27 |     } else {
+  28 |       const newId = `DR-${uuidv4().slice(0, 8).toUpperCase()}`;
+  29 |       localStorage.setItem('test_doctor_id', newId);  react-hooks/set-state-in-effect
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/src/components/test/PatientForm.tsx
+   4:18  warning  'AnimatePresence' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  19:8   warning  'Image' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+  50:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/src/components/test/PatientForm.tsx:50:5
+  48 |
+  49 |   useEffect(() => {
+> 50 |     setMounted(true);
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  51 |   }, []);
+  52 |
+  53 |   const onSubmit = (data: PatientData) => {  react-hooks/set-state-in-effect
+
+/Users/praphulragampeta/Desktop/Health-Metro-Mono/healthmetro-forms/src/utils/supabase/middleware.ts
+  15:9   warning  'supabase' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  24:48  warning  'options' is defined but never used            @typescript-eslint/no-unused-vars
+
+✖ 15 problems (5 errors, 10 warnings)
+

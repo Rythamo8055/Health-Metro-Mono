@@ -114,9 +114,9 @@ export async function submitCustomerRegistration(formData: FormData) {
 
     return { success: true, customer_id: finalCustomerId, booking: bookingData };
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Customer Registration failed:', error);
-    return { success: false, error: error.message || 'Registration failed' };
+    return { success: false, error: error instanceof Error ? error.message : 'Registration failed' };
   }
 }
 

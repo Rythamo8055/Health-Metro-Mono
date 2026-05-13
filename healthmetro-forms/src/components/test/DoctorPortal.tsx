@@ -23,6 +23,7 @@ export default function DoctorPortal() {
     // Generate or fetch Doctor ID
     const savedId = localStorage.getItem('test_doctor_id');
     if (savedId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setDoctorId(savedId);
     } else {
       const newId = `DR-${uuidv4().slice(0, 8).toUpperCase()}`;
