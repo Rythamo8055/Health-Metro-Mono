@@ -24,7 +24,7 @@ export async function submitProviderRegistration(formData: FormData) {
     const ext = file.name.split('.').pop() || 'pdf';
     const filename = `${prefix}_${Date.now()}_${Math.random().toString(36).substring(7)}.${ext}`;
     
-    const { data: uploadData, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from('documents')
       .upload(`providers/${filename}`, file, {
         cacheControl: '3600',
@@ -107,8 +107,8 @@ export async function submitProviderRegistration(formData: FormData) {
 
     return { success: true, provider: insertData };
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Registration failed:', error);
-    return { success: false, error: error.message || 'Registration failed' };
+    return { success: false, error: error instanceof Error ? error.message : 'Registration failed' };
   }
 }

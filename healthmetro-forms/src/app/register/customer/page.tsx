@@ -11,7 +11,7 @@ import { InputField } from '@/components/shared/InputField';
 import { SelectField } from '@/components/shared/SelectField';
 import { LocationButton } from '@/components/shared/LocationButton';
 import { useReferral } from '@/hooks/useReferral';
-import { getStateOptions, getCityOptions } from '@/lib/locationData';
+import { getStateOptions, getCityOptions, STATES } from '@/lib/locationData';
 
 // ─── Schema (Doc 3) ────────────────────────────────────────────────────────
 const schema = z.object({
@@ -108,7 +108,7 @@ function CustomerFormInner() {
   const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
   const [blockedSlots, setBlockedSlots] = useState<string[]>([]);
 
-  const { register, handleSubmit, trigger, control, watch, setValue, formState: { errors } } = useForm<FormData>({
+  const { register, handleSubmit, trigger, control, watch, setValue, getValues, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { collection_type: undefined, consent_accurate: false, consent_collection: false, consent_communication: false, consent_availability: false },
     mode: 'onBlur',
@@ -137,12 +137,70 @@ function CustomerFormInner() {
   }, [clientId, token]);
 
   const watchedState = watch('state_code');
+  const watchedPinCode = watch('pin_code');
   const collectionType = watch('collection_type');
   const appointmentDate = watch('appointment_date');
 
+  const isAutoFillingRef = React.useRef(false);
+
   useEffect(() => {
-    if (watchedState) { setCityOptions(getCityOptions(watchedState)); setValue('city', ''); }
-  }, [watchedState, setValue]);
+    if (watchedState) { 
+      const options = getCityOptions(watchedState);
+      const currentCity = getValues('city');
+      
+      if (isAutoFillingRef.current) {
+        if (currentCity && !options.find(o => o.value.toLowerCase() === currentCity.toLowerCase())) {
+          options.push({ value: currentCity, label: currentCity });
+        }
+        setCityOptions(options);
+        isAutoFillingRef.current = false;
+      } else {
+        setCityOptions(options);
+        setValue('city', '');
+      }
+    } else {
+      setCityOptions([]);
+    }
+  }, [watchedState, setValue, getValues]);
+
+  useEffect(() => {
+    async function fetchPinCodeDetails() {
+      if (watchedPinCode?.length === 6) {
+        try {
+          const res = await fetch(`https://api.postalpincode.in/pincode/${watchedPinCode}`);
+          const data = await res.json();
+          if (data && data[0] && data[0].Status === 'Success') {
+            const details = data[0].PostOffice[0];
+            const stateName = details.State;
+            const cityName = details.District;
+
+            const stateObj = STATES.find(s => s.name.toLowerCase() === stateName.toLowerCase() || s.name.toLowerCase().includes(stateName.toLowerCase()));
+            
+            if (stateObj) {
+              const currentOptions = getCityOptions(stateObj.code);
+              const existingCity = currentOptions.find(c => c.value.toLowerCase() === cityName.toLowerCase());
+              const finalCity = existingCity ? existingCity.value : cityName;
+
+              const currentState = getValues('state_code');
+              if (currentState === stateObj.code) {
+                if (!existingCity) {
+                  setCityOptions([...currentOptions, { value: finalCity, label: finalCity }]);
+                }
+                setValue('city', finalCity, { shouldValidate: true });
+              } else {
+                isAutoFillingRef.current = true;
+                setValue('state_code', stateObj.code, { shouldValidate: true });
+                setValue('city', finalCity, { shouldValidate: true });
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Failed to fetch pincode details", error);
+        }
+      }
+    }
+    fetchPinCodeDetails();
+  }, [watchedPinCode, setValue, getValues]);
 
   useEffect(() => {
     if (appointmentDate) {
@@ -182,7 +240,7 @@ function CustomerFormInner() {
 
       if (!result.success) {
         // Handle specific slot conflict error
-        if (result.error.includes('SLOT_CONFLICT')) {
+        if (result.error?.includes('SLOT_CONFLICT')) {
           alert('This time slot is already booked. Please go back and select a different time slot.');
           setStep(3); // Send them back to appointment step
           return;
@@ -259,7 +317,7 @@ function CustomerFormInner() {
               <span className="text-[#d97234] italic font-serif font-medium">at your doorstep.</span>
             </h1>
             <p className="text-slate-500 leading-relaxed">
-              Book a blood test in minutes. We collect at your provider's clinic or right at your home.
+              Book a blood test in minutes. We collect at your provider&apos;s clinic or right at your home.
             </p>
           </div>
           <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
