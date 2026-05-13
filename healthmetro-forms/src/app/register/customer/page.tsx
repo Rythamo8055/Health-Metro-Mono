@@ -240,7 +240,7 @@ function CustomerFormInner() {
 
       if (!result.success) {
         // Handle specific slot conflict error
-        if (result.error.includes('SLOT_CONFLICT')) {
+        if (result.error?.includes('SLOT_CONFLICT')) {
           alert('This time slot is already booked. Please go back and select a different time slot.');
           setStep(3); // Send them back to appointment step
           return;
