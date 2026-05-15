@@ -13,12 +13,6 @@ body {
   background: #F0F2F7;
   font-family: 'Inter', system-ui, sans-serif;
   color: #1A2020;
-  font-size: 12px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-size: 18px !important;
-  font-weight: 700;
 }
 
 /* Scrollbar */

@@ -90,7 +90,7 @@ export default function FormShell({
           <div className="space-y-6">
             <h1 className="text-5xl xl:text-6xl font-bold leading-[1.05] tracking-tight">
               {title} <br />
-              <span className="text-[#d97234] italic font-sans font-medium">{subtitle}</span>
+              <span className="text-[#d97234] italic font-serif font-medium">{subtitle}</span>
             </h1>
           </div>
         </div>

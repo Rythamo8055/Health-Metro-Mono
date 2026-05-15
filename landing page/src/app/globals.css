@@ -36,15 +36,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 18px;
   line-height: 1.6;
   overflow-x: hidden;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-size: 18px !important;
-  font-weight: 700;
-  letter-spacing: -0.01em;
 }
 
 @layer utilities {
@@ -55,6 +49,11 @@ h1, h2, h3, h4, h5, h6 {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 /* Accessible touch targets for mobile */

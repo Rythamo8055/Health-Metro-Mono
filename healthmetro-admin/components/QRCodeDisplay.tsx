@@ -51,7 +51,7 @@ export function QRCodeDisplay({ clientId }: { clientId: string }) {
     return (
       <div className="flex flex-col items-center justify-center p-8 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
         <Loader2 className="w-8 h-8 text-[#027473] animate-spin mb-2" />
-        <p className="text-[12px] font-bold text-slate-400">Loading QR Code...</p>
+        <p className="text-xs font-bold text-slate-400">Loading QR Code...</p>
       </div>
     );
   }
@@ -59,7 +59,7 @@ export function QRCodeDisplay({ clientId }: { clientId: string }) {
   if (error || !qrData) {
     return (
       <div className="p-4 bg-orange-50 rounded-xl border border-orange-100">
-        <p className="text-[12px] font-bold text-orange-600">{error || 'No QR code available'}</p>
+        <p className="text-xs font-bold text-orange-600">{error || 'No QR code available'}</p>
       </div>
     );
   }
@@ -81,14 +81,14 @@ export function QRCodeDisplay({ clientId }: { clientId: string }) {
             href={qrData.registrationUrl} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full py-2.5 bg-slate-50 text-slate-600 rounded-xl text-[12px] font-bold border border-slate-100 hover:bg-slate-100 transition-colors"
+            className="flex items-center justify-center gap-2 w-full py-2.5 bg-slate-50 text-slate-600 rounded-xl text-[11px] font-bold border border-slate-100 hover:bg-slate-100 transition-colors"
           >
             <ExternalLink className="w-3.5 h-3.5" /> Test Link
           </a>
           <a 
             href={qrData.imageUrl} 
             download={`${clientId}-QR.png`}
-            className="flex items-center justify-center gap-2 w-full py-2.5 bg-[#027473] text-white rounded-xl text-[12px] font-bold hover:bg-[#015a59] transition-colors"
+            className="flex items-center justify-center gap-2 w-full py-2.5 bg-[#027473] text-white rounded-xl text-[11px] font-bold hover:bg-[#015a59] transition-colors"
           >
             <Download className="w-3.5 h-3.5" /> Download QR
           </a>
@@ -96,8 +96,8 @@ export function QRCodeDisplay({ clientId }: { clientId: string }) {
       </div>
       
       <div className="p-3 bg-teal-50 rounded-xl border border-teal-100">
-        <p className="text-[12px] font-black text-teal-600 uppercase tracking-widest">Target URL</p>
-        <p className="text-[12px] text-teal-700 font-mono break-all mt-1">{qrData.registrationUrl}</p>
+        <p className="text-[10px] font-black text-teal-600 uppercase tracking-widest">Target URL</p>
+        <p className="text-[10px] text-teal-700 font-mono break-all mt-1">{qrData.registrationUrl}</p>
       </div>
     </div>
   );

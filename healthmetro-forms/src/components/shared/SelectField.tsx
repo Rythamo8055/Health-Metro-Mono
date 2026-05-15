@@ -47,7 +47,7 @@ export const SelectField = React.forwardRef<HTMLDivElement, SelectFieldProps>(
     return (
       <div ref={ref} className="space-y-2">
         <div className="flex justify-between items-end">
-          <label className="text-[12px] font-black tracking-widest text-slate-400 uppercase">
+          <label className="text-[9px] font-black tracking-widest text-slate-400 uppercase">
             {label}
           </label>
           {error && (
@@ -68,7 +68,7 @@ export const SelectField = React.forwardRef<HTMLDivElement, SelectFieldProps>(
             onClick={() => { if (!disabled) { setOpen(o => !o); setSearch(''); } }}
             className={`w-full bg-white lg:bg-slate-50 border ${
               error ? 'border-red-200 focus:ring-red-500/5' : 'border-slate-100 focus:ring-[#d97234]/5'
-            } ${disabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'} rounded-2xl px-4 lg:px-5 py-3.5 lg:py-4 text-xs outline-none transition-all shadow-sm lg:shadow-none flex items-center justify-between text-left`}
+            } ${disabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'} rounded-2xl px-4 lg:px-5 py-3.5 lg:py-4 text-sm lg:text-base outline-none transition-all shadow-sm lg:shadow-none flex items-center justify-between text-left`}
           >
             <span className={`block truncate ${selected ? 'font-semibold text-[#1A2020]' : 'text-slate-300 font-semibold'}`}>
               {selected ? selected.label : placeholder}
@@ -94,7 +94,7 @@ export const SelectField = React.forwardRef<HTMLDivElement, SelectFieldProps>(
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                         placeholder="Search..."
-                        className="text-xs bg-transparent outline-none flex-1 placeholder:text-slate-300 font-medium"
+                        className="text-sm bg-transparent outline-none flex-1 placeholder:text-slate-300 font-medium"
                       />
                     </div>
                   </div>
@@ -108,7 +108,7 @@ export const SelectField = React.forwardRef<HTMLDivElement, SelectFieldProps>(
                         key={opt.value}
                         type="button"
                         onClick={() => { onChange?.(opt.value); setOpen(false); setSearch(''); }}
-                        className={`w-full px-4 py-2.5 text-left text-xs font-semibold transition-colors hover:bg-slate-50 ${
+                        className={`w-full px-4 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-slate-50 ${
                           opt.value === value ? 'text-[#d97234] bg-orange-50/50' : 'text-[#1A2020]'
                         }`}
                       >
