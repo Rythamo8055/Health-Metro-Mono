@@ -111,7 +111,13 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    font-size: 12px;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans;
+    font-size: 18px !important;
+    font-weight: 700;
   }
 }
 

@@ -50,11 +50,11 @@ export function FileUploadField({
   return (
     <div className="space-y-2">
       <div className="flex justify-between items-end">
-        <label className="text-[9px] font-black tracking-widest text-slate-400 uppercase">
+        <label className="text-[12px] font-black tracking-widest text-slate-400 uppercase">
           {label}{required && <span className="text-red-400 ml-1">*</span>}
         </label>
         {displayError && (
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[10px] text-red-500 font-bold">
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[12px] text-red-500 font-bold">
             {displayError}
           </motion.p>
         )}
@@ -86,16 +86,16 @@ export function FileUploadField({
                 <Upload className="w-4 h-4 text-slate-400" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-slate-500">Click or drag to upload</p>
-                <p className="text-[10px] text-slate-400 font-medium mt-0.5">{hint}</p>
+                <p className="text-xs font-semibold text-slate-500">Click or drag to upload</p>
+                <p className="text-[12px] text-slate-400 font-medium mt-0.5">{hint}</p>
               </div>
             </motion.div>
           ) : (
             <motion.div key="done" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-3">
               <CheckCircle2 className="w-4 h-4 text-[#027473] shrink-0" />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-[#027473] truncate">{file.name}</p>
-                <p className="text-[10px] text-slate-400 font-medium">{(file.size / 1024).toFixed(0)} KB</p>
+                <p className="text-xs font-semibold text-[#027473] truncate">{file.name}</p>
+                <p className="text-[12px] text-slate-400 font-medium">{(file.size / 1024).toFixed(0)} KB</p>
               </div>
               <button type="button" onClick={reset} className="p-1 hover:bg-slate-100 rounded-lg transition-colors shrink-0">
                 <X className="w-3.5 h-3.5 text-slate-400" />
