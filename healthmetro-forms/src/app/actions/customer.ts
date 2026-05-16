@@ -28,15 +28,20 @@ export async function submitCustomerRegistration(formData: FormData) {
 
   try {
     // 2. Validate Provider & Get Provider ID
-    const { data: providerData, error: providerError } = await supabase
+    console.log('Searching for provider with client_id:', `"${clientId}"`);
+    const { data: providerData, error: pErr } = await supabase
       .from('providers')
-      .select('id, client_id, type_code, sequence')
+      .select('id, type_code, sequence, status')
       .eq('client_id', clientId)
+      .eq('status', 'approved')
       .single();
 
-    if (providerError || !providerData) {
-      throw new Error('Invalid Provider Client ID');
+    if (pErr || !providerData) {
+      console.error('Provider Lookup Failed:', pErr?.message || 'No provider found');
+      if (pErr) console.error('Full Error:', JSON.stringify(pErr));
+      throw new Error(`Invalid Provider Client ID: ${pErr?.message || 'No approved provider found for ' + clientId}`);
     }
+    console.log('Provider verified:', providerData.id);
 
     const year = new Date().getFullYear();
     const clientShort = `${providerData.type_code}${providerData.sequence}`;
