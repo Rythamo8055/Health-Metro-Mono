@@ -156,10 +156,10 @@ export default function PresentationPage() {
                 transition={{ delay: idx * 0.1 }}
                 className="relative group bg-slate-50/50 border border-slate-100 p-8 rounded-[2.5rem] hover:bg-white transition-all duration-500 hover:shadow-xl hover:shadow-slate-100"
               >
-                <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center mb-6 text-teal-600 border border-slate-100 shadow-sm">
+                <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center mb-6 text-[#d97234] border border-slate-100 shadow-sm">
                   {step.icon}
                 </div>
-                <span className="text-[10px] font-black text-teal-700 tracking-[0.4em] mb-3 uppercase opacity-50">{step.tag}</span>
+                <span className="text-[10px] font-black text-[#d97234] tracking-[0.4em] mb-3 uppercase opacity-50">{step.tag}</span>
                 <h3 className="font-bold text-lg mb-3 text-slate-900">{step.title}</h3>
                 <p className="text-sm text-slate-500 leading-relaxed font-medium">
                   {step.description}

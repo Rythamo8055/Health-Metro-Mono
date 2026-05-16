@@ -176,9 +176,9 @@ export default function WhatsAppPresentation() {
         </section>
 
         {/* ⚡ LIVE TRIGGER SECTION */}
-        <section className="mb-24 p-10 bg-teal-50/50 border border-teal-100 rounded-[2.5rem]">
+        <section className="mb-24 p-10 bg-orange-50/50 border border-orange-100 rounded-[2.5rem]">
           <h2 className="text-xl font-black mb-8 flex items-center gap-2">
-            <Play className="w-5 h-5 text-teal-600" /> Live Sandbox Test
+            <Play className="w-5 h-5 text-orange-600" /> Live Sandbox Test
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             {sandboxNumbers.map((sb, i) => (
@@ -190,7 +190,7 @@ export default function WhatsAppPresentation() {
                 <button 
                   onClick={() => triggerTest(sb.number)}
                   disabled={!!loading}
-                  className="p-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl shadow-lg shadow-teal-100 transition-all disabled:opacity-50"
+                  className="p-3 bg-orange-600 hover:bg-orange-700 text-white rounded-xl shadow-lg shadow-orange-100 transition-all disabled:opacity-50"
                 >
                   {loading === sb.number ? <Loader2 className="w-5 h-5 animate-spin" /> : <MessageSquare className="w-5 h-5" />}
                 </button>
@@ -207,13 +207,13 @@ export default function WhatsAppPresentation() {
         {/* 📝 TEMPLATE PREVIEW (MATCHING 10.AUTOMATIONS.MD) */}
         <section className="mb-24">
           <h2 className="text-xl font-black mb-8 flex items-center gap-2 text-slate-400">
-            <FileText className="w-5 h-5" /> Automation Templates
+            <FileText className="w-5 h-5 text-orange-500" /> Automation Templates
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             {templates.map((tpl, i) => (
               <div key={i} className="bg-slate-50 border border-slate-100 rounded-3xl p-8">
                 <div className="flex items-center justify-between mb-6">
-                  <div className="text-[10px] font-black text-teal-600 uppercase tracking-[0.2em]">{tpl.recipient}</div>
+                  <div className="text-[10px] font-black text-orange-600 uppercase tracking-[0.2em]">{tpl.recipient}</div>
                   <div className="text-[10px] font-mono text-slate-400">{tpl.name}</div>
                 </div>
                 <div className="bg-white p-6 rounded-2xl border border-slate-200 text-xs font-mono text-slate-600 leading-relaxed whitespace-pre-wrap">
