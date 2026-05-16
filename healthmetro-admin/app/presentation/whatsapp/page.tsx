@@ -2,191 +2,168 @@
 
 import { 
   MessageSquare, 
-  Zap, 
-  ShieldCheck, 
-  Smartphone, 
-  AlertCircle, 
-  CheckCircle2, 
+  Check, 
+  X, 
   ArrowRight,
-  Info,
-  DollarSign,
-  TrendingUp,
-  XCircle,
-  Stethoscope
+  TrendingDown,
+  PieChart as PieChartIcon,
+  BarChart2,
+  AlertTriangle
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 export default function WhatsAppPresentation() {
+  const comparisonData = [
+    { feature: 'Customer Opt-in', twilio: 'Required ("join...")', meta: 'None (Direct)', winner: 'meta' },
+    { feature: 'Branding', twilio: 'Shared Twilio Logo', meta: 'Healthmetro® Logo', winner: 'meta' },
+    { feature: 'Setup Speed', twilio: 'Instant', meta: '1-2 Days (Verification)', winner: 'twilio' },
+    { feature: 'Free Tier', twilio: '$15 Credit', meta: '1,000 Free/Mo', winner: 'meta' },
+    { feature: 'Cost per 1k msgs', twilio: '₹800 - ₹1,200', meta: '₹350 - ₹400', winner: 'meta' },
+  ];
+
   return (
-    <div className="min-h-screen bg-[#FDFDFD] text-slate-900 font-sans selection:bg-teal-100 overflow-x-hidden">
-      {/* Subtle organic background elements */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-teal-50 blur-[120px] rounded-full opacity-60" />
-        <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-orange-50 blur-[100px] rounded-full opacity-40" />
-      </div>
-
-      <main className="relative z-10 pt-16 pb-32 px-6 max-w-5xl mx-auto">
-        {/* Navigation / Home Link */}
-        <Link href="/presentation" className="inline-flex items-center gap-2 text-slate-400 hover:text-teal-600 transition-colors mb-20 text-xs font-bold uppercase tracking-widest">
-          <ArrowRight className="w-4 h-4 rotate-180" /> Back to Dashboard
-        </Link>
-
-        {/* SECTION 1: What is this about? (F-Pattern Start) */}
-        <section className="mb-32">
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 text-teal-600 mb-6"
-          >
-            <Stethoscope className="w-5 h-5" />
-            <span className="text-xs font-black uppercase tracking-[0.2em]">Healthmetro® Admin OS</span>
-          </motion.div>
-          
-          <motion.h1 
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 mb-8 leading-tight"
-          >
-            The Logistics <br />
-            of <span className="text-teal-600">Care.</span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            className="text-xl text-slate-500 max-w-2xl leading-relaxed"
-          >
-            Healthmetro® is a high-performance logistics engine designed for Oncoveryx®. It manages everything from provider onboarding to patient registration, ensuring every blood collection is tracked, verified, and secure.
-          </motion.p>
+    <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-teal-100 overflow-x-hidden">
+      <main className="max-w-4xl mx-auto pt-16 pb-32 px-6">
+        
+        {/* Simplified Header */}
+        <section className="mb-20">
+          <Link href="/presentation" className="inline-flex items-center gap-2 text-slate-400 hover:text-teal-600 transition-colors mb-12 text-xs font-bold uppercase tracking-widest">
+            <ArrowRight className="w-4 h-4 rotate-180" /> Back to Ecosystem
+          </Link>
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-4">
+            WhatsApp Strategy
+          </h1>
+          <p className="text-lg text-slate-500 font-medium">
+            A simple breakdown of how we automate patient notifications.
+          </p>
         </section>
 
-        {/* SECTION 2: Why WhatsApp? */}
-        <section className="mb-40">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl font-black mb-6 tracking-tight">Why WhatsApp Integration?</h2>
-            <p className="text-slate-500 leading-relaxed mb-10">
-              In healthcare, speed and reliability save lives. Manual coordination is slow and prone to error. By integrating WhatsApp, Healthmetro® creates an <strong>instant feedback loop</strong>.
-            </p>
-            
-            <div className="space-y-6">
-              {[
-                { title: 'Automated Confirmations', desc: 'Patients receive an instant ID and collection details the moment they book.' },
-                { title: 'Provider Alerts', desc: 'Healthcare centers are notified immediately of new registrations through their QR links.' },
-                { title: 'Operational Efficiency', desc: 'Reduces staff workload by eliminating the need for manual call-back confirmations.' }
-              ].map((item, i) => (
-                <div key={i} className="flex gap-4 p-6 bg-white border border-slate-100 rounded-3xl shadow-sm">
-                  <CheckCircle2 className="w-6 h-6 text-teal-500 shrink-0" />
-                  <div>
-                    <h4 className="font-bold text-slate-900">{item.title}</h4>
-                    <p className="text-sm text-slate-500">{item.desc}</p>
-                  </div>
+        {/* 1. COMPARISON TABLE */}
+        <section className="mb-24">
+          <h2 className="text-xl font-black mb-8 flex items-center gap-2">
+            <div className="w-8 h-8 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center">
+              <Check className="w-5 h-5" />
+            </div>
+            Direct Comparison
+          </h2>
+          <div className="overflow-hidden border border-slate-100 rounded-2xl shadow-sm">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-100">
+                  <th className="p-5 text-xs font-black uppercase tracking-widest text-slate-400">Feature</th>
+                  <th className="p-5 text-xs font-black uppercase tracking-widest text-slate-400">Twilio Sandbox</th>
+                  <th className="p-5 text-xs font-black uppercase tracking-widest text-slate-400">Meta Direct</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-50">
+                {comparisonData.map((row, i) => (
+                  <tr key={i} className="hover:bg-slate-50/50 transition-colors">
+                    <td className="p-5 font-bold text-sm text-slate-600">{row.feature}</td>
+                    <td className={`p-5 text-sm ${row.winner === 'twilio' ? 'text-teal-600 font-bold' : 'text-slate-500'}`}>{row.twilio}</td>
+                    <td className={`p-5 text-sm ${row.winner === 'meta' ? 'text-teal-600 font-bold' : 'text-slate-500'}`}>{row.meta}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* 2. VISUAL CHARTS */}
+        <section className="mb-24 grid md:grid-cols-2 gap-12">
+          
+          {/* COST BAR CHART */}
+          <div className="p-8 bg-slate-50 rounded-[2rem] border border-slate-100">
+            <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-8 flex items-center gap-2">
+              <BarChart2 className="w-4 h-4" /> Cost per 1,000 Bookings (INR)
+            </h3>
+            <div className="space-y-8">
+              <div>
+                <div className="flex justify-between text-xs font-bold mb-2">
+                  <span>Twilio</span>
+                  <span>₹1,200</span>
                 </div>
-              ))}
+                <div className="h-4 bg-slate-200 rounded-full overflow-hidden">
+                  <motion.div 
+                    initial={{ width: 0 }} whileInView={{ width: '100%' }} viewport={{ once: true }}
+                    className="h-full bg-slate-400"
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between text-xs font-bold mb-2 text-teal-600">
+                  <span>Meta Direct</span>
+                  <span>₹350</span>
+                </div>
+                <div className="h-4 bg-teal-100 rounded-full overflow-hidden">
+                  <motion.div 
+                    initial={{ width: 0 }} whileInView={{ width: '30%' }} viewport={{ once: true }}
+                    className="h-full bg-teal-500"
+                  />
+                </div>
+              </div>
+            </div>
+            <p className="mt-8 text-[10px] text-slate-400 leading-relaxed italic">
+              *Meta Direct is approximately 3.4x more cost-effective at scale.
+            </p>
+          </div>
+
+          {/* FREE TIER PIE CHART (Custom CSS) */}
+          <div className="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 flex flex-col items-center text-center">
+            <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-8 flex items-center gap-2 self-start">
+              <PieChartIcon className="w-4 h-4" /> Monthly Free Tier
+            </h3>
+            
+            <div className="relative w-40 h-40 mb-8">
+              {/* Outer ring */}
+              <div className="absolute inset-0 rounded-full border-[12px] border-teal-500" />
+              {/* Inner hole */}
+              <div className="absolute inset-4 bg-slate-50 rounded-full flex items-center justify-center">
+                <div>
+                  <div className="text-2xl font-black text-teal-600">1,000</div>
+                  <div className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Free Chats</div>
+                </div>
+              </div>
+            </div>
+            
+            <p className="text-sm text-slate-500 leading-relaxed font-medium">
+              Meta offers <strong>1,000 free conversations</strong> every month. For Healthmetro®, this means your first 1,000 customers cost <strong>₹0</strong>.
+            </p>
+          </div>
+        </section>
+
+        {/* 3. THE "NO APP" WARNING */}
+        <section className="p-10 bg-orange-50 rounded-[2rem] border border-orange-100 mb-24">
+          <div className="flex items-start gap-5">
+            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-orange-600 shadow-sm shrink-0">
+              <AlertTriangle className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="text-lg font-black text-slate-900 mb-2 tracking-tight">The "No-App" Constraint</h3>
+              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                To use your number <span className="text-slate-900 font-bold">7382033333</span> with Meta Direct, you must disconnect it from your personal WhatsApp app. It will function purely as an automated business endpoint.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* SECTION 3: The Options (F-Pattern Comparison) */}
-        <div className="space-y-40">
-          
-          {/* OPTION A: TWILIO */}
-          <section className="relative">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 text-orange-600 font-bold text-xs uppercase tracking-widest mb-4">
-                <Zap className="w-4 h-4" /> Option A: Twilio Sandbox
-              </div>
-              <h2 className="text-4xl font-black mb-8 tracking-tight">Speed & Testing.</h2>
-              
-              <div className="grid md:grid-cols-2 gap-12">
-                <div>
-                  <h4 className="font-bold text-sm uppercase text-slate-400 mb-4 tracking-widest">What we can do</h4>
-                  <p className="text-slate-500 leading-relaxed mb-6">
-                    Twilio is perfect for our current development phase. It allows us to verify that our message triggers, database logging, and templates are working exactly as planned.
-                  </p>
-                  <ul className="space-y-3 text-sm font-medium text-slate-600">
-                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-500" /> Instant deployment</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-500" /> Reliable delivery tracking</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-teal-500" /> Professional SDK support</li>
-                  </ul>
-                </div>
-                <div className="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100">
-                  <div className="flex items-center gap-2 text-slate-900 font-bold mb-4">
-                    <DollarSign className="w-5 h-5" />
-                    <span>Cost Analysis</span>
-                  </div>
-                  <p className="text-sm text-slate-500 mb-4">
-                    <strong>Trial:</strong> Free ($15.00 credit provided).
-                  </p>
-                  <p className="text-sm text-slate-500">
-                    <strong>Worth:</strong> High value for testing logic without the hassle of business verification.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* OPTION B: META DIRECT */}
-          <section className="relative">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 text-teal-600 font-bold text-xs uppercase tracking-widest mb-4">
-                <ShieldCheck className="w-4 h-4" /> Option B: Meta Cloud API
-              </div>
-              <h2 className="text-4xl font-black mb-8 tracking-tight">Scale & Authority.</h2>
-              
-              <div className="grid md:grid-cols-2 gap-12">
-                <div>
-                  <h4 className="font-bold text-sm uppercase text-slate-400 mb-4 tracking-widest">What it costs</h4>
-                  <p className="text-slate-500 leading-relaxed mb-6">
-                    Meta offers the most aggressive pricing for scale.
-                  </p>
-                  <div className="p-6 bg-teal-50 rounded-3xl border border-teal-100 text-teal-800 mb-6">
-                    <div className="text-2xl font-black">1,000 FREE</div>
-                    <div className="text-xs uppercase font-bold tracking-widest opacity-70">Conversations per month</div>
-                  </div>
-                  <p className="text-sm text-slate-500">
-                    After the free tier, utility messages in India cost approximately <strong>₹0.35</strong> per conversation.
-                  </p>
-                </div>
-                <div className="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100">
-                  <div className="flex items-center gap-2 text-red-600 font-bold mb-4">
-                    <XCircle className="w-5 h-5" />
-                    <span>What we CAN'T do</span>
-                  </div>
-                  <p className="text-sm text-slate-500 leading-relaxed">
-                    If we use a number like <span className="font-black text-slate-900">7382033333</span> for this API:
-                  </p>
-                  <ul className="mt-4 space-y-3 text-sm font-medium text-slate-600">
-                    <li className="flex items-start gap-2">
-                      <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-1" />
-                      <span>Cannot use the regular WhatsApp App on your phone.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-1" />
-                      <span>Cannot receive personal calls/chats on that number.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </section>
-
+        {/* Closing */}
+        <div className="text-center py-12 border-t border-slate-50">
+          <h4 className="font-black text-slate-900 mb-8">Ready to move forward?</h4>
+          <div className="flex justify-center gap-4">
+            <button className="px-8 py-4 bg-teal-600 text-white rounded-xl font-bold transition-all hover:bg-teal-700 shadow-lg shadow-teal-100">
+              Start Meta Setup
+            </button>
+            <button className="px-8 py-4 bg-white border border-slate-200 text-slate-600 rounded-xl font-bold hover:bg-slate-50 transition-all">
+              Stay on Twilio
+            </button>
+          </div>
         </div>
 
-        {/* Final Conclusion */}
-        <section className="mt-40 pt-20 border-t border-slate-100 text-center">
-          <p className="text-slate-400 font-bold mb-6 uppercase tracking-widest text-[10px]">Strategic Conclusion</p>
-          <h3 className="text-2xl font-black mb-8">Ready to automate Healthmetro®?</h3>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button className="px-8 py-4 bg-slate-900 text-white rounded-2xl font-black transition-all hover:bg-teal-600 shadow-xl shadow-slate-200">
-              Go Live with Meta
-            </button>
-            <button className="px-8 py-4 bg-white border border-slate-200 text-slate-900 rounded-2xl font-black transition-all hover:bg-slate-50">
-              Continue Sandbox
-            </button>
-          </div>
-        </section>
       </main>
 
-      <footer className="py-20 bg-slate-50 border-t border-slate-100 text-center">
-        <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">Healthmetro® Systems Documentation 2026</div>
+      <footer className="py-12 bg-slate-50 text-center border-t border-slate-100">
+        <span className="text-[10px] font-black text-slate-300 uppercase tracking-[0.5em]">Healthmetro® Final Strategy Review</span>
       </footer>
     </div>
   );
