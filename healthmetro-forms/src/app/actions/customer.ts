@@ -3,15 +3,25 @@
 import { createAdminClient } from '@/utils/supabase/admin';
 
 export async function submitCustomerRegistration(formData: FormData) {
-  const supabase = createAdminClient();
+  let supabase: ReturnType<typeof createAdminClient>;
+  try {
+    supabase = createAdminClient();
+  } catch (configErr: any) {
+    console.error('Supabase admin client config error:', configErr.message);
+    return { success: false, error: `Server configuration error: ${configErr.message}.` };
+  }
 
   // 1. Extract JSON data
   const dataString = formData.get('data') as string;
   if (!dataString) throw new Error('Form data missing');
   const data = JSON.parse(dataString);
+  
+  console.log('--- CUSTOMER FORM SUBMIT ---');
+  console.log('Payload data:', data);
 
   const clientId = formData.get('clientId') as string;
   const referralSource = formData.get('referralSource') as string;
+  console.log('clientId:', clientId, 'referralSource:', referralSource);
   
   const gpsString = formData.get('gpsCoords') as string;
   const gpsCoords = gpsString ? JSON.parse(gpsString) : null;
