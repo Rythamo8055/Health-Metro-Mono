@@ -1,0 +1,7 @@
+{
+  "name": "health-metro-mono",
+  "private": true,
+  "scripts": {
+    "vercel-build": "cd healthmetro-admin && npm install && npm run build"
+  }
+}
