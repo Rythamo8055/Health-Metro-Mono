@@ -24,9 +24,13 @@ export async function submitProviderRegistration(formData: FormData) {
     const ext = file.name.split('.').pop() || 'pdf';
     const filename = `${prefix}_${Date.now()}_${Math.random().toString(36).substring(7)}.${ext}`;
     
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
     const { data: uploadData, error } = await supabase.storage
       .from('documents')
-      .upload(`providers/${filename}`, file, {
+      .upload(`providers/${filename}`, buffer, {
+        contentType: file.type || 'application/pdf',
         cacheControl: '3600',
         upsert: false
       });
