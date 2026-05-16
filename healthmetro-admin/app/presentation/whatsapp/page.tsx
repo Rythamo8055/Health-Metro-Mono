@@ -8,12 +8,51 @@ import {
   TrendingDown,
   PieChart as PieChartIcon,
   BarChart2,
-  AlertTriangle
+  AlertTriangle,
+  Play,
+  Loader2,
+  CheckCircle2,
+  Smartphone
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function WhatsAppPresentation() {
+  const [loading, setLoading] = useState<string | null>(null);
+  const [status, setStatus] = useState<{ type: 'success' | 'error', message: string } | null>(null);
+
+  const sandboxNumbers = [
+    { number: '+919985508027', label: 'Primary Admin' },
+    { number: '+918341875017', label: 'Operations Lead' }
+  ];
+
+  const triggerTest = async (to: string) => {
+    setLoading(to);
+    setStatus(null);
+    try {
+      const res = await fetch('/api/whatsapp/test', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to,
+          message: `🟢 Healthmetro® Live Test\n\nThis message was triggered directly from the Healthmetro® Admin Presentation.\n\n✅ Connection: ACTIVE\n✅ Template: VERIFIED`
+        })
+      });
+      
+      const data = await res.json();
+      if (data.success) {
+        setStatus({ type: 'success', message: `Message sent to ${to}!` });
+      } else {
+        setStatus({ type: 'error', message: data.error || 'Failed to send' });
+      }
+    } catch (err) {
+      setStatus({ type: 'error', message: 'Network error' });
+    } finally {
+      setLoading(null);
+    }
+  };
+
   const comparisonData = [
     { feature: 'Customer Opt-in', twilio: 'Required ("join...")', meta: 'None (Direct)', winner: 'meta' },
     { feature: 'Branding', twilio: 'Shared Twilio Logo', meta: 'Healthmetro® Logo', winner: 'meta' },
@@ -26,26 +65,71 @@ export default function WhatsAppPresentation() {
     <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-teal-100 overflow-x-hidden">
       <main className="max-w-4xl mx-auto pt-16 pb-32 px-6">
         
-        {/* Simplified Header */}
+        {/* Header */}
         <section className="mb-20">
           <Link href="/presentation" className="inline-flex items-center gap-2 text-slate-400 hover:text-teal-600 transition-colors mb-12 text-xs font-bold uppercase tracking-widest">
-            <ArrowRight className="w-4 h-4 rotate-180" /> Back to Ecosystem
+            <ArrowRight className="w-4 h-4 rotate-180" /> Back to Dashboard
           </Link>
           <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-4">
             WhatsApp Strategy
           </h1>
           <p className="text-lg text-slate-500 font-medium">
-            A simple breakdown of how we automate patient notifications.
+            Live automation testing and ROI analysis.
           </p>
+        </section>
+
+        {/* ⚡ LIVE TRIGGER SECTION */}
+        <section className="mb-24 p-10 bg-teal-50/50 border border-teal-100 rounded-[2.5rem]">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-xl font-black flex items-center gap-2">
+              <div className="w-8 h-8 bg-teal-600 text-white rounded-lg flex items-center justify-center">
+                <Play className="w-4 h-4 fill-current" />
+              </div>
+              Live Test Trigger
+            </h2>
+            <div className="px-3 py-1 bg-teal-100 text-teal-700 text-[10px] font-black uppercase tracking-widest rounded-full border border-teal-200">
+              Sandbox Active
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {sandboxNumbers.map((sb, i) => (
+              <div key={i} className="bg-white p-6 rounded-2xl border border-slate-100 flex items-center justify-between group">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-teal-600">
+                    <Smartphone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-black text-slate-400 uppercase tracking-widest mb-0.5">{sb.label}</div>
+                    <div className="font-bold text-slate-900">{sb.number}</div>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => triggerTest(sb.number)}
+                  disabled={!!loading}
+                  className="p-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl shadow-lg shadow-teal-100 transition-all disabled:opacity-50"
+                >
+                  {loading === sb.number ? <Loader2 className="w-5 h-5 animate-spin" /> : <MessageSquare className="w-5 h-5" />}
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {status && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+              className={`mt-6 p-4 rounded-xl text-xs font-bold flex items-center gap-3 ${status.type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-700 border border-red-100'}`}
+            >
+              {status.type === 'success' ? <CheckCircle2 className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
+              {status.message}
+            </motion.div>
+          )}
         </section>
 
         {/* 1. COMPARISON TABLE */}
         <section className="mb-24">
-          <h2 className="text-xl font-black mb-8 flex items-center gap-2">
-            <div className="w-8 h-8 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center">
-              <Check className="w-5 h-5" />
-            </div>
-            Direct Comparison
+          <h2 className="text-xl font-black mb-8 flex items-center gap-2 text-slate-400">
+            Strategy Breakdown
           </h2>
           <div className="overflow-hidden border border-slate-100 rounded-2xl shadow-sm">
             <table className="w-full text-left border-collapse">
@@ -70,12 +154,10 @@ export default function WhatsAppPresentation() {
         </section>
 
         {/* 2. VISUAL CHARTS */}
-        <section className="mb-24 grid md:grid-cols-2 gap-12">
-          
-          {/* COST BAR CHART */}
+        <section className="mb-24 grid md:grid-cols-2 gap-12 text-slate-900">
           <div className="p-8 bg-slate-50 rounded-[2rem] border border-slate-100">
             <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-8 flex items-center gap-2">
-              <BarChart2 className="w-4 h-4" /> Cost per 1,000 Bookings (INR)
+              <BarChart2 className="w-4 h-4" /> Cost per 1k Bookings
             </h3>
             <div className="space-y-8">
               <div>
@@ -103,63 +185,36 @@ export default function WhatsAppPresentation() {
                 </div>
               </div>
             </div>
-            <p className="mt-8 text-[10px] text-slate-400 leading-relaxed italic">
-              *Meta Direct is approximately 3.4x more cost-effective at scale.
-            </p>
           </div>
 
-          {/* FREE TIER PIE CHART (Custom CSS) */}
           <div className="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 flex flex-col items-center text-center">
-            <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-8 flex items-center gap-2 self-start">
+            <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-8 flex items-center gap-2 self-start text-slate-900">
               <PieChartIcon className="w-4 h-4" /> Monthly Free Tier
             </h3>
-            
-            <div className="relative w-40 h-40 mb-8">
-              {/* Outer ring */}
-              <div className="absolute inset-0 rounded-full border-[12px] border-teal-500" />
-              {/* Inner hole */}
-              <div className="absolute inset-4 bg-slate-50 rounded-full flex items-center justify-center">
-                <div>
-                  <div className="text-2xl font-black text-teal-600">1,000</div>
-                  <div className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Free Chats</div>
-                </div>
+            <div className="relative w-32 h-32 mb-8">
+              <div className="absolute inset-0 rounded-full border-[10px] border-teal-500" />
+              <div className="absolute inset-2 bg-slate-50 rounded-full flex items-center justify-center">
+                <div className="text-xl font-black text-teal-600">1k</div>
               </div>
             </div>
-            
-            <p className="text-sm text-slate-500 leading-relaxed font-medium">
-              Meta offers <strong>1,000 free conversations</strong> every month. For Healthmetro®, this means your first 1,000 customers cost <strong>₹0</strong>.
+            <p className="text-xs text-slate-500 leading-relaxed font-bold">
+              1,000 Free Conversations / Month
             </p>
           </div>
         </section>
 
-        {/* 3. THE "NO APP" WARNING */}
-        <section className="p-10 bg-orange-50 rounded-[2rem] border border-orange-100 mb-24">
-          <div className="flex items-start gap-5">
-            <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-orange-600 shadow-sm shrink-0">
-              <AlertTriangle className="w-6 h-6" />
-            </div>
+        {/* 3. WARNING */}
+        <section className="p-8 bg-orange-50 rounded-[2rem] border border-orange-100 mb-24">
+          <div className="flex items-start gap-4">
+            <AlertTriangle className="w-6 h-6 text-orange-600 shrink-0" />
             <div>
-              <h3 className="text-lg font-black text-slate-900 mb-2 tracking-tight">The "No-App" Constraint</h3>
-              <p className="text-sm text-slate-600 leading-relaxed font-medium">
-                To use your number <span className="text-slate-900 font-bold">7382033333</span> with Meta Direct, you must disconnect it from your personal WhatsApp app. It will function purely as an automated business endpoint.
+              <h3 className="text-sm font-black text-slate-900 mb-1 tracking-tight">Cloud Number Limitation</h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                Switching to Meta Cloud with <span className="text-slate-900 font-bold">7382033333</span> will disable your personal WhatsApp app access. The number will be reserved exclusively for Healthmetro® automation.
               </p>
             </div>
           </div>
         </section>
-
-        {/* Closing */}
-        <div className="text-center py-12 border-t border-slate-50">
-          <h4 className="font-black text-slate-900 mb-8">Ready to move forward?</h4>
-          <div className="flex justify-center gap-4">
-            <button className="px-8 py-4 bg-teal-600 text-white rounded-xl font-bold transition-all hover:bg-teal-700 shadow-lg shadow-teal-100">
-              Start Meta Setup
-            </button>
-            <button className="px-8 py-4 bg-white border border-slate-200 text-slate-600 rounded-xl font-bold hover:bg-slate-50 transition-all">
-              Stay on Twilio
-            </button>
-          </div>
-        </div>
-
       </main>
 
       <footer className="py-12 bg-slate-50 text-center border-t border-slate-100">
