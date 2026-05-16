@@ -17,7 +17,9 @@ import {
   ShieldCheck,
   ThumbsUp,
   ThumbsDown,
-  FileText
+  FileText,
+  Zap,
+  Lock
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
