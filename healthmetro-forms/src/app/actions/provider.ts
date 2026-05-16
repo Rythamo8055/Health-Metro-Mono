@@ -3,7 +3,14 @@
 import { createAdminClient } from '@/utils/supabase/admin';
 
 export async function submitProviderRegistration(formData: FormData) {
-  const supabase = createAdminClient();
+  // Guard: check config before doing anything
+  let supabase: ReturnType<typeof createAdminClient>;
+  try {
+    supabase = createAdminClient();
+  } catch (configErr: any) {
+    console.error('Supabase admin client config error:', configErr.message);
+    return { success: false, error: `Server configuration error: ${configErr.message}. Ensure SUPABASE_SERVICE_ROLE_KEY is set in environment.` };
+  }
 
   // 1. Extract files
   const licenseFile = formData.get('licenseFile') as File | null;
@@ -12,18 +19,18 @@ export async function submitProviderRegistration(formData: FormData) {
 
   // 2. Extract JSON data
   const dataString = formData.get('data') as string;
-  if (!dataString) throw new Error('Form data missing');
+  if (!dataString) return { success: false, error: 'Form data missing' };
   const data = JSON.parse(dataString);
 
   const documentUrls: Record<string, string> = {};
 
-  // Helper to upload file and get a signed URL (private bucket)
+  // Helper: convert File → Buffer and upload to Supabase Storage
   const uploadFile = async (file: File, prefix: string) => {
     if (!file || file.size === 0) return null;
-    
+
     const ext = file.name.split('.').pop() || 'pdf';
     const filename = `${prefix}_${Date.now()}_${Math.random().toString(36).substring(7)}.${ext}`;
-    
+
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
@@ -32,28 +39,27 @@ export async function submitProviderRegistration(formData: FormData) {
       .upload(`providers/${filename}`, buffer, {
         contentType: file.type || 'application/pdf',
         cacheControl: '3600',
-        upsert: false
+        upsert: false,
       });
 
     if (error) {
-      console.error(`Error uploading ${prefix}:`, error);
-      throw new Error(`Failed to upload ${prefix}`);
+      console.error(`Error uploading ${prefix}:`, JSON.stringify(error));
+      throw new Error(`Failed to upload ${prefix}: ${error.message}`);
     }
 
-    // Store the path (not public URL since bucket is now private)
     return `providers/${filename}`;
   };
 
   try {
     // 3. Upload documents
     if (licenseFile) {
-      documentUrls.license = await uploadFile(licenseFile, 'license') as string;
+      documentUrls.license = (await uploadFile(licenseFile, 'license')) as string;
     }
     if (idProofFile) {
-      documentUrls.id_proof = await uploadFile(idProofFile, 'id_proof') as string;
+      documentUrls.id_proof = (await uploadFile(idProofFile, 'id_proof')) as string;
     }
     if (chequeFile) {
-      documentUrls.cheque = await uploadFile(chequeFile, 'cheque') as string;
+      documentUrls.cheque = (await uploadFile(chequeFile, 'cheque')) as string;
     }
 
     // 4. Construct Bank Details JSON
@@ -64,19 +70,19 @@ export async function submitProviderRegistration(formData: FormData) {
       ifsc_code: data.ifsc_code || '',
     };
 
-    // Determine type code (Doc 2 mapping)
+    // 5. Determine type code
     const typeMapping: Record<string, string> = {
       'Hospital': 'HOS',
       'Clinic': 'CLI',
       'Individual Doctor': 'DOC',
-      'Pharmacy': 'PHY',       // standardised — was 'PHA'
+      'Pharmacy': 'PHY',
       'Diagnostic Center': 'DIA',
-      'Other': 'OTH'
+      'Other': 'OTH',
     };
     const typeCode = typeMapping[data.provider_type] || 'OTH';
     const year = new Date().getFullYear();
 
-    // 5. Insert into Supabase
+    // 6. Insert into Supabase
     const { data: insertData, error: insertError } = await supabase
       .from('providers')
       .insert({
@@ -99,7 +105,7 @@ export async function submitProviderRegistration(formData: FormData) {
         status: 'pending',
         onboarding_stage: 'SUBMITTED',
         agreement_status: 'PENDING',
-        activation_status: 'BLOCKED_UNTIL_SIGNED'
+        activation_status: 'BLOCKED_UNTIL_SIGNED',
       })
       .select()
       .single();

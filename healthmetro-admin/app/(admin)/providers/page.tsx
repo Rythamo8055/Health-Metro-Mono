@@ -6,10 +6,10 @@ export const revalidate = 0; // Disable caching
 export default async function ProvidersPage() {
   const supabase = createAdminClient();
 
-  // Fetch providers from the database
+  // Fetch providers joined with cities
   const { data: providersData, error } = await supabase
     .from('providers')
-    .select('*')
+    .select('*, cities(name)')
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -24,7 +24,7 @@ export default async function ProvidersPage() {
     provider_type: p.provider_type,
     email: p.email || '',
     mobile: p.mobile || '',
-    city: '', // Supabase uses city_id, we can fetch cities table later if needed
+    city: p.cities?.name || p.address?.split(',')[0] || '',
     state_code: p.state_code || '',
     client_id: p.client_id || undefined,
     status: p.status as 'pending' | 'approved' | 'rejected',
