@@ -9,7 +9,7 @@ export default async function ProvidersPage() {
   // Fetch providers joined with cities
   const { data: providersData, error } = await supabase
     .from('providers')
-    .select('*, cities(name)')
+    .select('*, cities(city_name)')
     .order('created_at', { ascending: false });
 
   if (error) {
@@ -24,7 +24,7 @@ export default async function ProvidersPage() {
     provider_type: p.provider_type,
     email: p.email || '',
     mobile: p.mobile || '',
-    city: p.cities?.name || p.address?.split(',')[0] || '',
+    city: p.cities?.city_name || p.address?.split(',')[0] || '',
     state_code: p.state_code || '',
     client_id: p.client_id || undefined,
     status: p.status as 'pending' | 'approved' | 'rejected',
