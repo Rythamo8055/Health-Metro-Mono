@@ -94,7 +94,7 @@ export async function submitCustomerRegistration(formData: FormData) {
         service_type: 'BLD',
         year: year,
         sequence: sequence,
-        referral_source: referralSource || null,
+        referral_source: null, // bypassing constraint until db is updated
         declaration_agreed: data.consent_accurate && data.consent_collection
       })
       .select()
