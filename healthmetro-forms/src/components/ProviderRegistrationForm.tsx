@@ -80,6 +80,7 @@ interface Props {
   tagline?: string;
   heroTitle?: string;
   heroSubtitle?: string;
+  iconSrc?: string;
 }
 
 export default function ProviderRegistrationForm({
@@ -87,6 +88,7 @@ export default function ProviderRegistrationForm({
   tagline = 'Partner Network',
   heroTitle = 'Clinical excellence,',
   heroSubtitle = 'digitally mastered.',
+  iconSrc,
 }: Props) {
   const [step, setStep] = useState(0);
   const [mounted, setMounted] = useState(false);
@@ -220,10 +222,24 @@ export default function ProviderRegistrationForm({
       {/* Left Panel */}
       <div className="hidden lg:flex w-[40%] bg-white p-12 flex-col justify-between border-r border-slate-100">
         <div className="space-y-12">
-          <div className="flex items-center gap-4">
-            <Image src="/logo.png" alt="Health Metro" width={180} height={45} className="object-contain" priority />
-            <div className="h-6 w-px bg-slate-200" />
-            <span className="text-[10px] font-bold tracking-[0.2em] text-[#d97234] uppercase">{tagline}</span>
+          <div className="flex flex-col gap-8">
+            <div className="flex items-center gap-4">
+              <Image src="/logo.png" alt="Health Metro" width={180} height={45} className="object-contain" priority />
+              <div className="h-6 w-px bg-slate-200" />
+              <span className="text-[10px] font-bold tracking-[0.2em] text-[#d97234] uppercase">{tagline}</span>
+            </div>
+
+            {iconSrc && (
+              <div className="flex items-center gap-4 animate-in fade-in slide-in-from-left-4 duration-700">
+                <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-slate-100 p-2">
+                  <Image src={iconSrc} alt={tagline} width={80} height={80} className="object-contain" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-black tracking-widest text-[#d97234] uppercase">{tagline}</span>
+                  <span className="text-xs font-bold text-slate-400">Verified Provider</span>
+                </div>
+              </div>
+            )}
           </div>
           <div className="space-y-6">
             <h1 className="text-5xl xl:text-6xl font-bold leading-[1.05] tracking-tight">

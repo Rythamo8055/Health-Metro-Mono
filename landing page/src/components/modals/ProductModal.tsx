@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useModal } from "@/context/ModalContext";
 import products from "@/data/products.json";
 
@@ -14,13 +15,24 @@ export default function ProductModal() {
     <div className="p-6 md:p-8 flex flex-col flex-1 min-h-0 overflow-hidden">
       {/* Header */}
       <div className="flex justify-between items-start mb-6">
-        <div>
-          <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest rounded-full mb-3">
-            {product.name}
-          </span>
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground leading-tight">
-            {product.title}
-          </h2>
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0">
+            <Image 
+              src={`/icons/${product.id}.png`}
+              alt={product.name}
+              width={80}
+              height={80}
+              className="w-full h-full object-contain"
+            />
+          </div>
+          <div>
+            <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest rounded-full mb-2">
+              {product.name}
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground leading-tight tracking-tight">
+              {product.title}
+            </h2>
+          </div>
         </div>
       </div>
 

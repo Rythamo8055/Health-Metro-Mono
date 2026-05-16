@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useModal } from "@/context/ModalContext";
 
 const services = [
@@ -9,12 +10,8 @@ const services = [
     name: "HM MOVE – Diagnostics",
     title: "Specialty Diagnostics & Precision Health Access",
     description: "HM Move is an advanced diagnostics gateway designed for those who seek more than routine testing. Engineered for precision, it delivers deep clinical intelligence and early risk detection.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-      </svg>
-    ),
-    color: "bg-primary/10 text-primary",
+    icon: "/icons/hm-move.png",
+    color: "bg-transparent",
     accent: "border-primary/20 hover:border-primary/50",
     badge: "bg-primary text-white",
     features: [
@@ -31,12 +28,8 @@ const services = [
     name: "HM EASY – Home Collection",
     title: "Doorstep Sample Collection",
     description: "HM Easy redefines convenience by delivering professional, discreet, and clinically precise sample collection services directly to your home—ensuring comfort without compromise.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
-      </svg>
-    ),
-    color: "bg-secondary/10 text-secondary",
+    icon: "/icons/hm-easy.png",
+    color: "bg-transparent",
     accent: "border-secondary/20 hover:border-secondary/50",
     badge: "bg-secondary text-white",
     features: [
@@ -53,7 +46,7 @@ const services = [
     name: "Metabolomics",
     title: "Biochemical Health Signals",
     description: "A sophisticated exploration of your body's biochemical activity—revealing health signals at the fundamental, cellular level.",
-    icon: (
+    iconNode: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="3" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="M20 12h2" /><path d="M2 12h2" />
       </svg>
@@ -74,7 +67,7 @@ const services = [
     name: "Multi-Omics Solutions",
     title: "Complete View of Health",
     description: "A unified approach combining genomics, proteomics, and metabolomics for an intelligent view of human health.",
-    icon: (
+    iconNode: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
       </svg>
@@ -95,7 +88,7 @@ const services = [
     name: "Genomics",
     title: "Genetic Blueprint Insights",
     description: "A refined understanding of your genetic blueprint—unlocking insights into inherited risks and health trajectories.",
-    icon: (
+    iconNode: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4.7 7a3.5 3.5 0 1 1 5.1 4.8L8 14.1l-1.8-2.3L4.7 7Z" /><path d="M19.3 17a3.5 3.5 0 1 1-5.1-4.8L16 9.9l1.8 2.3L19.3 17Z" /><path d="M9.8 11.8 14.2 8.2" /><path d="M14.2 12.2 9.8 15.8" />
       </svg>
@@ -116,12 +109,8 @@ const services = [
     name: "HM TRUST – Doctor Visits",
     title: "Medical Care at Your Doorstep",
     description: "HM Trust brings clinical excellence to your home, offering access to experienced doctors for personalized, attentive medical care.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
-      </svg>
-    ),
-    color: "bg-primary/10 text-primary",
+    icon: "/icons/hm-trust.png",
+    color: "bg-transparent",
     accent: "border-primary/20 hover:border-primary/50",
     badge: "bg-primary text-white",
     features: [
@@ -137,12 +126,8 @@ const services = [
     name: "HM RELY – NRI Care",
     title: "Management for Families",
     description: "A refined healthcare experience for NRIs—ensuring loved ones in India receive consistent, high-quality care with transparency.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-      </svg>
-    ),
-    color: "bg-secondary/10 text-secondary",
+    icon: "/icons/hm-rely.png",
+    color: "bg-transparent",
     accent: "border-secondary/20 hover:border-secondary/50",
     badge: "bg-secondary text-white",
     features: [
@@ -158,12 +143,8 @@ const services = [
     name: "HM OHR – Health Records",
     title: "Digital Records Management",
     description: "A secure, intelligent health data platform designed to organize and protect your medical history for lifelong management.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
-      </svg>
-    ),
-    color: "bg-primary/10 text-primary",
+    icon: "/icons/hm-ohr.png",
+    color: "bg-transparent",
     accent: "border-primary/20 hover:border-primary/50",
     badge: "bg-primary text-white",
     features: [
@@ -214,8 +195,12 @@ export default function Features() {
                 <span className={`text-[11px] font-bold uppercase tracking-[0.15em] px-3.5 py-1.5 rounded-full bg-white border border-border text-foreground shadow-sm`}>
                   {service.name}
                 </span>
-                <div className={`w-14 h-14 rounded-2xl ${service.color} flex items-center justify-center`}>
-                  {service.icon}
+                <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl ${service.color} flex items-center justify-center transition-transform group-hover:scale-110`}>
+                  {service.icon ? (
+                    <Image src={service.icon} alt={service.name} width={80} height={80} className="w-full h-full object-contain" />
+                  ) : (
+                    (service as any).iconNode
+                  )}
                 </div>
               </div>
 
@@ -231,8 +216,8 @@ export default function Features() {
               <ul className="space-y-3 mb-10">
                 {service.features.map((f) => (
                   <li key={f} className="flex items-center gap-3 text-base text-foreground/80 font-medium">
-                    <span className={`flex-shrink-0 w-5 h-5 rounded-full ${service.color} flex items-center justify-center`}>
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <span className={`flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center`}>
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M20 6L9 17l-5-5" />
                       </svg>
                     </span>
@@ -252,7 +237,7 @@ export default function Features() {
           ))}
         </div>
 
-        {/* Secondary Services (Remaining 6) */}
+        {/* Secondary Services (Remaining) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {services.slice(2).map((service) => (
             <div
@@ -261,8 +246,12 @@ export default function Features() {
               onClick={() => openModal("product", service.id)}
               className="group bg-white rounded-2xl border border-border p-6 transition-all duration-300 cursor-pointer hover:border-border/80 hover:shadow-md hover:bg-surface"
             >
-              <div className={`w-10 h-10 rounded-xl ${service.color} flex items-center justify-center mb-5`}>
-                {service.icon}
+              <div className={`w-12 h-12 rounded-xl ${service.color} flex items-center justify-center mb-5 transition-transform group-hover:scale-110`}>
+                {service.icon ? (
+                  <Image src={service.icon} alt={service.name} width={48} height={48} className="w-full h-full object-contain" />
+                ) : (
+                  (service as any).iconNode
+                )}
               </div>
               <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                 {service.title}
@@ -284,4 +273,5 @@ export default function Features() {
     </section>
   );
 }
+
 

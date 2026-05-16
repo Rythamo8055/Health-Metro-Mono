@@ -7,6 +7,7 @@ export default function Home() {
         tagline="Partner Network"
         heroTitle="Clinical excellence,"
         heroSubtitle="digitally mastered."
+        iconSrc="/icons/hm-clin.png"
       />
     </main>
   );

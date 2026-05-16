@@ -248,11 +248,24 @@ function CustomerFormInner() {
       {/* Left panel */}
       <div className="hidden lg:flex w-[38%] bg-white p-12 flex-col justify-between border-r border-slate-100">
         <div className="space-y-10">
-          <div className="flex items-center gap-4">
-            <Image src="/logo.png" alt="Health Metro" width={160} height={40} className="object-contain" priority />
-            <div className="h-6 w-px bg-slate-200" />
-            <span className="text-[10px] font-bold tracking-[0.2em] text-[#d97234] uppercase">Book a Test</span>
+          <div className="flex flex-col gap-8">
+            <div className="flex items-center gap-4">
+              <Image src="/logo.png" alt="Health Metro" width={160} height={40} className="object-contain" priority />
+              <div className="h-6 w-px bg-slate-200" />
+              <span className="text-[10px] font-bold tracking-[0.2em] text-[#d97234] uppercase">Book a Test</span>
+            </div>
+
+            <div className="flex items-center gap-4 animate-in fade-in slide-in-from-left-4 duration-700">
+              <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-slate-100 p-2">
+                <Image src="/icons/hm-move.png" alt="HM MOVE" width={80} height={80} className="object-contain" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] font-black tracking-widest text-[#d97234] uppercase">HM MOVE</span>
+                <span className="text-xs font-bold text-slate-400">Verified Service</span>
+              </div>
+            </div>
           </div>
+
           <div className="space-y-4">
             <h1 className="text-4xl xl:text-5xl font-bold leading-[1.05] tracking-tight">
               Your health,<br />

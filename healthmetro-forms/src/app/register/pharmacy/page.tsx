@@ -8,6 +8,7 @@ export default function PharmacyPage() {
         tagline="Pharmacy Network"
         heroTitle="Connecting the"
         heroSubtitle="health supply chain."
+        iconSrc="/icons/hm-clin.png"
       />
     </main>
   );

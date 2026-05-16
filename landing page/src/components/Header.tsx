@@ -1,21 +1,16 @@
 "use client";
 
+import Image from "next/image";
 import {
-  Activity,
-  Home,
-  Stethoscope,
-  HeartHandshake,
-  ClipboardList,
-  Microscope,
   Phone,
 } from "lucide-react";
 import { useModal } from "@/context/ModalContext";
 
 // Shared style constants
 const ICON_WRAP =
-  "p-1.5 sm:p-3 bg-primary/5 text-primary rounded-xl transition-all duration-200 " +
-  "active:scale-95 group-hover:bg-primary group-hover:text-white group-hover:shadow-[0_8px_20px_rgba(2,116,115,0.35)] " +
-  "group-focus-visible:bg-primary group-focus-visible:text-white group-focus-visible:shadow-[0_8px_20px_rgba(2,116,115,0.35)]";
+  "p-1 sm:p-2 bg-transparent rounded-xl transition-all duration-200 " +
+  "active:scale-95 group-hover:bg-primary/5 " +
+  "group-focus-visible:bg-primary/5";
 
 const LABEL_CLS =
   "text-[8px] sm:text-[10px] font-semibold text-primary/70 group-hover:text-primary " +
@@ -25,16 +20,16 @@ const BTN_CLS =
   "group flex flex-col items-center gap-0 rounded-xl flex-shrink-0 min-w-[34px] sm:min-w-[48px] " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-white";
 
-const ICON_SIZE = "w-4 h-4 sm:w-[22px] sm:h-[22px]";
+const ICON_SIZE = 32;
 
 interface DockItemProps {
   onClick: () => void;
   label: string;
   shortLabel: string;
-  icon: React.ReactNode;
+  iconSrc: string;
 }
 
-function DockItem({ onClick, label, shortLabel, icon }: DockItemProps) {
+function DockItem({ onClick, label, shortLabel, iconSrc }: DockItemProps) {
   return (
     <button
       onClick={onClick}
@@ -42,7 +37,15 @@ function DockItem({ onClick, label, shortLabel, icon }: DockItemProps) {
       title={label}
       className={BTN_CLS}
     >
-      <div className={ICON_WRAP}>{icon}</div>
+      <div className={ICON_WRAP}>
+        <Image 
+          src={iconSrc} 
+          alt={shortLabel} 
+          width={ICON_SIZE} 
+          height={ICON_SIZE} 
+          className="w-6 h-6 sm:w-8 sm:h-8 object-contain transition-transform group-hover:scale-110"
+        />
+      </div>
       <span className={LABEL_CLS} aria-hidden="true">
         {shortLabel}
       </span>
@@ -68,7 +71,7 @@ export default function Header() {
             onClick={() => openModal("product", "hm-move")}
             label="HM MOVE – Diagnostics & Health Packages"
             shortLabel="MOVE"
-            icon={<Activity className={ICON_SIZE} strokeWidth={2} aria-hidden="true" />}
+            iconSrc="/icons/hm-move.png"
           />
 
           {/* HM EASY */}
@@ -76,7 +79,7 @@ export default function Header() {
             onClick={() => openModal("product", "hm-easy")}
             label="HM EASY – Home Sample Collection"
             shortLabel="EASY"
-            icon={<Home className={ICON_SIZE} strokeWidth={2} aria-hidden="true" />}
+            iconSrc="/icons/hm-easy.png"
           />
 
           {/* HM TRUST */}
@@ -84,7 +87,7 @@ export default function Header() {
             onClick={() => openModal("product", "hm-trust")}
             label="HM TRUST – Doctor Consultation"
             shortLabel="TRUST"
-            icon={<Stethoscope className={ICON_SIZE} strokeWidth={2} aria-hidden="true" />}
+            iconSrc="/icons/hm-trust.png"
           />
 
           {/* Divider */}
@@ -101,7 +104,7 @@ export default function Header() {
             className="group flex flex-col items-center gap-0 rounded-xl flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-white"
           >
             <div className="p-2 sm:p-3 bg-secondary text-white rounded-xl shadow-md transition-all duration-200 active:scale-95 group-hover:shadow-[0_8px_20px_rgba(217,114,52,0.45)] group-focus-visible:shadow-[0_8px_20px_rgba(217,114,52,0.45)]">
-              <Phone className={ICON_SIZE} strokeWidth={2.5} aria-hidden="true" />
+              <Phone className="w-4 h-4 sm:w-[22px] sm:h-[22px]" strokeWidth={2.5} aria-hidden="true" />
             </div>
             <span
               className="text-[8px] sm:text-[10px] font-bold text-secondary leading-none mt-1 select-none"
@@ -122,7 +125,7 @@ export default function Header() {
             onClick={() => openModal("product", "hm-rely")}
             label="HM RELY – NRI Care & Remote Health Management"
             shortLabel="RELY"
-            icon={<HeartHandshake className={ICON_SIZE} strokeWidth={2} aria-hidden="true" />}
+            iconSrc="/icons/hm-rely.png"
           />
 
           {/* HM OHR */}
@@ -130,7 +133,7 @@ export default function Header() {
             onClick={() => openModal("product", "hm-ohr")}
             label="HM OHR – Digital Health Records"
             shortLabel="OHR"
-            icon={<ClipboardList className={ICON_SIZE} strokeWidth={2} aria-hidden="true" />}
+            iconSrc="/icons/hm-ohr.png"
           />
 
           {/* HM CLIN */}
@@ -138,10 +141,11 @@ export default function Header() {
             onClick={() => openModal("product", "hm-clin")}
             label="HM CLIN – Clinical Research & Wellness"
             shortLabel="CLIN"
-            icon={<Microscope className={ICON_SIZE} strokeWidth={2} aria-hidden="true" />}
+            iconSrc="/icons/hm-clin.png"
           />
         </nav>
       </div>
     </header>
   );
 }
+

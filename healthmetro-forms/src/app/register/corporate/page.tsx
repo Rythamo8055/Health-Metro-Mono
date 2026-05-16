@@ -8,6 +8,7 @@ export default function CorporatePage() {
         tagline="Corporate & Hospital"
         heroTitle="Enterprise health,"
         heroSubtitle="built to scale."
+        iconSrc="/icons/hm-trust.png"
       />
     </main>
   );
