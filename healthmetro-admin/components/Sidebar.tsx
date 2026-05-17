@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard, Users, CalendarCheck, UserCog,
@@ -28,21 +29,22 @@ export function Sidebar() {
       className="h-screen bg-[#0B1020] flex flex-col shrink-0 overflow-hidden z-40 sticky top-0"
     >
       {/* Logo */}
-      <div className="h-16 flex items-center gap-3 px-4 border-b border-white/5">
-        <div className="w-8 h-8 bg-[#027473] rounded-xl flex items-center justify-center shrink-0">
-          <Activity className="w-4 h-4 text-white" />
-        </div>
-        <AnimatePresence>
-          {!collapsed && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="overflow-hidden">
-              <p className="text-white font-black text-sm whitespace-nowrap">Health Metro</p>
-              <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest whitespace-nowrap">Admin Console</p>
+      <div className="h-20 flex items-center gap-3 px-4 border-b border-white/5">
+        <AnimatePresence mode="wait">
+          {!collapsed ? (
+            <motion.div key="full" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-start w-full overflow-hidden">
+              <Image src="/logo.png" alt="Health Metro" width={130} height={34} className="object-contain brightness-0 invert opacity-90" priority />
+              <p className="text-[9px] font-black tracking-[0.25em] text-[#d97234] uppercase mt-2">Admin Console</p>
+            </motion.div>
+          ) : (
+            <motion.div key="mini" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-8 h-8 bg-[#027473] rounded-xl flex items-center justify-center shrink-0">
+              <span className="text-white font-black text-xs">HM</span>
             </motion.div>
           )}
         </AnimatePresence>
         <button
           onClick={() => setCollapsed(c => !c)}
-          className={`ml-auto p-1.5 rounded-lg text-white/30 hover:text-white hover:bg-white/5 transition-colors ${collapsed ? 'rotate-180' : ''}`}
+          className={`ml-auto p-1.5 rounded-lg text-white/30 hover:text-white hover:bg-white/5 transition-colors ${collapsed ? 'hidden' : ''}`}
         >
           <ChevronLeft className="w-4 h-4" />
         </button>

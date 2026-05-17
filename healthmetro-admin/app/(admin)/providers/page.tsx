@@ -32,6 +32,8 @@ export default async function ProvidersPage() {
     reviewed_at: p.reviewed_at,
     rejection_reason: p.rejection_reason,
     contact_name: p.contact_name || '',
+    registration_number: p.registration_number || undefined,
+    documents: p.documents || {},
   }));
 
   return <ProvidersClient initialProviders={initialProviders} />;

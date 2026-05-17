@@ -1,0 +1,6 @@
+{
+  "name": "healthmetro-landing-page",
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "framework": "nextjs"
+}

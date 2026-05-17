@@ -22,9 +22,11 @@ export interface Provider {
   reviewed_at?: string;
   rejection_reason?: string;
   contact_name: string;
+  registration_number?: string;
+  documents?: Record<string, string>;
 }
 
-const TABS = ['all', 'pending', 'approved', 'rejected'] as const;
+const TABS = ['all', 'pending', 'approved', 'rejected', 'b2b'] as const;
 type Tab = typeof TABS[number];
 
 function ApprovalModal({ provider, onClose, onAction }: {
@@ -223,13 +225,26 @@ export function ProvidersClient({ initialProviders }: { initialProviders: Provid
   };
 
   const filtered = providers.filter(p => {
-    const matchTab = tab === 'all' || p.status === tab;
+    let matchTab = false;
+    if (tab === 'all') {
+      matchTab = true;
+    } else if (tab === 'b2b') {
+      matchTab = p.provider_name.startsWith('[B2B]');
+    } else {
+      matchTab = p.status === tab;
+    }
     const q = search.toLowerCase();
     const matchSearch = !q || p.provider_name.toLowerCase().includes(q) || (p.email && p.email.toLowerCase().includes(q));
     return matchTab && matchSearch;
   });
 
-  const counts = { all: providers.length, pending: providers.filter(p => p.status === 'pending').length, approved: providers.filter(p => p.status === 'approved').length, rejected: providers.filter(p => p.status === 'rejected').length };
+  const counts = { 
+    all: providers.length, 
+    pending: providers.filter(p => p.status === 'pending').length, 
+    approved: providers.filter(p => p.status === 'approved').length, 
+    rejected: providers.filter(p => p.status === 'rejected').length,
+    b2b: providers.filter(p => p.provider_name.startsWith('[B2B]')).length
+  };
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
@@ -238,7 +253,9 @@ export function ProvidersClient({ initialProviders }: { initialProviders: Provid
           <button
             key={t}
             onClick={() => setTab(t)}
-            className={`px-4 py-2 rounded-xl font-bold text-sm transition-all capitalize flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-xl font-bold text-sm transition-all flex items-center gap-2 ${
+              t === 'b2b' ? 'uppercase' : 'capitalize'
+            } ${
               tab === t ? 'bg-[#027473] text-white shadow-sm' : 'bg-white text-slate-500 border border-slate-100 hover:border-slate-200'
             }`}
           >
