@@ -1,9 +1,45 @@
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const supabase = createClient('https://heeacfhzkrcfkcesoqmk.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlZWFjZmh6a3JjZmtjZXNvcW1rIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3ODI4NjUyNCwiZXhwIjoyMDkzODYyNTI0fQ.rt6IRgf4C9IOSIEpQUb_80aUnfAr3hrTeQlFnAGuLB4');
+// Parse local environment file dynamically to secure credentials
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const SECRET_KEY = 'health-metro-default-secret-2026';
+function getEnvVariable(key, fallbackPaths = ['.env.local', '../healthmetro-admin/.env.local']) {
+  for (const relPath of fallbackPaths) {
+    try {
+      const fullPath = path.resolve(__dirname, relPath);
+      if (fs.existsSync(fullPath)) {
+        const content = fs.readFileSync(fullPath, 'utf8');
+        const lines = content.split('\n');
+        for (const line of lines) {
+          if (line.trim().startsWith('#') || !line.includes('=')) continue;
+          const [currentKey, ...valParts] = line.split('=');
+          if (currentKey.trim() === key) {
+            return valParts.join('=').trim().replace(/^["']|["']$/g, '');
+          }
+        }
+      }
+    } catch (e) {
+      // Ignore reading errors for alternate fallbacks
+    }
+  }
+  return process.env[key];
+}
+
+const SUPABASE_URL = getEnvVariable('NEXT_PUBLIC_SUPABASE_URL') || 'https://heeacfhzkrcfkcesoqmk.supabase.co';
+const SUPABASE_KEY = getEnvVariable('SUPABASE_SERVICE_ROLE_KEY') || getEnvVariable('NEXT_PUBLIC_SUPABASE_ANON_KEY');
+const SECRET_KEY = getEnvVariable('QR_SECRET_KEY') || 'health-metro-default-secret-2026';
+
+if (!SUPABASE_KEY) {
+  console.error('❌ ERROR: Could not find Supabase Service Role Key or Anon Key in environment or local files.');
+  process.exit(1);
+}
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function runTests() {
   console.log('🚀 Starting Health Metro Automated CLI Tests...\n');
