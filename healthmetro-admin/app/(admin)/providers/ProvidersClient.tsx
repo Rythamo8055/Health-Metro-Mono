@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { StatusBadge } from '@/components/StatusBadge';
-import { CheckCircle2, XCircle, Eye, Search, QrCode } from 'lucide-react';
+import { CheckCircle2, XCircle, Eye, Search, QrCode, FileText, ExternalLink, Download, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { approveProvider, rejectProvider } from '@/app/actions/admin';
 import { QRCodeDisplay } from '@/components/QRCodeDisplay';
@@ -37,6 +37,7 @@ function ApprovalModal({ provider, onClose, onAction }: {
   const [rejectionReason, setRejectionReason] = useState('');
   const [mode, setMode] = useState<'view' | 'reject' | 'qr'>('view');
   const [loading, setLoading] = useState(false);
+  const [viewingDoc, setViewingDoc] = useState<{ url: string; label: string } | null>(null);
 
   const handleAction = async (action: 'approved' | 'rejected') => {
     setLoading(true);
@@ -71,8 +72,6 @@ function ApprovalModal({ provider, onClose, onAction }: {
     }
   };
 
-  // ... (rest of ApprovalModal)
-
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <motion.div
@@ -104,6 +103,56 @@ function ApprovalModal({ provider, onClose, onAction }: {
                   <span className="font-bold text-[#1A2020]">{value}</span>
                 </div>
               ))}
+
+              {/* ── Documents Section ── */}
+              {provider.documents && Object.keys(provider.documents).length > 0 && (
+                <div className="space-y-2 pt-4 border-t border-slate-100">
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Uploaded Verification Documents</p>
+                  <div className="grid grid-cols-1 gap-2 mt-2">
+                    {Object.entries(provider.documents).map(([key, path]) => {
+                      if (!path) return null;
+                      const labelMap: Record<string, string> = {
+                        license: 'Medical / Trade License',
+                        id_proof: 'Identity Proof (Aadhaar/PAN)',
+                        cheque: 'Cancelled Cheque',
+                      };
+                      const label = labelMap[key] || key;
+                      const publicUrl = `https://heeacfhzkrcfkcesoqmk.supabase.co/storage/v1/object/public/documents/${path}`;
+                      
+                      return (
+                        <div key={key} className="flex items-center justify-between p-3 bg-slate-50 border border-slate-100 rounded-xl hover:bg-slate-100/70 transition-all">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                              <FileText className="w-5 h-5" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs font-bold text-slate-800 truncate">{label}</p>
+                              <p className="text-[10px] font-mono text-slate-400 truncate max-w-[180px]">{path.split('/').pop()}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => setViewingDoc({ url: publicUrl, label })}
+                              className="px-3 py-1.5 bg-[#027473]/10 hover:bg-[#027473]/20 text-[#027473] rounded-lg text-xs font-bold transition-colors"
+                            >
+                              View
+                            </button>
+                            <a
+                              href={publicUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all"
+                              title="Open in new tab"
+                            >
+                              <ExternalLink className="w-4 h-4" />
+                            </a>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
               {provider.client_id && (
                 <div className="flex items-center justify-between p-3 bg-teal-50 rounded-xl border border-teal-100">
@@ -188,6 +237,58 @@ function ApprovalModal({ provider, onClose, onAction }: {
           )}
         </div>
       </motion.div>
+
+      {/* ── Document Viewer Overlay Lightbox ── */}
+      {viewingDoc && (
+        <div className="fixed inset-0 bg-black/75 backdrop-blur-md z-[60] flex flex-col items-center justify-center p-4">
+          <div className="bg-white rounded-3xl w-full max-w-4xl h-[85vh] overflow-hidden flex flex-col shadow-2xl">
+            <div className="bg-[#0B1020] p-4 flex items-center justify-between text-white">
+              <div>
+                <h3 className="font-bold text-lg">{viewingDoc.label}</h3>
+                <p className="text-xs text-white/50">Provider Verification Document</p>
+              </div>
+              <button
+                onClick={() => setViewingDoc(null)}
+                className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="flex-1 bg-slate-100 p-2 flex items-center justify-center relative">
+              {viewingDoc.url.toLowerCase().endsWith('.pdf') ? (
+                <iframe
+                  src={`${viewingDoc.url}#toolbar=0`}
+                  className="w-full h-full rounded-2xl border-0"
+                  title={viewingDoc.label}
+                />
+              ) : (
+                <img
+                  src={viewingDoc.url}
+                  alt={viewingDoc.label}
+                  className="max-w-full max-h-full object-contain rounded-2xl"
+                />
+              )}
+            </div>
+            <div className="p-4 bg-white border-t border-slate-100 flex justify-end gap-3">
+              <a
+                href={viewingDoc.url}
+                download
+                target="_blank"
+                rel="noreferrer"
+                className="px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-bold transition-all flex items-center gap-2"
+              >
+                <Download className="w-4 h-4" /> Download Original
+              </a>
+              <button
+                onClick={() => setViewingDoc(null)}
+                className="px-6 py-2.5 bg-[#027473] hover:bg-[#015a59] text-white rounded-xl text-sm font-bold transition-all"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
