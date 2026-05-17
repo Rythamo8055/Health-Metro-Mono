@@ -104,3 +104,16 @@ export async function rejectProvider(providerId: string, reason: string) {
     return { success: false, error: error.message };
   }
 }
+
+export async function getDocumentSignedUrl(path: string) {
+  const supabase = createAdminClient();
+  try {
+    const { data, error } = await supabase.storage.from('documents').createSignedUrl(path, 900); // 15 minutes expiry
+    if (error) throw error;
+    return { success: true, url: data.signedUrl };
+  } catch (error: any) {
+    console.error('Error creating signed URL:', error);
+    return { success: false, error: error.message };
+  }
+}
+

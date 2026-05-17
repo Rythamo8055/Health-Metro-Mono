@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { StatusBadge } from '@/components/StatusBadge';
 import { CheckCircle2, XCircle, Eye, Search, QrCode, FileText, ExternalLink, Download, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { approveProvider, rejectProvider } from '@/app/actions/admin';
+import { approveProvider, rejectProvider, getDocumentSignedUrl } from '@/app/actions/admin';
 import { QRCodeDisplay } from '@/components/QRCodeDisplay';
 
 export interface Provider {
@@ -38,6 +38,41 @@ function ApprovalModal({ provider, onClose, onAction }: {
   const [mode, setMode] = useState<'view' | 'reject' | 'qr'>('view');
   const [loading, setLoading] = useState(false);
   const [viewingDoc, setViewingDoc] = useState<{ url: string; label: string } | null>(null);
+  const [fetchingDocKey, setFetchingDocKey] = useState<string | null>(null);
+
+  const handleViewDoc = async (key: string, path: string, label: string) => {
+    setFetchingDocKey(key);
+    try {
+      const result = await getDocumentSignedUrl(path);
+      if (result.success && result.url) {
+        setViewingDoc({ url: result.url, label });
+      } else {
+        alert(`Error fetching document: ${result.error || 'Unknown error'}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('An unexpected error occurred while fetching document');
+    } finally {
+      setFetchingDocKey(null);
+    }
+  };
+
+  const handleOpenInNewTab = async (key: string, path: string) => {
+    setFetchingDocKey(key);
+    try {
+      const result = await getDocumentSignedUrl(path);
+      if (result.success && result.url) {
+        window.open(result.url, '_blank');
+      } else {
+        alert(`Error fetching document: ${result.error || 'Unknown error'}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('An unexpected error occurred while fetching document');
+    } finally {
+      setFetchingDocKey(null);
+    }
+  };
 
   const handleAction = async (action: 'approved' | 'rejected') => {
     setLoading(true);
@@ -117,7 +152,7 @@ function ApprovalModal({ provider, onClose, onAction }: {
                         cheque: 'Cancelled Cheque',
                       };
                       const label = labelMap[key] || key;
-                      const publicUrl = `https://heeacfhzkrcfkcesoqmk.supabase.co/storage/v1/object/public/documents/${path}`;
+                      const isFetching = fetchingDocKey === key;
                       
                       return (
                         <div key={key} className="flex items-center justify-between p-3 bg-slate-50 border border-slate-100 rounded-xl hover:bg-slate-100/70 transition-all">
@@ -132,20 +167,20 @@ function ApprovalModal({ provider, onClose, onAction }: {
                           </div>
                           <div className="flex items-center gap-2">
                             <button
-                              onClick={() => setViewingDoc({ url: publicUrl, label })}
-                              className="px-3 py-1.5 bg-[#027473]/10 hover:bg-[#027473]/20 text-[#027473] rounded-lg text-xs font-bold transition-colors"
+                              onClick={() => handleViewDoc(key, path, label)}
+                              disabled={fetchingDocKey !== null}
+                              className="px-3 py-1.5 bg-[#027473]/10 hover:bg-[#027473]/20 text-[#027473] rounded-lg text-xs font-bold transition-colors disabled:opacity-50"
                             >
-                              View
+                              {isFetching ? 'Loading...' : 'View'}
                             </button>
-                            <a
-                              href={publicUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all"
+                            <button
+                              onClick={() => handleOpenInNewTab(key, path)}
+                              disabled={fetchingDocKey !== null}
+                              className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all disabled:opacity-50"
                               title="Open in new tab"
                             >
                               <ExternalLink className="w-4 h-4" />
-                            </a>
+                            </button>
                           </div>
                         </div>
                       );
