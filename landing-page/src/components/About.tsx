@@ -51,27 +51,30 @@ export default function About() {
     <section id="about" className="bg-white scroll-mt-24">
 
       {/* Mission Banner */}
-      <div className="py-24 px-6 border-b border-primary/5">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div className="py-24 px-6 bg-secondary relative overflow-hidden">
+        {/* Subtle premium background glow patterns */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
           {/* Left: text */}
           <div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-semibold mb-8">
-              <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm font-semibold mb-8">
+              <span className="flex h-2 w-2 rounded-full bg-white animate-pulse" />
               About Health Metro
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold text-primary leading-tight mb-6 tracking-tight">
-              Healthcare for <span className="text-secondary">Every Indian</span>
+            <h2 className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6 tracking-tight">
+              Healthcare for <span className="text-slate-950">Every Indian</span>
             </h2>
-            <p className="text-lg text-foreground opacity-70 leading-relaxed mb-6">
+            <p className="text-lg text-white/90 font-medium leading-relaxed mb-6">
               Health Metro was built because we believed that quality diagnostics and healthcare
               should not be a privilege. It should be simple, affordable, and accessible —
               at your doorstep, at a centre near you, or through a doctor you trust.
             </p>
-            <p className="text-base text-foreground opacity-60 leading-relaxed mb-10">
+            <p className="text-base text-white/75 font-medium leading-relaxed mb-10">
               We connect patients with certified labs, trained professionals, and specialist doctors
               — all through a single platform designed for the Indian family.
             </p>
-
           </div>
 
           {/* Right: stats */}
@@ -82,10 +85,10 @@ export default function About() {
               { stat: "NRI", label: "Care Ready", sub: "Manage from anywhere" },
               { stat: "NABL", label: "Certified Labs", sub: "Trusted diagnostics" },
             ].map((s) => (
-              <div key={s.label} className="bg-surface rounded-3xl border border-primary/10 p-6 text-center hover:border-primary/30 hover:shadow-md transition-all">
-                <div className="text-3xl md:text-4xl font-black text-primary mb-1">{s.stat}</div>
-                <div className="text-sm font-bold text-foreground mb-1">{s.label}</div>
-                <div className="text-xs text-foreground opacity-50">{s.sub}</div>
+              <div key={s.label} className="bg-white rounded-[2rem] p-6 text-center shadow-xl hover:scale-105 hover:shadow-2xl transition-all duration-300 border border-white/20">
+                <div className="text-3xl md:text-4xl font-extrabold text-primary mb-1">{s.stat}</div>
+                <div className="text-sm font-bold text-slate-800 mb-1">{s.label}</div>
+                <div className="text-xs text-slate-500 font-semibold">{s.sub}</div>
               </div>
             ))}
           </div>
