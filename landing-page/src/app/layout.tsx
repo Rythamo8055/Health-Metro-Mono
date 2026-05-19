@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     "international healthcare"
   ],
   authors: [{ name: "Health Metro Team" }],
-  metadataBase: new URL("https://healthmetro-landing-mono.vercel.app"),
+  metadataBase: new URL("https://healthmetro.in"),
   alternates: {
     canonical: "/",
   },
@@ -48,21 +48,40 @@ export const metadata: Metadata = {
 
 const medicalOrgSchema = {
   "@context": "https://schema.org",
-  "@type": "MedicalOrganization",
+  "@type": ["Organization", "MedicalOrganization"],
+  "@id": "https://healthmetro.in/#organization",
   "name": "Health Metro",
-  "url": "https://healthmetro.com",
-  "logo": "https://healthmetro.com/logo.png",
-  "description": "Connecting Health Globally — the world's platform for international healthcare connectivity and medical coordination.",
+  "alternateName": "HealthMetro",
+  "url": "https://healthmetro.in",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://healthmetro.in/logo.png",
+    "width": "512",
+    "height": "512"
+  },
+  "description": "Health Metro is the global platform connecting patients with international healthcare providers. Connecting Health Globally.",
+  "slogan": "Connecting Health Globally",
+  "foundingDate": "2024",
+  "areaServed": "Worldwide",
+  "knowsAbout": [
+    "Medical Tourism",
+    "Global Healthcare",
+    "International Patient Services",
+    "Healthcare Connectivity",
+    "Telemedicine"
+  ],
   "sameAs": [
     "https://twitter.com/healthmetro",
     "https://linkedin.com/company/healthmetro",
+    "https://facebook.com/healthmetro",
+    "https://instagram.com/healthmetro",
     "https://en.wikipedia.org/wiki/Health_Metro"
   ],
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "Customer Support",
     "telephone": "+1-800-HEALTH",
-    "availableLanguage": "English"
+    "availableLanguage": ["English", "Hindi", "Arabic", "Spanish"]
   },
   "address": {
     "@type": "PostalAddress",
@@ -75,11 +94,18 @@ const medicalOrgSchema = {
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": "https://healthmetro.in/#website",
   "name": "Health Metro",
-  "url": "https://healthmetro.com",
+  "url": "https://healthmetro.in",
+  "publisher": {
+    "@id": "https://healthmetro.in/#organization"
+  },
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://healthmetro.com/search?q={search_term_string}",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://healthmetro.in/search?q={search_term_string}"
+    },
     "query-input": "required name=search_term_string"
   }
 };
@@ -131,7 +157,16 @@ const faqSchema = {
   ]
 };
 
-const schemas = [medicalOrgSchema, webSiteSchema, faqSchema];
+const speakableSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".speakable-summary", "h1", ".key-facts"]
+  }
+};
+
+const schemas = [medicalOrgSchema, webSiteSchema, faqSchema, speakableSchema];
 
 export default function RootLayout({
   children,
