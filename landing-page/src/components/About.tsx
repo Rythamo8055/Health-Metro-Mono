@@ -84,10 +84,10 @@ export default function About() {
       >
         {/* Dynamic expanding background element */}
         <div 
-          className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-secondary transition-all duration-[1600ms] cubic-bezier(0.16, 1, 0.3, 1) pointer-events-none z-0 ${
+          className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-secondary transition-all duration-[1400ms] cubic-bezier(0.16, 1, 0.3, 1) pointer-events-none z-0 ${
             isInView 
-              ? "w-[350%] h-[350%] rounded-none opacity-100" 
-              : "w-16 h-16 opacity-0 scale-50"
+              ? "w-full h-full rounded-none opacity-100 scale-100" 
+              : "w-[92%] md:w-[85%] h-[88%] rounded-[3.5rem] max-w-7xl opacity-100 scale-95"
           }`}
         />
 
