@@ -1,6 +1,7 @@
 "use client";
 
 import { useModal } from "@/context/ModalContext";
+import { useEffect, useRef, useState } from "react";
 
 const values = [
   {
@@ -47,16 +48,56 @@ const values = [
 
 export default function About() {
   const { openModal } = useModal();
+  const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        }
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of the section is visible
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section id="about" className="bg-white scroll-mt-24">
 
       {/* Mission Banner */}
-      <div className="py-24 px-6 bg-secondary relative overflow-hidden">
-        {/* Subtle premium background glow patterns */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+      <div 
+        ref={sectionRef}
+        className="py-24 px-6 relative overflow-hidden bg-white min-h-[500px] flex items-center"
+      >
+        {/* Dynamic expanding background element */}
+        <div 
+          className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-secondary transition-all duration-[1600ms] cubic-bezier(0.16, 1, 0.3, 1) pointer-events-none z-0 ${
+            isInView 
+              ? "w-[350%] h-[350%] rounded-none opacity-100" 
+              : "w-16 h-16 opacity-0 scale-50"
+          }`}
+        />
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
+        {/* Subtle premium background glow patterns */}
+        <div className={`absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none z-0 transition-opacity duration-1000 delay-1000 ${isInView ? 'opacity-100' : 'opacity-0'}`} />
+        <div className={`absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none z-0 transition-opacity duration-1000 delay-1000 ${isInView ? 'opacity-100' : 'opacity-0'}`} />
+
+        <div className={`max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10 transition-all duration-[1000ms] delay-[400ms] ${
+          isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+        }`}>
           {/* Left: text */}
           <div>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm font-semibold mb-8">
