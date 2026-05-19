@@ -22,6 +22,9 @@ const CONFIG: Record<string, { label: string; classes: string }> = {
   // Collection type
   home:      { label: 'Home Collection', classes: 'bg-purple-50 text-purple-700 border-purple-200' },
   provider:  { label: 'At Provider', classes: 'bg-slate-50 text-slate-600 border-slate-200' },
+  // Leads Status
+  contacted: { label: 'Contacted', classes: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
+  confirmed: { label: 'Confirmed', classes: 'bg-teal-50 text-teal-700 border-teal-200' },
 };
 
 export function StatusBadge({ status }: { status: BadgeVariant }) {

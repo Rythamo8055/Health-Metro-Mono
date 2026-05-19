@@ -186,20 +186,20 @@ export default function Features() {
               id={service.id}
               onClick={() => openModal("product", service.id)}
               className={`
-                group relative bg-surface rounded-[2rem] border p-8 md:p-10 transition-all duration-300
-                cursor-pointer hover:border-primary/40 hover:shadow-lg
+                group relative bg-white rounded-[2rem] border border-border p-8 md:p-10 transition-all duration-300
+                cursor-pointer hover:border-primary/40
               `}
             >
               {/* Badge + Icon row */}
               <div className="flex items-center justify-between mb-8">
-                <span className={`text-[11px] font-bold uppercase tracking-[0.15em] px-3.5 py-1.5 rounded-full bg-white border border-border text-foreground shadow-sm`}>
+                <span className={`text-[10px] font-bold uppercase tracking-wider px-4 py-1.5 rounded-full bg-white border border-border text-foreground/70`}>
                   {service.name}
                 </span>
-                <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl ${service.color} flex items-center justify-center transition-transform group-hover:scale-110`}>
+                <div className={`h-6 md:h-8 transition-transform group-hover:scale-105`}>
                   {service.icon ? (
-                    <Image src={service.icon} alt={service.name} width={80} height={80} className="w-full h-full object-contain" />
+                    <Image src={service.icon} alt={service.name} width={120} height={32} className="h-full w-auto object-contain" />
                   ) : (
-                    (service as any).iconNode
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">{(service as any).iconNode}</div>
                   )}
                 </div>
               </div>

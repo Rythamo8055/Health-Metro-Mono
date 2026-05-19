@@ -7,13 +7,14 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard, Users, CalendarCheck, UserCog,
-  Clock, ChevronLeft, LogOut, Activity,
+  Clock, ChevronLeft, LogOut, Activity, PhoneCall
 } from 'lucide-react';
 
 const NAV = [
   { href: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/providers', icon: Users, label: 'Providers' },
   { href: '/bookings', icon: CalendarCheck, label: 'Bookings' },
+  { href: '/leads', icon: PhoneCall, label: 'Leads' },
   { href: '/agents', icon: UserCog, label: 'Agents' },
   { href: '/slots', icon: Clock, label: 'Slot Config' },
 ];

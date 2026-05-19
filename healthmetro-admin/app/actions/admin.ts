@@ -117,3 +117,24 @@ export async function getDocumentSignedUrl(path: string) {
   }
 }
 
+export async function updateLeadStatus(leadId: string, status: string) {
+  const supabase = createAdminClient();
+  try {
+    const { error } = await supabase
+      .from('appointment_requests')
+      .update({
+        status,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', leadId);
+
+    if (error) throw error;
+
+    revalidatePath('/leads');
+    return { success: true };
+  } catch (error: any) {
+    console.error('Error updating lead status:', error);
+    return { success: false, error: error.message };
+  }
+}
+

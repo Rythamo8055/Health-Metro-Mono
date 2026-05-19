@@ -30,6 +30,8 @@ interface DockItemProps {
 }
 
 function DockItem({ onClick, label, shortLabel, iconSrc }: DockItemProps) {
+  const fillIconSrc = iconSrc.replace(".png", "-fill.png");
+
   return (
     <button
       onClick={onClick}
@@ -37,13 +39,22 @@ function DockItem({ onClick, label, shortLabel, iconSrc }: DockItemProps) {
       title={label}
       className={BTN_CLS}
     >
-      <div className={ICON_WRAP}>
+      <div className={`${ICON_WRAP} relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center overflow-hidden`}>
         <Image 
           src={iconSrc} 
           alt={shortLabel} 
           width={ICON_SIZE} 
           height={ICON_SIZE} 
-          className="w-6 h-6 sm:w-8 sm:h-8 object-contain transition-transform group-hover:scale-110"
+          unoptimized
+          className="w-6 h-6 sm:w-8 sm:h-8 object-cover object-left transition-all duration-200 group-hover:scale-110 group-hover:opacity-0 absolute"
+        />
+        <Image 
+          src={fillIconSrc} 
+          alt={shortLabel} 
+          width={ICON_SIZE} 
+          height={ICON_SIZE} 
+          unoptimized
+          className="w-6 h-6 sm:w-8 sm:h-8 object-cover object-left transition-all duration-200 group-hover:scale-110 opacity-0 group-hover:opacity-100 absolute"
         />
       </div>
       <span className={LABEL_CLS} aria-hidden="true">
