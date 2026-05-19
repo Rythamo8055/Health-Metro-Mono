@@ -159,7 +159,7 @@ async function diagnose() {
       service_type: 'BLD',
       year: year,
       sequence: sequence,
-      referral_source: 'QR_SCAN',
+      referral_source: null,
       declaration_agreed: true
     })
     .select()

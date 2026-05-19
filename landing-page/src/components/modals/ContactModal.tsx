@@ -17,9 +17,9 @@ const COUNTRIES: CountryConfig[] = [
   { code: "IN", name: "India", dialCode: "+91", flag: "🇮🇳", length: 10, placeholder: "98765 43210" },
   { code: "US", name: "United States", dialCode: "+1", flag: "🇺🇸", length: 10, placeholder: "(555) 000-0000" },
   { code: "GB", name: "United Kingdom", dialCode: "+44", flag: "🇬🇧", length: 10, placeholder: "7911 123456" },
-  { code: "AE", name: "United Arab Emirates", dialCode: "+971", length: 9, placeholder: "50 123 4567" },
+  { code: "AE", name: "United Arab Emirates", dialCode: "+971", flag: "🇦🇪", length: 9, placeholder: "50 123 4567" },
   { code: "CA", name: "Canada", dialCode: "+1", flag: "🇨🇦", length: 10, placeholder: "(555) 000-0000" },
-  { code: "AU", name: "Australia", dialCode: "+61", length: 9, placeholder: "412 345 678" }
+  { code: "AU", name: "Australia", dialCode: "+61", flag: "🇦🇺", length: 9, placeholder: "412 345 678" }
 ];
 
 const formatPhoneNumber = (value: string, countryCode: string) => {
