@@ -9,16 +9,16 @@ import { useModal } from "@/context/ModalContext";
 // Shared style constants
 const ICON_WRAP =
   "p-1 sm:p-2 bg-transparent rounded-xl transition-all duration-200 " +
-  "active:scale-95 group-hover:bg-primary/5 " +
-  "group-focus-visible:bg-primary/5";
+  "active:scale-95 group-hover:bg-secondary/10 " +
+  "group-focus-visible:bg-secondary/10";
 
 const LABEL_CLS =
-  "text-[8px] sm:text-[10px] font-semibold text-primary/70 group-hover:text-primary " +
-  "group-focus-visible:text-primary transition-colors leading-none mt-1 select-none";
+  "text-[8px] sm:text-[10px] font-semibold text-primary/70 group-hover:text-secondary " +
+  "group-focus-visible:text-secondary transition-colors leading-none mt-1 select-none";
 
 const BTN_CLS =
   "group flex flex-col items-center gap-0 rounded-xl flex-shrink-0 min-w-[34px] sm:min-w-[48px] " +
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-white";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-white";
 
 const ICON_SIZE = 32;
 

@@ -2,15 +2,13 @@
 
 import Link from "next/link";
 import RotatingText from "./RotatingText";
-import { useModal } from "@/context/ModalContext";
 
 export default function Hero() {
-  const { openModal } = useModal();
   return (
     <section id="hero" className="relative pt-32 pb-20 px-6 overflow-hidden">
       <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
         <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-semibold leading-[1.05] tracking-tight mb-8 animate-in fade-in slide-in-from-bottom-6 duration-1000 text-foreground">
-          Connecting Health <br className="md:hidden" />
+          <span className="text-secondary">Connecting Health</span> <br className="md:hidden" />
           <span className="inline-block md:inline mt-2 md:mt-0">
             <RotatingText
               texts={['Globally.', 'Reliably.', 'Everywhere.', 'Seamlessly.']}
@@ -35,18 +33,11 @@ export default function Hero() {
           at a centre near you, or through a trusted doctor referral.
         </p>
 
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 animate-fade-in-up mt-8">
-          <button
-            onClick={() => openModal("contact")}
-            id="hero-cta-book"
-            className="px-8 py-5 bg-secondary text-white rounded-2xl font-bold text-lg hover:scale-105 active:scale-95 transition-all shadow-xl shadow-secondary/20 text-center"
-          >
-            Book Appointment
-          </button>
+        <div className="flex justify-center items-center animate-fade-in-up mt-8">
           <Link
             href="#about"
             id="hero-cta-about"
-            className="px-8 py-5 bg-white text-foreground border border-border rounded-2xl font-bold text-lg hover:bg-surface transition-all text-center"
+            className="px-8 py-5 bg-white text-foreground border border-foreground/20 rounded-2xl font-bold text-lg hover:bg-secondary hover:text-white hover:border-secondary transition-all text-center shadow-sm hover:shadow-[0_8px_20px_rgba(217,114,52,0.25)] hover:scale-[1.02] active:scale-[0.98]"
           >
             About Health Metro
           </Link>

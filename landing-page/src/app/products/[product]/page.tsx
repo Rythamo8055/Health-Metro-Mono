@@ -1,11 +1,13 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import products from "@/data/products.json";
 import TopLogo from "@/components/TopLogo";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Activity, Home, Stethoscope, HeartHandshake, ClipboardList, Microscope, ArrowRight, CheckCircle2 } from "lucide-react";
+import BookNowButton from "@/components/BookNowButton";
+import { Activity, Home, Stethoscope, HeartHandshake, ClipboardList, Microscope, ArrowRight, CheckCircle2, ArrowLeft } from "lucide-react";
 
 interface Props {
   params: Promise<{ product: string }>;
@@ -60,10 +62,38 @@ export default async function ProductPage({ params }: Props) {
       <main className="flex-grow pt-32 pb-48">
         <section className="max-w-5xl mx-auto px-6">
           
+          {/* Back Button */}
+          <div className="mb-10 flex justify-start">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-foreground/60 hover:text-primary font-bold text-sm transition-colors group"
+            >
+              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+              Back to Home
+            </Link>
+          </div>
+          
           {/* Hero Section */}
           <div className="text-center mb-20 flex flex-col items-center">
-            <div className="w-24 h-24 bg-primary/10 text-primary rounded-3xl flex items-center justify-center mb-8 shadow-sm">
-              {getIcon(productData.icon)}
+            <div className={`bg-white border border-primary/15 flex items-center justify-center mb-8 shadow-sm relative transition-all ${
+              ["hm-move", "hm-easy", "hm-trust", "hm-rely", "hm-ohr", "hm-clin"].includes(productData.slug) 
+                ? "w-64 h-20 md:w-80 md:h-24 px-6 py-4 rounded-2xl" 
+                : "w-24 h-24 p-2 rounded-[1.8rem]"
+            }`}>
+              {["hm-move", "hm-easy", "hm-trust", "hm-rely", "hm-ohr", "hm-clin"].includes(productData.slug) ? (
+                <Image
+                  src={`/icons/${productData.slug}.png`}
+                  alt={productData.name}
+                  width={240}
+                  height={60}
+                  className="w-full h-full object-contain"
+                  priority
+                />
+              ) : (
+                <div className="text-primary">
+                  {getIcon(productData.icon)}
+                </div>
+              )}
             </div>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary text-sm font-bold mb-6 tracking-widest uppercase">
               {productData.name}
@@ -113,9 +143,12 @@ export default async function ProductPage({ params }: Props) {
           {/* CTA */}
           <div className="text-center">
             <h2 className="text-3xl font-bold text-primary mb-6">Ready to experience {productData.name}?</h2>
-            <button className="px-10 py-5 bg-secondary text-white rounded-2xl font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-secondary/20 inline-flex items-center gap-3">
-              Explore Services <ArrowRight className="w-5 h-5" />
-            </button>
+            <BookNowButton
+              productId={productData.id}
+              className="px-10 py-5 bg-secondary text-white rounded-2xl font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-secondary/20 inline-flex items-center gap-3"
+            >
+              Book {productData.name} <ArrowRight className="w-5 h-5" />
+            </BookNowButton>
           </div>
 
         </section>

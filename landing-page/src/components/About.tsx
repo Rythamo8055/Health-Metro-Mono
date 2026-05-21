@@ -1,6 +1,5 @@
 "use client";
 
-import { useModal } from "@/context/ModalContext";
 import { useEffect, useRef, useState } from "react";
 
 const values = [
@@ -47,7 +46,6 @@ const values = [
 ];
 
 export default function About() {
-  const { openModal } = useModal();
   const [isInView, setIsInView] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -103,7 +101,7 @@ export default function About() {
               About Health Metro
             </div>
             <h2 className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6 tracking-tight">
-              Healthcare for <span className="text-slate-950">Every Indian</span>
+              Healthcare for <span className="text-white">Every Indian</span>
             </h2>
             <p className="text-lg text-white/90 font-medium leading-relaxed mb-6">
               Health Metro was built because we believed that quality diagnostics and healthcare

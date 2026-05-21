@@ -168,6 +168,28 @@
       "Longitudinal Tracking",
       "Family Health Integration"
     ]
+  },
+  {
+    "id": "hm-clin",
+    "name": "HM CLIN – Clinical Research",
+    "title": "Clinical Research & Wellness Integration",
+    "slug": "hm-clin",
+    "description": "HM Clin offers a secure gateway for participating in certified clinical research and wellness programs. Bridging the gap between active clinical studies and patient wellness, HM Clin ensures the highest standard of participant care, data accuracy, and transparent reporting.\n\nEmpowering individuals to contribute to modern medicine while receiving personalized wellness oversight and guidance.",
+    "icon": "Microscope",
+    "features": [
+      "Access to certified clinical research and wellness programs",
+      "Strict compliance with international ethical and clinical standards",
+      "Seamless data sharing with research institutions",
+      "Personalized wellness monitoring and expert oversight",
+      "Secure and confidential participant portal"
+    ],
+    "flow": [
+      "Program Matching & Selection",
+      "Certified Onboarding",
+      "Wellness Data Monitoring",
+      "Research Partnership Access",
+      "Outcome Reporting"
+    ]
   }
 ]
 

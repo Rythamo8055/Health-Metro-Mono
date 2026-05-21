@@ -3,6 +3,32 @@
 import Image from "next/image";
 import { useModal } from "@/context/ModalContext";
 import products from "@/data/products.json";
+import { 
+  Activity, 
+  Home as HomeIcon, 
+  Stethoscope, 
+  HeartHandshake, 
+  ClipboardList, 
+  Microscope,
+  Target,
+  Layers,
+  Dna
+} from "lucide-react";
+
+const getIcon = (iconName: string) => {
+  switch (iconName) {
+    case "Activity": return <Activity className="w-10 h-10" />;
+    case "Home": return <HomeIcon className="w-10 h-10" />;
+    case "Stethoscope": return <Stethoscope className="w-10 h-10" />;
+    case "HeartHandshake": return <HeartHandshake className="w-10 h-10" />;
+    case "ClipboardList": return <ClipboardList className="w-10 h-10" />;
+    case "Microscope": return <Microscope className="w-10 h-10" />;
+    case "Target": return <Target className="w-10 h-10" />;
+    case "Layers": return <Layers className="w-10 h-10" />;
+    case "Dna": return <Dna className="w-10 h-10" />;
+    default: return <Activity className="w-10 h-10" />;
+  }
+};
 
 export default function ProductModal() {
   const { data: productId, closeModal, openModal } = useModal();
@@ -16,14 +42,24 @@ export default function ProductModal() {
       {/* Header */}
       <div className="flex justify-between items-start mb-6">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 md:w-20 md:h-20 flex-shrink-0">
-            <Image 
-              src={`/icons/${product.id}.png`}
-              alt={product.name}
-              width={80}
-              height={80}
-              className="w-full h-full object-contain"
-            />
+          <div className={`flex-shrink-0 bg-white border border-primary/10 rounded-2xl flex items-center justify-center relative shadow-sm transition-all ${
+            ["hm-move", "hm-easy", "hm-trust", "hm-rely", "hm-ohr", "hm-clin"].includes(product.id)
+              ? "w-40 h-14 md:w-48 md:h-16 px-4 py-2"
+              : "w-16 h-16 md:w-20 md:h-20 p-2"
+          }`}>
+            {["hm-move", "hm-easy", "hm-trust", "hm-rely", "hm-ohr", "hm-clin"].includes(product.id) ? (
+              <Image 
+                src={`/icons/${product.id}.png`}
+                alt={product.name}
+                width={160}
+                height={50}
+                className="w-full h-full object-contain animate-in fade-in duration-300"
+              />
+            ) : (
+              <div className="text-primary flex items-center justify-center w-full h-full animate-in fade-in duration-300">
+                {getIcon(product.icon)}
+              </div>
+            )}
           </div>
           <div>
             <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest rounded-full mb-2">
@@ -82,7 +118,7 @@ export default function ProductModal() {
       {/* Fixed Bottom CTA */}
       <div className="absolute bottom-0 left-0 right-0 p-6 bg-white border-t border-primary/5">
         <button
-          onClick={() => openModal("contact")}
+          onClick={() => openModal("contact", product.id)}
           className="w-full py-4 bg-secondary text-white rounded-xl font-bold text-base hover:scale-[1.02] active:scale-95 transition-all shadow-md shadow-secondary/20"
         >
           Book {product.name} Now →

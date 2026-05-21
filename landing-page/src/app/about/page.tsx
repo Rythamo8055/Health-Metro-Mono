@@ -4,6 +4,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TopLogo from "@/components/TopLogo";
+import BookNowButton from "@/components/BookNowButton";
 
 export const metadata: Metadata = {
   title: "About Health Metro | Connecting Health Globally",
@@ -144,12 +145,11 @@ export default function AboutPage() {
               Healthcare made easy.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/contact"
+              <BookNowButton
                 className="px-8 py-5 bg-secondary text-white rounded-2xl font-bold text-lg hover:scale-105 active:scale-95 transition-all shadow-lg shadow-black/20 text-center"
               >
                 Book Appointment
-              </Link>
+              </BookNowButton>
               <Link
                 href="/"
                 className="px-8 py-5 bg-white/10 text-white border border-white/20 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all text-center"

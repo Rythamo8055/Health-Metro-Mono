@@ -52,8 +52,14 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <Image src="/logo.png" alt="Health Metro Logo" width={200} height={60} className="h-14 w-auto brightness-0 invert" />
+            <div className="inline-block bg-white/95 backdrop-blur-md rounded-2xl px-6 py-4 mb-8 shadow-lg border border-primary/5 hover:scale-[1.02] transition-transform">
+              <Image 
+                src="/logo.png" 
+                alt="Health Metro Logo" 
+                width={280} 
+                height={84} 
+                className="h-16 md:h-20 w-auto object-contain" 
+              />
             </div>
             <p className="text-white/70 max-w-sm leading-relaxed text-base">
               Affordable, accessible diagnostics and healthcare services — delivered at
@@ -64,23 +70,41 @@ export default function Footer() {
           {/* Company nav */}
           <div>
             <h4 className="font-bold mb-6 uppercase text-sm tracking-widest text-secondary">Company</h4>
-            <ul className="space-y-4 text-white/70 text-base md:text-lg">
-              <li><Link href="/" className="hover:text-secondary transition-colors">Home</Link></li>
-              <li><Link href="#about" className="hover:text-secondary transition-colors">About Us</Link></li>
-              <li><button onClick={() => openModal("contact")} className="hover:text-secondary transition-colors">Contact</button></li>
+            <ul className="space-y-2 text-white/70 text-base md:text-lg">
+              <li className="h-8 flex items-center">
+                <Link href="/" className="w-full h-full flex items-center hover:text-secondary transition-colors">Home</Link>
+              </li>
+              <li className="h-8 flex items-center">
+                <Link href="#about" className="w-full h-full flex items-center hover:text-secondary transition-colors">About Us</Link>
+              </li>
+              <li className="h-8 flex items-center">
+                <button onClick={() => openModal("contact")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">Contact</button>
+              </li>
             </ul>
           </div>
 
           {/* Services nav */}
           <div>
             <h4 className="font-bold mb-6 uppercase text-sm tracking-widest text-secondary">Services</h4>
-            <ul className="space-y-4 text-white/70 text-base md:text-lg">
-              <li><button onClick={() => openModal("product", "hm-move")} className="hover:text-secondary transition-colors">HM Move – Diagnostics</button></li>
-              <li><button onClick={() => openModal("product", "hm-easy")} className="hover:text-secondary transition-colors">HM Easy – Home Collection</button></li>
-              <li><button onClick={() => openModal("product", "hm-trust")} className="hover:text-secondary transition-colors">HM Trust – Consultation</button></li>
-              <li><button onClick={() => openModal("product", "hm-rely")} className="hover:text-secondary transition-colors">HM Rely – NRI Care</button></li>
-              <li><button onClick={() => openModal("product", "hm-ohr")} className="hover:text-secondary transition-colors">HM OHR – Health Records</button></li>
-              <li><button onClick={() => openModal("product", "hm-clin")} className="hover:text-secondary transition-colors">HM Clin – Clinical Research</button></li>
+            <ul className="space-y-2 text-white/70 text-base md:text-lg">
+              <li className="h-8 flex items-center">
+                <button onClick={() => openModal("product", "hm-move")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Move – Diagnostics</button>
+              </li>
+              <li className="h-8 flex items-center">
+                <button onClick={() => openModal("product", "hm-easy")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Easy – Home Collection</button>
+              </li>
+              <li className="h-8 flex items-center">
+                <button onClick={() => openModal("product", "hm-trust")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Trust – Consultation</button>
+              </li>
+              <li className="h-8 flex items-center">
+                <button onClick={() => openModal("product", "hm-rely")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Rely – NRI Care</button>
+              </li>
+              <li className="h-8 flex items-center">
+                <button onClick={() => openModal("product", "hm-ohr")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM OHR – Health Records</button>
+              </li>
+              <li className="h-8 flex items-center">
+                <button onClick={() => openModal("product", "hm-clin")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Clin – Clinical Research</button>
+              </li>
             </ul>
           </div>
 

@@ -53,8 +53,23 @@ const isValidPhone = (value: string, country: CountryConfig) => {
 };
 
 export default function ContactModal() {
-  const { closeModal } = useModal();
-  const [form, setForm] = useState({ name: "", service: "" });
+  const { data, closeModal } = useModal();
+  
+  const getInitialService = (productId: string) => {
+    switch (productId) {
+      case "hm-move": return "diagnostic-test";
+      case "hm-easy": return "home-collection";
+      case "hm-trust": return "doctor-consultation";
+      case "hm-rely": return "nri-care";
+      case "hm-ohr": return "health-records";
+      default: return "";
+    }
+  };
+
+  const [form, setForm] = useState({ 
+    name: "", 
+    service: typeof data === "string" ? getInitialService(data) : "" 
+  });
   const [phone, setPhone] = useState("");
   const [selectedCountry, setSelectedCountry] = useState<CountryConfig>(COUNTRIES[0]);
   const [submitted, setSubmitted] = useState(false);

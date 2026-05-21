@@ -6,6 +6,7 @@ import cities from "@/data/cities.json";
 import TopLogo from "@/components/TopLogo";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import BookNowButton from "@/components/BookNowButton";
 import { Activity, MapPin, ShieldCheck, Globe } from "lucide-react";
 
 interface Props {
@@ -103,9 +104,9 @@ export default async function CityPage({ params }: Props) {
           </div>
 
           <div className="mt-20 text-center">
-            <button className="px-8 py-5 bg-secondary text-white rounded-2xl font-bold text-lg hover:scale-105 transition-all shadow-lg shadow-secondary/20">
-              Launch {cityData.city} Portal
-            </button>
+            <BookNowButton className="px-8 py-5 bg-secondary text-white rounded-2xl font-bold text-lg hover:scale-105 transition-all shadow-lg shadow-secondary/20">
+              Book Appointment in {cityData.city}
+            </BookNowButton>
           </div>
         </section>
       </main>
