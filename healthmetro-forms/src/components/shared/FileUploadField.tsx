@@ -27,6 +27,9 @@ export function FileUploadField({
   const [sizeError, setSizeError] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const fileId = React.useId();
+  const errorId = `${fileId}-error`;
+
   const handleFile = (f: File) => {
     if (f.size > maxSizeMB * 1024 * 1024) {
       setSizeError(`File exceeds ${maxSizeMB} MB`);
@@ -45,26 +48,47 @@ export function FileUploadField({
     if (inputRef.current) inputRef.current.value = '';
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (!file) inputRef.current?.click();
+    }
+  };
+
   const displayError = error || sizeError;
 
   return (
     <div className="space-y-2">
       <div className="flex justify-between items-end">
-        <label className="text-[9px] font-black tracking-widest text-slate-400 uppercase">
+        <label 
+          htmlFor={fileId}
+          className="text-[9px] font-black tracking-widest text-slate-400 uppercase"
+        >
           {label}{required && <span className="text-red-400 ml-1">*</span>}
         </label>
         {displayError && (
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[10px] text-red-500 font-bold">
+          <motion.p 
+            id={errorId}
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="text-[10px] text-red-500 font-bold"
+          >
             {displayError}
           </motion.p>
         )}
       </div>
 
       <div
+        id={fileId}
+        role="button"
+        tabIndex={file ? -1 : 0}
+        aria-invalid={!!displayError}
+        aria-describedby={displayError ? errorId : undefined}
         onClick={() => !file && inputRef.current?.click()}
+        onKeyDown={handleKeyDown}
         onDragOver={e => e.preventDefault()}
         onDrop={e => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }}
-        className={`border-2 border-dashed rounded-2xl px-5 py-4 transition-all ${
+        className={`border-2 border-dashed rounded-2xl px-5 py-4 transition-all focus:outline-none focus:ring-4 focus:ring-teal-500/10 focus:border-[#d97234]/60 ${
           file
             ? 'border-[#027473]/30 bg-teal-50/30 cursor-default'
             : displayError
@@ -77,6 +101,7 @@ export function FileUploadField({
           type="file"
           accept={accept}
           className="hidden"
+          aria-hidden="true"
           onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }}
         />
         <AnimatePresence mode="wait">

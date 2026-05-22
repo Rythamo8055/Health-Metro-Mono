@@ -281,7 +281,7 @@ export default function ProviderRegistrationForm({
 
       {/* Right Panel: Form */}
       <div className="flex-1 min-h-0 overflow-y-auto bg-[#F8FAFA] flex flex-col p-6 lg:p-12 pb-32 lg:pb-12 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
-        <div className="w-full max-w-xl mx-auto space-y-8 h-full flex flex-col justify-center">
+        <div className="w-full max-w-xl mx-auto space-y-8 min-h-full flex flex-col justify-start lg:justify-center">
 
           {/* Desktop back + dots */}
           <div className="hidden lg:flex items-center justify-between">
@@ -514,7 +514,7 @@ export default function ProviderRegistrationForm({
             </AnimatePresence>
 
             {/* CTA */}
-            <div className="fixed bottom-0 left-0 right-0 p-6 bg-white border-t border-slate-100 lg:static lg:p-0 lg:border-none lg:bg-transparent lg:mt-8 space-y-3">
+            <div className="fixed bottom-0 left-0 right-0 p-6 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] bg-white border-t border-slate-100 lg:static lg:p-0 lg:border-none lg:bg-transparent lg:mt-8 space-y-3">
               <div className="flex gap-4">
                 {step > 0 && (
                   <button

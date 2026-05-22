@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, Suspense } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -16,7 +16,6 @@ import {
   AlertCircle,
   QrCode
 } from 'lucide-react';
-import Image from 'next/image';
 
 const patientSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters'),
@@ -120,7 +119,7 @@ function PatientFormInner() {
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center p-6 pb-24 lg:pb-6">
+      <main className="flex-1 flex flex-col items-center justify-start lg:justify-center p-6 py-8 lg:py-6 pb-24 lg:pb-6">
         <div className="w-full max-w-lg space-y-8">
           <div className="space-y-2 text-center lg:text-left">
             <h1 className="text-3xl font-bold tracking-tight text-[#1A2020]">Patient Intake</h1>

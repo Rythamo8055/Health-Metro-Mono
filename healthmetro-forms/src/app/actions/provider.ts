@@ -34,7 +34,7 @@ export async function submitProviderRegistration(formData: FormData) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const { data: uploadData, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from('documents')
       .upload(`providers/${filename}`, buffer, {
         contentType: file.type || 'application/pdf',

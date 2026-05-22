@@ -128,6 +128,8 @@ function CustomerFormInner() {
         const valid = await verifyRegistrationToken(clientId, token);
         setIsValidToken(valid);
       } catch (err) {
+        // Log or handle error silently as token validation fails
+        console.error('Token verification failed:', err);
         setIsValidToken(false);
       } finally {
         setIsVerifying(false);
@@ -272,7 +274,7 @@ function CustomerFormInner() {
               <span className="text-[#d97234] italic font-serif font-medium">at your doorstep.</span>
             </h1>
             <p className="text-slate-500 leading-relaxed">
-              Book a blood test in minutes. We collect at your provider's clinic or right at your home.
+              Book a blood test in minutes. We collect at your provider&apos;s clinic or right at your home.
             </p>
           </div>
           <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-1">
@@ -294,7 +296,7 @@ function CustomerFormInner() {
 
       {/* Right panel */}
       <div className="flex-1 h-full overflow-y-auto bg-[#F8FAFA] flex flex-col p-6 lg:p-12 pb-32 lg:pb-12">
-        <div className="w-full max-w-xl mx-auto space-y-8 h-full flex flex-col justify-center">
+        <div className="w-full max-w-xl mx-auto space-y-8 min-h-full flex flex-col justify-start lg:justify-center">
 
           <div className="hidden lg:flex items-center justify-between">
             {step > 0
@@ -445,7 +447,7 @@ function CustomerFormInner() {
             </AnimatePresence>
 
             {/* CTA */}
-            <div className="fixed bottom-0 left-0 right-0 p-6 bg-white border-t border-slate-100 lg:static lg:p-0 lg:border-none lg:bg-transparent lg:mt-8 space-y-3">
+            <div className="fixed bottom-0 left-0 right-0 p-6 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] bg-white border-t border-slate-100 lg:static lg:p-0 lg:border-none lg:bg-transparent lg:mt-8 space-y-3">
               <div className="flex gap-4">
                 {step > 0 && (
                   <button type="button" onClick={() => setStep(s => s - 1)} className="lg:hidden flex-1 bg-slate-50 text-slate-400 py-5 rounded-2xl font-bold border border-slate-100 active:scale-95">

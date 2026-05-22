@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Lock, Globe2, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Lock, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 interface FormShellProps {
   children: React.ReactNode;
@@ -151,7 +151,7 @@ export default function FormShell({
 
       {/* Right Column: Form Area */}
       <div className="flex-1 h-full overflow-y-auto bg-[#F8FAFA] flex flex-col p-6 lg:p-12 relative">
-        <div className="w-full max-w-xl mx-auto h-full flex flex-col justify-center">
+        <div className="w-full max-w-xl mx-auto min-h-full flex flex-col justify-start lg:justify-center">
           {children}
         </div>
       </div>

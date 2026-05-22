@@ -12,15 +12,23 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
   ({ label, error, icon, ...props }, ref) => {
+    const defaultId = React.useId();
+    const inputId = props.id || defaultId;
+    const errorId = `${inputId}-error`;
+
     return (
       <div className="space-y-2">
         <div className="flex justify-between items-end">
-          <label className="text-[9px] font-black tracking-widest text-slate-400 uppercase flex items-center gap-2">
+          <label 
+            htmlFor={inputId}
+            className="text-[9px] font-black tracking-widest text-slate-400 uppercase flex items-center gap-2"
+          >
             {icon}
             {label}
           </label>
           {error && (
             <motion.p 
+              id={errorId}
               initial={{ opacity: 0, x: -5 }}
               animate={{ opacity: 1, x: 0 }}
               className="text-[10px] text-red-500 font-bold flex items-center gap-1"
@@ -32,6 +40,9 @@ export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
         </div>
         <input 
           ref={ref}
+          id={inputId}
+          aria-invalid={!!error}
+          aria-describedby={error ? errorId : undefined}
           suppressHydrationWarning
           className={`w-full bg-white lg:bg-slate-50 border ${
             error ? 'border-red-200 focus:ring-red-500/5 focus:border-red-500' : 'border-slate-100 focus:ring-[#d97234]/5 focus:border-[#d97234]'
