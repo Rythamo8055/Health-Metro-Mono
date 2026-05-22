@@ -69,7 +69,7 @@ export default function FormShell({
   }
 
   return (
-    <div className="h-screen w-full overflow-hidden flex flex-col lg:flex-row bg-white font-sans text-[#1A2020]">
+    <div className="min-h-screen lg:h-screen w-full lg:overflow-hidden flex flex-col lg:flex-row bg-white font-sans text-[#1A2020]">
       
       {/* Left Column: Custom Clinical Branding */}
       <div className="hidden lg:flex w-[40%] bg-white p-12 flex-col justify-between border-r border-slate-100 relative">
@@ -150,8 +150,8 @@ export default function FormShell({
       </div>
 
       {/* Right Column: Form Area */}
-      <div className="flex-1 h-full overflow-y-auto bg-[#F8FAFA] flex flex-col p-6 lg:p-12 relative">
-        <div className="w-full max-w-xl mx-auto min-h-full flex flex-col justify-start lg:justify-center">
+      <div className="flex-1 min-h-0 lg:overflow-y-auto bg-[#F8FAFA] flex flex-col p-6 lg:p-12 pb-32 lg:pb-12 relative overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <div className="w-full max-w-xl mx-auto flex flex-col justify-start lg:justify-center">
           {children}
         </div>
       </div>

@@ -231,7 +231,7 @@ function CustomerFormInner() {
   }
 
   return (
-    <div className="h-screen w-full overflow-hidden flex flex-col lg:flex-row bg-white font-sans text-[#1A2020]">
+    <div className="min-h-screen lg:h-screen w-full lg:overflow-hidden flex flex-col lg:flex-row bg-white font-sans text-[#1A2020]">
 
       {/* Mobile header */}
       <div className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-slate-100 sticky top-0 z-50">
@@ -295,8 +295,8 @@ function CustomerFormInner() {
       </div>
 
       {/* Right panel */}
-      <div className="flex-1 h-full overflow-y-auto bg-[#F8FAFA] flex flex-col p-6 lg:p-12 pb-32 lg:pb-12">
-        <div className="w-full max-w-xl mx-auto space-y-8 min-h-full flex flex-col justify-start lg:justify-center">
+      <div className="flex-1 min-h-0 lg:overflow-y-auto bg-[#F8FAFA] flex flex-col p-6 lg:p-12 pb-32 lg:pb-12 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <div className="w-full max-w-xl mx-auto space-y-8 flex flex-col justify-start lg:justify-center">
 
           <div className="hidden lg:flex items-center justify-between">
             {step > 0

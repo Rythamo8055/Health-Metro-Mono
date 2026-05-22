@@ -243,8 +243,8 @@ export default function B2BRegistrationForm({
       </div>
 
       {/* Right Panel: Form */}
-      <div className="flex-1 min-h-0 overflow-y-auto bg-[#F8FAFA] flex flex-col p-6 lg:p-12 pb-32 lg:pb-12 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
-        <div className="w-full max-w-xl mx-auto space-y-8 min-h-full flex flex-col justify-start lg:justify-center">
+      <div className="flex-1 min-h-0 lg:overflow-y-auto bg-[#F8FAFA] flex flex-col p-6 lg:p-12 pb-32 lg:pb-12 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <div className="w-full max-w-xl mx-auto space-y-8 flex flex-col justify-start lg:justify-center">
 
           {/* Desktop back + dots */}
           <div className="hidden lg:flex items-center justify-between">
