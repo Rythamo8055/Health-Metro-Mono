@@ -10,7 +10,7 @@ const services = [
     name: "HM MOVE – Diagnostics",
     title: "Specialty Diagnostics & Precision Health Access",
     description: "HM Move is an advanced diagnostics gateway designed for those who seek more than routine testing. Engineered for precision, it delivers deep clinical intelligence and early risk detection.",
-    icon: "/icons/hm-move.png",
+    icon: "/icons/hm_move.png",
     color: "bg-transparent",
     accent: "border-primary/20 hover:border-primary/50",
     badge: "bg-primary text-white",
@@ -28,7 +28,7 @@ const services = [
     name: "HM EASY – Home Collection",
     title: "Doorstep Sample Collection",
     description: "HM Easy redefines convenience by delivering professional, discreet, and clinically precise sample collection services directly to your home—ensuring comfort without compromise.",
-    icon: "/icons/hm-easy.png",
+    icon: "/icons/hm_easy.png",
     color: "bg-transparent",
     accent: "border-secondary/20 hover:border-secondary/50",
     badge: "bg-secondary text-white",
@@ -109,7 +109,7 @@ const services = [
     name: "HM TRUST – Doctor Visits",
     title: "Medical Care at Your Doorstep",
     description: "HM Trust brings clinical excellence to your home, offering access to experienced doctors for personalized, attentive medical care.",
-    icon: "/icons/hm-trust.png",
+    icon: "/icons/hm_trust.png",
     color: "bg-transparent",
     accent: "border-primary/20 hover:border-primary/50",
     badge: "bg-primary text-white",
@@ -126,7 +126,7 @@ const services = [
     name: "HM RELY – NRI Care",
     title: "Management for Families",
     description: "A refined healthcare experience for NRIs—ensuring loved ones in India receive consistent, high-quality care with transparency.",
-    icon: "/icons/hm-rely.png",
+    icon: "/icons/hm_rely.png",
     color: "bg-transparent",
     accent: "border-secondary/20 hover:border-secondary/50",
     badge: "bg-secondary text-white",
@@ -143,7 +143,7 @@ const services = [
     name: "HM OHR – Health Records",
     title: "Digital Records Management",
     description: "A secure, intelligent health data platform designed to organize and protect your medical history for lifelong management.",
-    icon: "/icons/hm-ohr.png",
+    icon: "/icons/hm_ohr.png",
     color: "bg-transparent",
     accent: "border-primary/20 hover:border-primary/50",
     badge: "bg-primary text-white",
@@ -190,24 +190,24 @@ export default function Features() {
                 cursor-pointer hover:border-primary/40
               `}
             >
-              {/* Badge + Icon row */}
+              {/* Icon Row - clean, larger horizontal full brand logo with text */}
               <div className="flex items-center justify-between mb-8">
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-4 py-1.5 rounded-full bg-white border border-border text-foreground/70`}>
-                  {service.name}
-                </span>
-                <div className={`h-6 md:h-8 transition-transform group-hover:scale-105`}>
+                <div className="h-12 md:h-14 transition-all duration-300 group-hover:scale-[1.03] relative flex items-center justify-start">
                   {service.icon ? (
-                    <Image src={service.icon} alt={service.name} width={120} height={32} className="h-full w-auto object-contain" />
+                    <Image src={service.icon} alt={service.name} width={240} height={60} className="h-full w-auto object-contain object-left" />
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">{(service as any).iconNode}</div>
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">{(service as any).iconNode}</div>
                   )}
                 </div>
               </div>
 
               {/* Title + Description */}
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4 leading-snug group-hover:text-primary transition-colors">
-                {service.title}
+              <h3 className="text-2xl md:text-3xl font-black text-foreground mb-2 leading-snug group-hover:text-primary transition-colors">
+                {service.name}
               </h3>
+              <p className="text-xs md:text-sm text-foreground/60 font-semibold mb-5">
+                {service.title}
+              </p>
               <p className="text-foreground/70 leading-relaxed text-base md:text-lg mb-8">
                 {service.description}
               </p>
@@ -246,16 +246,24 @@ export default function Features() {
               onClick={() => openModal("product", service.id)}
               className="group bg-white rounded-2xl border border-border p-6 transition-all duration-300 cursor-pointer hover:border-border/80 hover:shadow-md hover:bg-surface"
             >
-              <div className={`w-12 h-12 rounded-xl ${service.color} flex items-center justify-center mb-5 transition-transform group-hover:scale-110`}>
+              {/* Bigger horizontal brand logo container */}
+              <div className="h-10 md:h-12 mb-5 transition-all duration-300 group-hover:scale-[1.03] relative flex items-center justify-start">
                 {service.icon ? (
-                  <Image src={service.icon} alt={service.name} width={48} height={48} className="w-full h-full object-contain" />
+                  <Image src={service.icon} alt={service.name} width={180} height={45} className="h-full w-auto object-contain object-left" />
                 ) : (
-                  (service as any).iconNode
+                  <div className={`w-12 h-12 rounded-xl ${service.color} flex items-center justify-center text-primary`}>
+                    {(service as any).iconNode}
+                  </div>
                 )}
               </div>
-              <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                {service.title}
+              
+              {/* Title & Description */}
+              <h3 className="text-lg font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
+                {service.name}
               </h3>
+              <p className="text-[11px] text-foreground/50 font-bold mb-3">
+                {service.title}
+              </p>
               <p className="text-foreground/60 leading-snug text-sm mb-4 line-clamp-3">
                 {service.description}
               </p>

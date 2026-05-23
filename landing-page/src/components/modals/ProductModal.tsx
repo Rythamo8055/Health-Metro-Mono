@@ -41,18 +41,18 @@ export default function ProductModal() {
     <div className="p-6 md:p-8 flex flex-col flex-1 min-h-0 overflow-hidden">
       {/* Header */}
       <div className="flex justify-between items-start mb-6">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           <div className={`flex-shrink-0 bg-white border border-primary/10 rounded-2xl flex items-center justify-center relative shadow-sm transition-all ${
             ["hm-move", "hm-easy", "hm-trust", "hm-rely", "hm-ohr", "hm-clin"].includes(product.id)
-              ? "w-40 h-14 md:w-48 md:h-16 px-4 py-2"
+              ? "w-44 h-16 md:w-52 md:h-20 px-4 py-2"
               : "w-16 h-16 md:w-20 md:h-20 p-2"
           }`}>
             {["hm-move", "hm-easy", "hm-trust", "hm-rely", "hm-ohr", "hm-clin"].includes(product.id) ? (
               <Image 
                 src={`/icons/${product.id}.png`}
                 alt={product.name}
-                width={160}
-                height={50}
+                width={200}
+                height={60}
                 className="w-full h-full object-contain animate-in fade-in duration-300"
               />
             ) : (
@@ -62,12 +62,12 @@ export default function ProductModal() {
             )}
           </div>
           <div>
-            <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest rounded-full mb-2">
+            <h2 className="text-2xl md:text-3xl font-black text-primary leading-tight tracking-tight">
               {product.name}
-            </span>
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground leading-tight tracking-tight">
-              {product.title}
             </h2>
+            <p className="text-xs md:text-sm text-foreground/60 font-semibold mt-1">
+              {product.title}
+            </p>
           </div>
         </div>
       </div>

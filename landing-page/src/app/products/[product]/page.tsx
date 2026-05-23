@@ -95,13 +95,13 @@ export default async function ProductPage({ params }: Props) {
                 </div>
               )}
             </div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary text-sm font-bold mb-6 tracking-widest uppercase">
+            <h1 className="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4 text-primary">
               {productData.name}
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight mb-8 text-primary">
-              {productData.title}
             </h1>
-            <p className="text-xl text-foreground opacity-90 leading-relaxed max-w-2xl">
+            <p className="text-xl md:text-2xl font-bold text-foreground opacity-80 leading-tight mb-6 max-w-3xl">
+              {productData.title}
+            </p>
+            <p className="text-base md:text-lg text-foreground opacity-60 leading-relaxed max-w-2xl">
               {productData.description}
             </p>
           </div>

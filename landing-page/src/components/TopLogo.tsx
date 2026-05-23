@@ -201,20 +201,20 @@ export default function TopLogo() {
                           href={`/products/${service.slug}`}
                           className="flex items-start gap-3 p-3 rounded-2xl hover:bg-primary/5 transition-all group/item"
                         >
-                          <div className="w-8 h-8 rounded-xl overflow-hidden flex-shrink-0 mt-0.5 relative flex items-center justify-center bg-primary/5 group-hover/item:scale-110 transition-all duration-300">
+                          <div className="w-28 h-8 overflow-hidden flex-shrink-0 mt-0.5 relative flex items-center justify-start group-hover/item:scale-105 transition-all duration-300">
                             <Image
                               src={`/icons/${service.slug}.png`}
                               alt={service.name}
-                              width={24}
-                              height={24}
-                              className="w-6 h-6 object-contain absolute transition-all duration-300 group-hover/item:scale-95 group-hover/item:opacity-0"
+                              width={120}
+                              height={32}
+                              className="h-full w-auto object-contain object-left absolute transition-all duration-300 group-hover/item:scale-95 group-hover/item:opacity-0"
                             />
                             <Image
                               src={`/icons/${service.slug}-fill.png`}
                               alt={service.name}
-                              width={24}
-                              height={24}
-                              className="w-6 h-6 object-contain absolute opacity-0 transition-all duration-300 group-hover/item:scale-105 group-hover/item:opacity-100"
+                              width={120}
+                              height={32}
+                              className="h-full w-auto object-contain object-left absolute opacity-0 transition-all duration-300 group-hover/item:scale-105 group-hover/item:opacity-100"
                             />
                           </div>
                           <div>
@@ -384,20 +384,20 @@ export default function TopLogo() {
                           href={`/products/${service.slug}`}
                           className="flex items-center gap-3 p-2.5 rounded-xl bg-surface border border-primary/5 hover:border-primary/20 transition-all group"
                         >
-                          <div className="w-7 h-7 rounded-lg overflow-hidden flex-shrink-0 relative flex items-center justify-center bg-primary/5 transition-all">
+                          <div className="w-24 h-7 overflow-hidden flex-shrink-0 relative flex items-center justify-start transition-all">
                             <Image
                               src={`/icons/${service.slug}.png`}
                               alt={service.name}
-                              width={20}
-                              height={20}
-                              className="w-5 h-5 object-contain absolute transition-all duration-300 group-hover:opacity-0"
+                              width={100}
+                              height={28}
+                              className="h-full w-auto object-contain object-left absolute transition-all duration-300 group-hover:opacity-0"
                             />
                             <Image
                               src={`/icons/${service.slug}-fill.png`}
                               alt={service.name}
-                              width={20}
-                              height={20}
-                              className="w-5 h-5 object-contain absolute opacity-0 transition-all duration-300 group-hover:opacity-100"
+                              width={100}
+                              height={28}
+                              className="h-full w-auto object-contain object-left absolute opacity-0 transition-all duration-300 group-hover:opacity-100"
                             />
                           </div>
                           <span className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">{service.name}</span>
