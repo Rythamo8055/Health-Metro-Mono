@@ -77,14 +77,6 @@ export default function Header() {
             icon={<Home className={ICON_SIZE} strokeWidth={2} aria-hidden="true" />}
           />
 
-          {/* HM TRUST */}
-          <DockItem
-            onClick={() => openModal("product", "hm-trust")}
-            label="HM TRUST – Doctor Consultation"
-            shortLabel="TRUST"
-            icon={<Stethoscope className={ICON_SIZE} strokeWidth={2} aria-hidden="true" />}
-          />
-
           {/* Divider */}
           <div
             className="w-px self-stretch mx-0.5 bg-primary/10 rounded-full flex-shrink-0"
@@ -113,6 +105,14 @@ export default function Header() {
           <div
             className="w-px self-stretch mx-0.5 bg-primary/10 rounded-full flex-shrink-0"
             aria-hidden="true"
+          />
+
+          {/* HM TRUST */}
+          <DockItem
+            onClick={() => openModal("product", "hm-trust")}
+            label="HM TRUST – Doctor Consultation"
+            shortLabel="TRUST"
+            icon={<Stethoscope className={ICON_SIZE} strokeWidth={2} aria-hidden="true" />}
           />
 
           {/* HM RELY */}
