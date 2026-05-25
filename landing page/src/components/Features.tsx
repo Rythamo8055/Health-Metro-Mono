@@ -153,27 +153,6 @@ const services = [
     ],
     href: "/products/hm-rely",
   },
-  {
-    id: "hm-ohr",
-    name: "HM OHR – Health Records",
-    title: "Digital Records Management",
-    description: "A secure, intelligent health data platform designed to organize and protect your medical history for lifelong management.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect width="18" height="11" x="3" y="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
-      </svg>
-    ),
-    color: "bg-primary/10 text-primary",
-    accent: "border-primary/20 hover:border-primary/50",
-    badge: "bg-primary text-white",
-    features: [
-      "Structured medical records",
-      "Secure cloud infrastructure",
-      "Instant report access",
-      "Family record management",
-    ],
-    href: "/products/hm-ohr",
-  },
 ];
 
 export default function Features() {

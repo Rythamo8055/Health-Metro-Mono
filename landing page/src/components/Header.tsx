@@ -5,8 +5,6 @@ import {
   Home,
   Stethoscope,
   HeartHandshake,
-  ClipboardList,
-  Microscope,
   Phone,
 } from "lucide-react";
 import { useModal } from "@/context/ModalContext";
@@ -123,22 +121,6 @@ export default function Header() {
             label="HM RELY – NRI Care & Remote Health Management"
             shortLabel="RELY"
             icon={<HeartHandshake className={ICON_SIZE} strokeWidth={2} aria-hidden="true" />}
-          />
-
-          {/* HM OHR */}
-          <DockItem
-            onClick={() => openModal("product", "hm-ohr")}
-            label="HM OHR – Digital Health Records"
-            shortLabel="OHR"
-            icon={<ClipboardList className={ICON_SIZE} strokeWidth={2} aria-hidden="true" />}
-          />
-
-          {/* HM CLIN */}
-          <DockItem
-            onClick={() => openModal("product", "hm-clin")}
-            label="HM CLIN – Clinical Research & Wellness"
-            shortLabel="CLIN"
-            icon={<Microscope className={ICON_SIZE} strokeWidth={2} aria-hidden="true" />}
           />
         </nav>
       </div>

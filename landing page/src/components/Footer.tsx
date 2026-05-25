@@ -43,8 +43,6 @@ export default function Footer() {
               <li><button onClick={() => openModal("product", "hm-easy")} className="hover:text-secondary transition-colors">HM Easy – Home Collection</button></li>
               <li><button onClick={() => openModal("product", "hm-trust")} className="hover:text-secondary transition-colors">HM Trust – Consultation</button></li>
               <li><button onClick={() => openModal("product", "hm-rely")} className="hover:text-secondary transition-colors">HM Rely – NRI Care</button></li>
-              <li><button onClick={() => openModal("product", "hm-ohr")} className="hover:text-secondary transition-colors">HM OHR – Health Records</button></li>
-              <li><button onClick={() => openModal("product", "hm-clin")} className="hover:text-secondary transition-colors">HM Clin – Clinical Research</button></li>
             </ul>
           </div>
 

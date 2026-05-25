@@ -146,28 +146,6 @@
       "Dedicated Support",
       "Peace of Mind Monitoring"
     ]
-  },
-  {
-    "id": "hm-ohr",
-    "name": "HM OHR – Health Records",
-    "title": "Digital Health Records Management",
-    "slug": "hm-ohr",
-    "description": "HM OHR is a secure, intelligent health data platform designed to organize, protect, and provide seamless access to your complete medical history—creating a single source of truth for lifelong health management.",
-    "icon": "ClipboardList",
-    "features": [
-      "Structured, centralized medical records",
-      "Secure, cloud-based infrastructure",
-      "Instant access to reports and clinical documents",
-      "Continuous and longitudinal health tracking",
-      "Integrated family health record management"
-    ],
-    "flow": [
-      "Centralized Data Storage",
-      "Secure Infrastructure",
-      "Instant Access",
-      "Longitudinal Tracking",
-      "Family Health Integration"
-    ]
   }
 ]
 

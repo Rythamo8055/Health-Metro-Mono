@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     question: "How long does it take to get my reports?",
-    answer: "Most routine diagnostic reports are generated within 24 to 48 hours. Once ready, they are automatically uploaded to your HM OHR (Digital Health Records) account, where you can view, download, or share them securely."
+    answer: "Most routine diagnostic reports are generated within 24 to 48 hours. Once ready, they are automatically sent to your digital account, where you can view, download, or share them securely."
   },
   {
     question: "I am an NRI. Can I book tests or doctor visits for my parents in India?",
@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     question: "Are my medical records secure?",
-    answer: "Security is our highest priority. The HM OHR system uses end-to-end encryption to store your family's health history safely. Only authorized users and your consulting doctors can access your data."
+    answer: "Security is our highest priority. Our secure digital records system uses end-to-end encryption to store your family's health history safely. Only authorized users and your consulting doctors can access your data."
   }
 ];
 
