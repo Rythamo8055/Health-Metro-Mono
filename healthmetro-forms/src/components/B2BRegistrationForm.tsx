@@ -26,6 +26,9 @@ const schema = z.object({
   designation: z.string().min(2, 'Designation is required'),
   mobile: z.string().regex(/^[6-9]\d{9}$/, '10-digit number starting with 6–9'),
   email: z.string().email('Enter a valid email address'),
+  pan_number: z.string()
+    .regex(/^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$/, 'Enter valid 10-character alphanumeric PAN (e.g. ABCDE1234F)')
+    .transform(val => val.toUpperCase()),
 
   // Declaration (Doc 1 §3.7)
   confirm_accurate: z.boolean().refine(v => v === true, { message: 'This confirmation is required' }),
@@ -44,7 +47,7 @@ const STEPS = [
   },
   {
     id: 'location', title: 'Location & Contact', description: 'Where and how to reach you.',
-    fields: ['address', 'state_code', 'city', 'pin_code', 'contact_name', 'designation', 'mobile', 'email'] as (keyof FormData)[],
+    fields: ['address', 'state_code', 'city', 'pin_code', 'contact_name', 'designation', 'mobile', 'email', 'pan_number'] as (keyof FormData)[],
   },
   {
     id: 'declaration', title: 'Declaration', description: 'Review and confirm your application.',
@@ -80,6 +83,8 @@ export default function B2BRegistrationForm({
   const [mounted, setMounted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
+  const [submitError, setSubmitError] = useState('');
+  const [checkingDuplicate, setCheckingDuplicate] = useState(false);
 
   const { register, handleSubmit, trigger, control, setValue, watch, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -102,24 +107,75 @@ export default function B2BRegistrationForm({
     }
   }, [watchedState, setValue]);
 
+  const handleFieldBlur = async (field: 'mobile' | 'pan_number', value: string) => {
+    if (!value) return;
+
+    // Standard structural validations before querying
+    if (field === 'mobile' && !/^[6-9]\d{9}$/.test(value)) return;
+    if (field === 'pan_number' && !/^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$/.test(value)) return;
+
+    try {
+      setCheckingDuplicate(true);
+      const { checkB2BDuplicate } = await import('@/app/actions/b2b');
+      const currentMobile = field === 'mobile' ? value : watch('mobile');
+      const currentPan = field === 'pan_number' ? value : watch('pan_number');
+
+      const result = await checkB2BDuplicate(currentMobile, currentPan);
+      if (result.isDuplicate) {
+        setSubmitError(result.error || 'A client is already registered.');
+      } else {
+        setSubmitError('');
+      }
+    } catch (err) {
+      console.error('Instant duplicate check failed:', err);
+    } finally {
+      setCheckingDuplicate(false);
+    }
+  };
+
   const handleNext = async () => {
+    setSubmitError('');
     const valid = await trigger(STEPS[step].fields);
-    if (valid) setStep(s => Math.min(s + 1, STEPS.length - 1));
+    if (!valid) return;
+
+    // Check duplicates before leaving step 1 (Location & Contact)
+    if (step === 1) {
+      try {
+        setCheckingDuplicate(true);
+        const { checkB2BDuplicate } = await import('@/app/actions/b2b');
+        const currentMobile = watch('mobile');
+        const currentPan = watch('pan_number');
+
+        const result = await checkB2BDuplicate(currentMobile, currentPan);
+        if (result.isDuplicate) {
+          setSubmitError(result.error || 'A client is already registered.');
+          return; // Block step progression
+        }
+      } catch (err) {
+        console.error('Duplicate verification failed on navigation:', err);
+      } finally {
+        setCheckingDuplicate(false);
+      }
+    }
+
+    setStep(s => Math.min(s + 1, STEPS.length - 1));
   };
 
   const onSubmit = async (data: FormData) => {
     try {
+      setSubmitError('');
       const { submitB2BRegistration } = await import('@/app/actions/b2b');
       const result = await submitB2BRegistration(data);
       
       if (!result.success) {
-        throw new Error(result.error);
+        setSubmitError(result.error || 'Failed to submit B2B application. Please try again.');
+        return;
       }
       
       setSubmitted(true);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to submit B2B form:', error);
-      alert('Failed to submit B2B application. Please try again.');
+      setSubmitError(error.message || 'Failed to submit B2B application. Please try again.');
     }
   };
 
@@ -364,7 +420,9 @@ export default function B2BRegistrationForm({
                         placeholder="10-digit mobile"
                         error={errors.mobile?.message}
                         maxLength={10}
-                        {...register('mobile')}
+                        {...register('mobile', {
+                          onBlur: (e) => handleFieldBlur('mobile', e.target.value)
+                        })}
                       />
                       <InputField
                         label="EMAIL ADDRESS"
@@ -373,6 +431,16 @@ export default function B2BRegistrationForm({
                         {...register('email')}
                       />
                     </div>
+                    <InputField
+                      label="PAN CARD NUMBER"
+                      placeholder="e.g. ABCDE1234F"
+                      error={errors.pan_number?.message}
+                      maxLength={10}
+                      style={{ textTransform: 'uppercase' }}
+                      {...register('pan_number', {
+                        onBlur: (e) => handleFieldBlur('pan_number', e.target.value)
+                      })}
+                    />
                   </>
                 )}
 
@@ -416,6 +484,19 @@ export default function B2BRegistrationForm({
 
             {/* CTA */}
             <div className="fixed bottom-0 left-0 right-0 p-6 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] bg-white border-t border-slate-100 lg:static lg:p-0 lg:border-none lg:bg-transparent lg:mt-8 space-y-3">
+              {submitError && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-3 text-left shadow-sm shadow-red-900/5"
+                >
+                  <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white font-bold shrink-0 mt-0.5 text-[10px]">!</div>
+                  <div className="space-y-0.5">
+                    <p className="text-xs font-bold text-red-800">Registration Failed</p>
+                    <p className="text-[11px] text-red-600 leading-relaxed font-medium">{submitError}</p>
+                  </div>
+                </motion.div>
+              )}
               <div className="flex gap-4">
                 {step > 0 && (
                   <button
