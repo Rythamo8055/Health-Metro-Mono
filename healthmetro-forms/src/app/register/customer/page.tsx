@@ -12,6 +12,7 @@ import { SelectField } from '@/components/shared/SelectField';
 import { LocationButton } from '@/components/shared/LocationButton';
 import { useReferral } from '@/hooks/useReferral';
 import { getStateOptions, getCityOptions, STATES } from '@/lib/locationData';
+import { fetchPincodeDetails } from '@/app/actions/location';
 
 // ─── Schema (Doc 3) ────────────────────────────────────────────────────────
 const schema = z.object({
@@ -167,12 +168,10 @@ function CustomerFormInner() {
     async function fetchPinCodeDetails() {
       if (watchedPinCode?.length === 6) {
         try {
-          const res = await fetch(`https://api.postalpincode.in/pincode/${watchedPinCode}`);
-          const data = await res.json();
-          if (data && data[0] && data[0].Status === 'Success') {
-            const details = data[0].PostOffice[0];
-            const stateName = details.State;
-            const cityName = details.District;
+          const result = await fetchPincodeDetails(watchedPinCode);
+          if (result && result.success && result.state && result.city) {
+            const stateName = result.state;
+            const cityName = result.city;
 
             const stateObj = STATES.find(s => s.name.toLowerCase() === stateName.toLowerCase() || s.name.toLowerCase().includes(stateName.toLowerCase()));
             
