@@ -147,50 +147,7 @@
       "Peace of Mind Monitoring"
     ]
   },
-  {
-    "id": "hm-ohr",
-    "name": "HM OHR – Health Records",
-    "title": "Digital Health Records Management",
-    "slug": "hm-ohr",
-    "description": "HM OHR is a secure, intelligent health data platform designed to organize, protect, and provide seamless access to your complete medical history—creating a single source of truth for lifelong health management.",
-    "icon": "ClipboardList",
-    "features": [
-      "Structured, centralized medical records",
-      "Secure, cloud-based infrastructure",
-      "Instant access to reports and clinical documents",
-      "Continuous and longitudinal health tracking",
-      "Integrated family health record management"
-    ],
-    "flow": [
-      "Centralized Data Storage",
-      "Secure Infrastructure",
-      "Instant Access",
-      "Longitudinal Tracking",
-      "Family Health Integration"
-    ]
-  },
-  {
-    "id": "hm-clin",
-    "name": "HM CLIN – Clinical Research",
-    "title": "Clinical Research & Wellness Integration",
-    "slug": "hm-clin",
-    "description": "HM Clin offers a secure gateway for participating in certified clinical research and wellness programs. Bridging the gap between active clinical studies and patient wellness, HM Clin ensures the highest standard of participant care, data accuracy, and transparent reporting.\n\nEmpowering individuals to contribute to modern medicine while receiving personalized wellness oversight and guidance.",
-    "icon": "Microscope",
-    "features": [
-      "Access to certified clinical research and wellness programs",
-      "Strict compliance with international ethical and clinical standards",
-      "Seamless data sharing with research institutions",
-      "Personalized wellness monitoring and expert oversight",
-      "Secure and confidential participant portal"
-    ],
-    "flow": [
-      "Program Matching & Selection",
-      "Certified Onboarding",
-      "Wellness Data Monitoring",
-      "Research Partnership Access",
-      "Outcome Reporting"
-    ]
-  }
 ]
+
 
 

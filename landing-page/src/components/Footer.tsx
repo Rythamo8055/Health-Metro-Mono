@@ -99,12 +99,7 @@ export default function Footer() {
               <li className="h-8 flex items-center">
                 <button onClick={() => openModal("product", "hm-rely")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Rely – NRI Care</button>
               </li>
-              <li className="h-8 flex items-center">
-                <button onClick={() => openModal("product", "hm-ohr")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM OHR – Health Records</button>
-              </li>
-              <li className="h-8 flex items-center">
-                <button onClick={() => openModal("product", "hm-clin")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Clin – Clinical Research</button>
-              </li>
+
             </ul>
           </div>
 

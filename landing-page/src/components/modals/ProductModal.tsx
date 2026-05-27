@@ -43,11 +43,11 @@ export default function ProductModal() {
       <div className="flex justify-between items-start mb-6">
         <div className="flex items-center gap-5">
           <div className={`flex-shrink-0 bg-white border border-primary/10 rounded-2xl flex items-center justify-center relative shadow-sm transition-all ${
-            ["hm-move", "hm-easy", "hm-trust", "hm-rely", "hm-ohr", "hm-clin"].includes(product.id)
+            ["hm-move", "hm-easy", "hm-trust", "hm-rely"].includes(product.id)
               ? "w-44 h-16 md:w-52 md:h-20 px-4 py-2"
               : "w-16 h-16 md:w-20 md:h-20 p-2"
           }`}>
-            {["hm-move", "hm-easy", "hm-trust", "hm-rely", "hm-ohr", "hm-clin"].includes(product.id) ? (
+            {["hm-move", "hm-easy", "hm-trust", "hm-rely"].includes(product.id) ? (
               <Image 
                 src={`/icons/${product.id}.png`}
                 alt={product.name}

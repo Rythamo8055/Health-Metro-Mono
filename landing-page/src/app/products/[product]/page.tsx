@@ -76,11 +76,11 @@ export default async function ProductPage({ params }: Props) {
           {/* Hero Section */}
           <div className="text-center mb-20 flex flex-col items-center">
             <div className={`bg-white border border-primary/15 flex items-center justify-center mb-8 shadow-sm relative transition-all ${
-              ["hm-move", "hm-easy", "hm-trust", "hm-rely", "hm-ohr", "hm-clin"].includes(productData.slug) 
+              ["hm-move", "hm-easy", "hm-trust", "hm-rely"].includes(productData.slug) 
                 ? "w-64 h-20 md:w-80 md:h-24 px-6 py-4 rounded-2xl" 
                 : "w-24 h-24 p-2 rounded-[1.8rem]"
             }`}>
-              {["hm-move", "hm-easy", "hm-trust", "hm-rely", "hm-ohr", "hm-clin"].includes(productData.slug) ? (
+              {["hm-move", "hm-easy", "hm-trust", "hm-rely"].includes(productData.slug) ? (
                 <Image
                   src={`/icons/${productData.slug}.png`}
                   alt={productData.name}

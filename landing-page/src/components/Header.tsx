@@ -152,22 +152,6 @@ export default function Header() {
             shortLabel="RELY"
             iconSrc="/icons/hm-rely.png"
           />
-
-          {/* HM OHR */}
-          <DockItem
-            onClick={() => openModal("product", "hm-ohr")}
-            label="HM OHR – Digital Health Records"
-            shortLabel="OHR"
-            iconSrc="/icons/hm-ohr.png"
-          />
-
-          {/* HM CLIN */}
-          <DockItem
-            onClick={() => openModal("product", "hm-clin")}
-            label="HM CLIN – Clinical Research & Wellness"
-            shortLabel="CLIN"
-            iconSrc="/icons/hm-clin.png"
-          />
         </nav>
       </div>
     </header>

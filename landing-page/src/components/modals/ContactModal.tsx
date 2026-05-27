@@ -61,7 +61,6 @@ export default function ContactModal() {
       case "hm-easy": return "home-collection";
       case "hm-trust": return "doctor-consultation";
       case "hm-rely": return "nri-care";
-      case "hm-ohr": return "health-records";
       default: return "";
     }
   };
@@ -236,7 +235,6 @@ export default function ContactModal() {
               <option value="home-collection">Home Sample Collection</option>
               <option value="diagnostic-test">Diagnostic / Pathology Test</option>
               <option value="doctor-consultation">Doctor Consultation</option>
-              <option value="health-records">Health Records</option>
               <option value="nri-care">NRI Care – HM Rely</option>
               <option value="other">Other / Not sure</option>
             </select>

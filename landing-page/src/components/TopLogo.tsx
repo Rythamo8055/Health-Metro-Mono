@@ -13,7 +13,6 @@ import {
   Activity, 
   Stethoscope, 
   HeartHandshake, 
-  ClipboardList, 
   Layers, 
   Target, 
   Dna,
@@ -47,12 +46,6 @@ const coreServices = [
     description: "Healthcare management for families in India",
     slug: "hm-rely",
     icon: HeartHandshake
-  },
-  {
-    name: "HM OHR – Health Records",
-    description: "Secure digital medical record platform",
-    slug: "hm-ohr",
-    icon: ClipboardList
   }
 ];
 
