@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS providers (
   provider_name VARCHAR NOT NULL,
   registration_number VARCHAR,
   gst_number VARCHAR,
-  pan_number VARCHAR(10),
   address TEXT,
   state_id INT REFERENCES states(id),
   city_id INT REFERENCES cities(id),

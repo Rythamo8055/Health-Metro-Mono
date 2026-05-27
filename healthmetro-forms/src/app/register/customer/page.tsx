@@ -12,6 +12,7 @@ import { SelectField } from '@/components/shared/SelectField';
 import { LocationButton } from '@/components/shared/LocationButton';
 import { useReferral } from '@/hooks/useReferral';
 import { getStateOptions, getCityOptions } from '@/lib/locationData';
+import { usePincodeFetch } from '@/hooks/usePincodeFetch';
 
 // ─── Schema (Doc 3) ────────────────────────────────────────────────────────
 const schema = z.object({
@@ -108,10 +109,19 @@ function CustomerFormInner() {
   const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
   const [blockedSlots, setBlockedSlots] = useState<string[]>([]);
 
-  const { register, handleSubmit, trigger, control, watch, setValue, formState: { errors } } = useForm<FormData>({
+  const { register, handleSubmit, trigger, control, watch, setValue, setError, clearErrors, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { collection_type: undefined, consent_accurate: false, consent_collection: false, consent_communication: false, consent_availability: false },
     mode: 'onBlur',
+  });
+
+  const pinCode = watch('pin_code');
+  const { isLocked } = usePincodeFetch({
+    pinCode,
+    setValue,
+    setError,
+    clearErrors,
+    setCityOptions,
   });
 
   // Verify Token on Mount
@@ -141,10 +151,6 @@ function CustomerFormInner() {
   const watchedState = watch('state_code');
   const collectionType = watch('collection_type');
   const appointmentDate = watch('appointment_date');
-
-  useEffect(() => {
-    if (watchedState) { setCityOptions(getCityOptions(watchedState)); setValue('city', ''); }
-  }, [watchedState, setValue]);
 
   useEffect(() => {
     if (appointmentDate) {
@@ -342,15 +348,15 @@ function CustomerFormInner() {
                 {step === 1 && (
                   <>
                     <InputField label="FULL ADDRESS" placeholder="House no, Street, Area" error={errors.address?.message} {...register('address')} />
+                    <InputField label="PIN CODE" placeholder="6-digit PIN" maxLength={6} error={errors.pin_code?.message} {...register('pin_code')} />
                     <div className="grid grid-cols-2 gap-4">
                       <Controller name="state_code" control={control} render={({ field }) => (
-                        <SelectField label="STATE" placeholder="Select state" options={getStateOptions()} value={field.value} onChange={field.onChange} error={errors.state_code?.message} />
+                        <SelectField label="STATE" placeholder="Select state" options={getStateOptions()} value={field.value} onChange={field.onChange} error={errors.state_code?.message} disabled={isLocked} />
                       )} />
                       <Controller name="city" control={control} render={({ field }) => (
-                        <SelectField label="CITY" placeholder={watchedState ? 'Select city' : 'Select state first'} options={cityOptions} value={field.value} onChange={field.onChange} error={errors.city?.message} disabled={!watchedState} />
+                        <SelectField label="CITY" placeholder={watchedState ? 'Select city' : 'Select state first'} options={cityOptions} value={field.value} onChange={field.onChange} error={errors.city?.message} disabled={isLocked || !watchedState} />
                       )} />
                     </div>
-                    <InputField label="PIN CODE" placeholder="6-digit PIN" maxLength={6} error={errors.pin_code?.message} {...register('pin_code')} />
                   </>
                 )}
 

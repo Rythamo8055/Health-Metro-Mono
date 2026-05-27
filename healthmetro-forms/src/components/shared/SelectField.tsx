@@ -173,12 +173,12 @@ export const SelectField = React.forwardRef<HTMLDivElement, SelectFieldProps>(
             onClick={() => { if (!disabled) { setOpen(o => !o); setSearch(''); } }}
             className={`w-full bg-white lg:bg-slate-50 border ${
               error ? 'border-red-200 focus:ring-red-500/5' : 'border-slate-100 focus:ring-[#d97234]/5'
-            } ${disabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'} rounded-2xl px-4 lg:px-5 py-3.5 lg:py-4 text-sm lg:text-base outline-none transition-all shadow-sm lg:shadow-none flex items-center justify-between text-left`}
+            } ${disabled ? 'cursor-not-allowed bg-slate-100/40' : 'cursor-pointer'} rounded-2xl px-4 lg:px-5 py-3.5 lg:py-4 text-sm lg:text-base outline-none transition-all shadow-sm lg:shadow-none flex items-center justify-between text-left`}
           >
-            <span className={`block truncate ${selected ? 'font-semibold text-[#1A2020]' : 'text-slate-300 font-semibold'}`}>
+            <span className={`block truncate ${selected ? 'font-semibold text-[#1A2020]' : 'text-slate-300 font-semibold'} ${disabled && selected ? 'opacity-100 text-[#1A2020]' : ''}`}>
               {selected ? selected.label : placeholder}
             </span>
-            <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`w-4 h-4 text-slate-400/50 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
           </button>
 
           <AnimatePresence>

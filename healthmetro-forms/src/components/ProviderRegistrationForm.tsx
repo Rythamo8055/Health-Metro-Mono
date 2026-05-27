@@ -14,6 +14,7 @@ import { InputField } from './shared/InputField';
 import { SelectField } from './shared/SelectField';
 import { FileUploadField } from './shared/FileUploadField';
 import { getStateOptions, getCityOptions } from '@/lib/locationData';
+import { usePincodeFetch } from '@/hooks/usePincodeFetch';
 
 // ─── Schema (Doc 1) ────────────────────────────────────────────────────────
 const schema = z.object({
@@ -101,7 +102,7 @@ export default function ProviderRegistrationForm({
   const [chequeFile, setChequeFile] = useState<File | null>(null);
   const [docError, setDocError] = useState('');
 
-  const { register, handleSubmit, trigger, control, setValue, watch, formState: { errors } } = useForm<FormData>({
+  const { register, handleSubmit, trigger, control, setValue, setError, clearErrors, watch, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
       provider_type: preselectedType ?? '',
@@ -112,15 +113,18 @@ export default function ProviderRegistrationForm({
     mode: 'onBlur',
   });
 
+  const pinCode = watch('pin_code');
+  const { isLocked } = usePincodeFetch({
+    pinCode,
+    setValue,
+    setError,
+    clearErrors,
+    setCityOptions,
+  });
+
   useEffect(() => { setMounted(true); }, []);
 
   const watchedState = watch('state_code');
-  useEffect(() => {
-    if (watchedState) {
-      setCityOptions(getCityOptions(watchedState));
-      setValue('city', '');
-    }
-  }, [watchedState, setValue]);
 
   const handleNext = async () => {
     // Step 2: validate doc uploads
@@ -338,7 +342,7 @@ export default function ProviderRegistrationForm({
                       {...register('provider_name')}
                     />
                     <InputField
-                      label="REGISTRATION / LICENSE NUMBER"
+                      label="REGISTRATION NUMBER"
                       placeholder="e.g. MCI-12345 or DL-XXXX-XXXX"
                       error={errors.registration_number?.message}
                       {...register('registration_number')}
@@ -361,6 +365,13 @@ export default function ProviderRegistrationForm({
                       error={errors.address?.message}
                       {...register('address')}
                     />
+                    <InputField
+                      label="PIN CODE"
+                      placeholder="6-digit PIN"
+                      error={errors.pin_code?.message}
+                      maxLength={6}
+                      {...register('pin_code')}
+                    />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <Controller
                         name="state_code"
@@ -373,6 +384,7 @@ export default function ProviderRegistrationForm({
                             value={field.value}
                             onChange={field.onChange}
                             error={errors.state_code?.message}
+                            disabled={isLocked}
                           />
                         )}
                       />
@@ -387,18 +399,11 @@ export default function ProviderRegistrationForm({
                             value={field.value}
                             onChange={field.onChange}
                             error={errors.city?.message}
-                            disabled={!watchedState}
+                            disabled={isLocked || !watchedState}
                           />
                         )}
                       />
                     </div>
-                    <InputField
-                      label="PIN CODE"
-                      placeholder="6-digit PIN"
-                      error={errors.pin_code?.message}
-                      maxLength={6}
-                      {...register('pin_code')}
-                    />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <InputField
                         label="CONTACT PERSON NAME"
@@ -438,7 +443,7 @@ export default function ProviderRegistrationForm({
                       <p className="text-[9px] font-black tracking-widest text-slate-400 uppercase">Required Documents</p>
                     </div>
                     <FileUploadField
-                      label="REGISTRATION / LICENSE CERTIFICATE *"
+                      label="REGISTRATION CERTIFICATE *"
                       hint="PDF, JPG, PNG — max 10 MB"
                       onFileSelect={setLicenseFile}
                       required
