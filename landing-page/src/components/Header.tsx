@@ -105,14 +105,6 @@ export default function Header() {
             iconSrc="/icons/hm-easy.png"
           />
 
-          {/* HM TRUST */}
-          <DockItem
-            onClick={() => openModal("product", "hm-trust")}
-            label="HM TRUST – Doctor Consultation"
-            shortLabel="TRUST"
-            iconSrc="/icons/hm-trust.png"
-          />
-
           {/* Divider */}
           <div
             className="w-px h-8 sm:h-10 self-center mx-1 bg-primary/10 rounded-full flex-shrink-0"
@@ -143,6 +135,14 @@ export default function Header() {
           <div
             className="w-px h-8 sm:h-10 self-center mx-1 bg-primary/10 rounded-full flex-shrink-0"
             aria-hidden="true"
+          />
+
+          {/* HM TRUST */}
+          <DockItem
+            onClick={() => openModal("product", "hm-trust")}
+            label="HM TRUST – Doctor Consultation"
+            shortLabel="TRUST"
+            iconSrc="/icons/hm-trust.png"
           />
 
           {/* HM RELY */}
