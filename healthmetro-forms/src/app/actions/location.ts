@@ -52,9 +52,10 @@ export async function fetchPincodeDetails(pincode: string) {
     }
   }
 
-  // 2. Mock Fallback for testing purposes (e.g. testing PIN 500016 from screenshot)
+  // 2. Mock Fallback for testing purposes (e.g. testing PIN 500016/505001 from screenshot)
   const mockDb: Record<string, { state: string; city: string }> = {
     "500016": { state: "Telangana", city: "Begumpet" },
+    "505001": { state: "Telangana", city: "Karimnagar" },
     "110001": { state: "Delhi", city: "New Delhi" },
     "400001": { state: "Maharashtra", city: "Mumbai" },
     "560001": { state: "Karnataka", city: "Bengaluru" },
@@ -70,7 +71,9 @@ export async function fetchPincodeDetails(pincode: string) {
 
   // 3. Fallback to free India Post API
   try {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     const res = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '1';
     if (res.ok) {
       const data = await res.json();
       if (data && data[0] && data[0].Status === 'Success') {
@@ -84,6 +87,7 @@ export async function fetchPincodeDetails(pincode: string) {
       }
     }
   } catch (error) {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '1';
     console.error("India Post lookup failed", error);
   }
 
