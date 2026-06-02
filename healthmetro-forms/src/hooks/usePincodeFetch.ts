@@ -29,7 +29,7 @@ function toTitleCase(str: string): string {
 // Refine fetched location to fix common legacy database inaccuracies in India
 function refineFetchedLocation(stateName: string, cityName: string): { stateName: string; cityName: string } {
   let refinedState = stateName;
-  let refinedCity = toTitleCase(cityName);
+  const refinedCity = toTitleCase(cityName);
 
   const cleanCityLower = cityName.toLowerCase();
 
@@ -67,7 +67,7 @@ function matchState(fetchedState: string) {
   const cleanedFetched = cleanName(fetchedState);
   
   // 1. Direct match on cleaned name
-  let matched = STATES.find(s => cleanName(s.name) === cleanedFetched);
+  const matched = STATES.find(s => cleanName(s.name) === cleanedFetched);
   if (matched) return matched;
 
   // 2. Custom variations mapping
