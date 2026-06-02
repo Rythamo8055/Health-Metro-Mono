@@ -63,11 +63,8 @@ export default function ProductModal() {
           </div>
           <div>
             <h2 className="text-2xl md:text-3xl font-black text-primary leading-tight tracking-tight">
-              {product.name}
-            </h2>
-            <p className="text-xs md:text-sm text-foreground/60 font-semibold mt-1">
               {product.title}
-            </p>
+            </h2>
           </div>
         </div>
       </div>
@@ -121,7 +118,7 @@ export default function ProductModal() {
           onClick={() => openModal("contact", product.id)}
           className="w-full py-4 bg-secondary text-white rounded-xl font-bold text-base hover:scale-[1.02] active:scale-95 transition-all shadow-md shadow-secondary/20"
         >
-          Book {product.name} Now →
+          Book Now →
         </button>
       </div>
     </div>

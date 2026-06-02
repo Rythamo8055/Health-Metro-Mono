@@ -96,11 +96,8 @@ export default async function ProductPage({ params }: Props) {
               )}
             </div>
             <h1 className="text-4xl md:text-6xl font-black leading-tight tracking-tight mb-4 text-primary">
-              {productData.name}
-            </h1>
-            <p className="text-xl md:text-2xl font-bold text-foreground opacity-80 leading-tight mb-6 max-w-3xl">
               {productData.title}
-            </p>
+            </h1>
             <p className="text-base md:text-lg text-foreground opacity-60 leading-relaxed max-w-2xl">
               {productData.description}
             </p>
@@ -142,12 +139,12 @@ export default async function ProductPage({ params }: Props) {
 
           {/* CTA */}
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-primary mb-6">Ready to experience {productData.name}?</h2>
+            <h2 className="text-3xl font-bold text-primary mb-6">Ready to experience it?</h2>
             <BookNowButton
               productId={productData.id}
               className="px-10 py-5 bg-secondary text-white rounded-2xl font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-secondary/20 inline-flex items-center gap-3"
             >
-              Book {productData.name} <ArrowRight className="w-5 h-5" />
+              Book Now <ArrowRight className="w-5 h-5" />
             </BookNowButton>
           </div>
 
