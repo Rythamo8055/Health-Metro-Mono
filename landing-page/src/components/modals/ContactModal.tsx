@@ -232,10 +232,10 @@ export default function ContactModal() {
               className="w-full h-[52px] px-4 rounded-xl border border-primary/15 bg-surface text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition bg-white font-semibold cursor-pointer"
             >
               <option value="">Select a service…</option>
-              <option value="home-collection">Home Sample Collection</option>
-              <option value="diagnostic-test">Diagnostic / Pathology Test</option>
-              <option value="doctor-consultation">Doctor Consultation</option>
-              <option value="nri-care">NRI Care – HM Rely</option>
+              <option value="home-collection">Doorstep Sample Collection</option>
+              <option value="diagnostic-test">Specialty Diagnostics & Precision Health Access</option>
+              <option value="doctor-consultation">Medical Care at Your Doorstep</option>
+              <option value="nri-care">Healthcare Management for Families in India</option>
               <option value="other">Other / Not sure</option>
             </select>
           </div>
