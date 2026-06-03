@@ -78,7 +78,7 @@ export default function Footer() {
                 <Link href="#about" className="w-full h-full flex items-center hover:text-secondary transition-colors">About Us</Link>
               </li>
               <li className="h-8 flex items-center">
-                <button onClick={() => openModal("contact")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">Contact</button>
+                <Link href="/contact" className="w-full h-full flex items-center hover:text-secondary transition-colors">Contact</Link>
               </li>
             </ul>
           </div>
