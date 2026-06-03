@@ -30,7 +30,7 @@ export default function Hero() {
 
         <p className="text-lg md:text-2xl text-foreground/80 leading-relaxed mb-10 max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 font-medium">
           Affordable, accessible diagnostic and healthcare services — delivered at home,
-          at a centre near you, or through a trusted doctor referral.
+          or through a trusted doctor referral.
         </p>
 
         <div className="flex justify-center items-center animate-fade-in-up mt-8">

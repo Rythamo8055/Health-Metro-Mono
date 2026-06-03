@@ -63,7 +63,7 @@ export default function Footer() {
             </div>
             <p className="text-white/70 max-w-sm leading-relaxed text-base">
               Affordable, accessible diagnostics and healthcare services — delivered at
-              home, at our centres, or through a trusted doctor referral.
+              home, or through a trusted doctor referral.
             </p>
           </div>
 

@@ -15,7 +15,7 @@ const contactMethods = [
       </svg>
     ),
     label: "Call Us",
-    value: "+91 XXXXX XXXXX",
+    value: "+91 73820 33333",
     sub: "Mon – Sat, 8am – 8pm",
   },
   {
@@ -28,17 +28,6 @@ const contactMethods = [
     label: "Email",
     value: "hello@healthmetro.in",
     sub: "We reply within 24 hours",
-  },
-  {
-    id: "contact-location",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
-      </svg>
-    ),
-    label: "Visit Us",
-    value: "Health Metro Centre",
-    sub: "Find a centre near you",
   },
 ];
 
@@ -80,7 +69,7 @@ export default function ContactPage() {
 
         {/* Contact Methods */}
         <section className="py-10 px-6 bg-white">
-          <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6">
             {contactMethods.map((m) => (
               <div key={m.id} id={m.id} className="flex gap-4 items-start p-6 bg-surface rounded-2xl border border-primary/10">
                 <div className="w-12 h-12 flex-shrink-0 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
@@ -140,7 +129,7 @@ export default function ContactPage() {
                       id="contact-phone"
                       type="tel"
                       required
-                      placeholder="+91 XXXXX XXXXX"
+                      placeholder="+91 73820 33333"
                       value={form.phone}
                       onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
                       className="w-full px-5 py-4 rounded-2xl border border-primary/15 bg-surface text-foreground text-base focus:outline-none focus:ring-2 focus:ring-primary/30 transition"

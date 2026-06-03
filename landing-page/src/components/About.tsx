@@ -106,7 +106,7 @@ export default function About() {
             <p className="text-lg text-white/90 font-medium leading-relaxed mb-6">
               Health Metro was built because we believed that quality diagnostics and healthcare
               should not be a privilege. It should be simple, affordable, and accessible —
-              at your doorstep, at a centre near you, or through a doctor you trust.
+              at your doorstep, or through a doctor you trust.
             </p>
             <p className="text-base text-white/75 font-medium leading-relaxed mb-10">
               We connect patients with certified labs, trained professionals, and specialist doctors
