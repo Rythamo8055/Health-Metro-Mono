@@ -117,7 +117,7 @@ export default function About() {
           {/* Right: stats */}
           <div className="grid grid-cols-2 gap-5">
             {[
-              { stat: "6+", label: "Services", sub: "All in one platform" },
+              { stat: "4", label: "Services", sub: "All in one platform" },
               { stat: "100%", label: "Digital", sub: "Reports & records online" },
               { stat: "NRI", label: "Care Ready", sub: "Manage from anywhere" },
               { stat: "NABL", label: "Certified Labs", sub: "Trusted diagnostics" },
