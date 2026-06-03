@@ -185,12 +185,9 @@ export default function Features() {
               </div>
 
               {/* Title + Description */}
-              <h3 className="text-2xl md:text-3xl font-black text-foreground mb-2 leading-snug group-hover:text-primary transition-colors">
-                {service.name}
-              </h3>
-              <p className="text-xs md:text-sm text-foreground/60 font-semibold mb-5">
+              <h3 className="text-2xl md:text-3xl font-black text-foreground mb-5 leading-snug group-hover:text-primary transition-colors">
                 {service.title}
-              </p>
+              </h3>
               <p className="text-foreground/70 leading-relaxed text-base md:text-lg mb-8">
                 {service.description}
               </p>
@@ -241,12 +238,9 @@ export default function Features() {
               </div>
               
               {/* Title & Description */}
-              <h3 className="text-lg font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
-                {service.name}
-              </h3>
-              <p className="text-[11px] text-foreground/50 font-bold mb-3">
+              <h3 className="text-lg font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                 {service.title}
-              </p>
+              </h3>
               <p className="text-foreground/60 leading-snug text-sm mb-4 line-clamp-3">
                 {service.description}
               </p>
