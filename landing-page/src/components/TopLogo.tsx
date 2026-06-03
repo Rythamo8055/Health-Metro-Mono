@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useModal } from "@/context/ModalContext";
 import { 
   Menu, 
   X, 
@@ -16,7 +15,6 @@ import {
   Layers, 
   Target, 
   Dna,
-  ArrowRight,
   Home as HomeIcon,
   Sparkles
 } from "lucide-react";
@@ -71,21 +69,20 @@ const advancedDiagnostics = [
 ];
 
 const citiesList = [
-  { name: "London", slug: "london" },
-  { name: "Dubai", slug: "dubai" },
-  { name: "New York", slug: "new-york" },
-  { name: "Singapore", slug: "singapore" },
-  { name: "Mumbai", slug: "mumbai" },
-  { name: "Berlin", slug: "berlin" },
-  { name: "Bangkok", slug: "bangkok" },
-  { name: "Sydney", slug: "sydney" },
-  { name: "Toronto", slug: "toronto" },
-  { name: "Tokyo", slug: "tokyo" }
+  { name: "Mumbai (Maharashtra)", slug: "mumbai" },
+  { name: "Delhi (National Capital Region)", slug: "delhi" },
+  { name: "Kolkata (West Bengal)", slug: "kolkata" },
+  { name: "Chennai (Tamil Nadu)", slug: "chennai" },
+  { name: "Bangalore (Karnataka)", slug: "bangalore" },
+  { name: "Hyderabad (Telangana)", slug: "hyderabad" },
+  { name: "Ahmedabad (Gujarat)", slug: "ahmedabad" },
+  { name: "Pune (Maharashtra)", slug: "pune" },
+  { name: "Surat (Gujarat)", slug: "surat" },
+  { name: "Jaipur (Rajasthan)", slug: "jaipur" }
 ];
 
 export default function TopLogo() {
   const pathname = usePathname();
-  const { openModal } = useModal();
   const [scrolled, setScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeAccordion, setActiveAccordion] = useState<"services" | "cities" | null>(null);
@@ -274,7 +271,7 @@ export default function TopLogo() {
               <div className="absolute top-[85%] left-1/2 -translate-x-1/2 w-[420px] mt-2 bg-white border border-primary/10 rounded-[2rem] shadow-[0_20px_50px_rgba(2,116,115,0.12)] opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 p-6">
                 <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-3 px-3 flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5" />
-                  Our Global Hubs
+                  Cities We Serve
                 </h3>
                 <div className="grid grid-cols-2 gap-2">
                   {citiesList.map((city) => (
@@ -440,7 +437,7 @@ export default function TopLogo() {
               {activeAccordion === "cities" && (
                 <div className="mt-4 pl-3 animate-in fade-in slide-in-from-top-3 duration-200">
                   <h4 className="text-xs font-black uppercase tracking-wider text-primary mb-3">
-                    Our Global Hubs
+                    Cities We Serve
                   </h4>
                   <div className="grid grid-cols-2 gap-2">
                     {citiesList.map((city) => (
