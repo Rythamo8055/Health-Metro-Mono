@@ -26,7 +26,7 @@ const contactMethods = [
       </svg>
     ),
     label: "Email",
-    value: "hello@healthmetro.in",
+    value: "help@healthmetro.in",
     sub: "We reply within 24 hours",
   },
 ];
@@ -150,7 +150,6 @@ export default function ContactPage() {
                       <option value="doctor-consultation">Doctor Consultation</option>
                       <option value="health-records">Health Records</option>
                       <option value="nri-care">NRI Care – HM Rely</option>
-                      <option value="other">Other / Not sure</option>
                     </select>
                   </div>
 

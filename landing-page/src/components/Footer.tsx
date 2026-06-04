@@ -87,17 +87,17 @@ export default function Footer() {
           <div>
             <h4 className="font-bold mb-6 uppercase text-sm tracking-widest text-secondary">Services</h4>
             <ul className="space-y-2 text-white/70 text-base md:text-lg">
-              <li className="h-8 flex items-center">
-                <button onClick={() => openModal("product", "hm-move")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Move – Diagnostics</button>
+              <li className="min-h-8 py-1 flex items-center">
+                <button onClick={() => openModal("product", "hm-move")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Move - Specialty Diagnostics & Precision Health Access</button>
               </li>
-              <li className="h-8 flex items-center">
-                <button onClick={() => openModal("product", "hm-easy")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Easy – Home Collection</button>
+              <li className="min-h-8 py-1 flex items-center">
+                <button onClick={() => openModal("product", "hm-easy")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Easy - Doorstep Sample Collection</button>
               </li>
-              <li className="h-8 flex items-center">
-                <button onClick={() => openModal("product", "hm-trust")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Trust – Consultation</button>
+              <li className="min-h-8 py-1 flex items-center">
+                <button onClick={() => openModal("product", "hm-trust")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Trust - Medical Care at Your Doorstep</button>
               </li>
-              <li className="h-8 flex items-center">
-                <button onClick={() => openModal("product", "hm-rely")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Rely – NRI Care</button>
+              <li className="min-h-8 py-1 flex items-center">
+                <button onClick={() => openModal("product", "hm-rely")} className="w-full h-full flex items-center text-left bg-transparent border-none p-0 cursor-pointer hover:text-secondary transition-colors">HM Rely - Healthcare Management for Families in India</button>
               </li>
 
             </ul>

@@ -236,7 +236,6 @@ export default function ContactModal() {
               <option value="diagnostic-test">Specialty Diagnostics & Precision Health Access</option>
               <option value="doctor-consultation">Medical Care at Your Doorstep</option>
               <option value="nri-care">Healthcare Management for Families in India</option>
-              <option value="other">Other / Not sure</option>
             </select>
           </div>
 
