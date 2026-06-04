@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-05T08:00:00Z",
+  "title": "Design System: Health Metro Forms",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Medical Teal", "canonical": "oklch(48% 0.12 195)", "tonalRamp": ["#013a3a", "#015757", "#027473", "#039291", "#35b0ae", "#67cec9", "#99ebe4", "#ccf8f4"] },
+      "secondary": { "role": "secondary", "displayName": "Vitality Orange", "canonical": "oklch(62% 0.16 45)", "tonalRamp": ["#6d391a", "#a35627", "#d97234", "#e18e5c", "#e9aa85", "#f1c6ad", "#f9e2d6", "#ffffff"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display Bold", "purpose": "Main headers and hero text." },
+      "body": { "displayName": "Body Regular", "purpose": "Form labels and informational text." }
+    },
+    "shadows": [
+      { "name": "brand-shadow", "value": "0 10px 25px -5px rgba(2, 116, 115, 0.1), 0 8px 10px -6px rgba(2, 116, 115, 0.1)", "purpose": "Subtle depth for primary cards." }
+    ],
+    "motion": [
+      { "name": "step-transition", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Horizontal slide for form steps." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Step Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary action button for form navigation.",
+      "html": "<button class=\"ds-btn-primary\">CONTINUE</button>",
+      "css": ".ds-btn-primary { background: #027473; color: #fff; padding: 12px 24px; border-radius: 12px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; } .ds-btn-primary:hover { background: #015757; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(2, 116, 115, 0.2); }"
+    },
+    {
+      "name": "Glass Card",
+      "kind": "card",
+      "refersTo": "card-glass",
+      "description": "Main container for form steps.",
+      "html": "<div class=\"ds-card-glass\"><p>Form Content Area</p></div>",
+      "css": ".ds-card-glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 32px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Clinical Sanctuary",
+    "overview": "The Health Metro visual system is designed to evoke absolute trust, professional efficiency, and modern medical excellence.",
+    "keyCharacteristics": ["Deep Teal for authority", "Generous white space", "Precise typography"],
+    "rules": [
+      { "name": "The Rarity Rule", "body": "The primary teal is used on ≤15% of the screen.", "section": "colors" },
+      { "name": "The Glass Rule", "body": "Glass cards are reserved for floating containers.", "section": "elevation" }
+    ],
+    "dos": ["Do use Medical Teal for step indicators.", "Do maintain 40px padding."],
+    "donts": ["Don't use border-left stripes.", "Don't use gradient text."]
+  }
+}

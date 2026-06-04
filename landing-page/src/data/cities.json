@@ -1,0 +1,72 @@
+[
+  {
+    "city": "Mumbai (Maharashtra)",
+    "slug": "mumbai",
+    "country": "India",
+    "highlight": "Connecting India's top super-specialty hospitals to global coordination.",
+    "hospitals": ["Kokilaben Dhirubhai Ambani Hospital", "Nanavati Max Super Speciality Hospital", "Hinduja Hospital"]
+  },
+  {
+    "city": "Delhi (National Capital Region)",
+    "slug": "delhi",
+    "country": "India",
+    "highlight": "Advanced diagnostics and clinical networking across the capital region.",
+    "hospitals": ["AIIMS Delhi", "Medanta The Medicity", "Max Super Speciality Hospital"]
+  },
+  {
+    "city": "Kolkata (West Bengal)",
+    "slug": "kolkata",
+    "country": "India",
+    "highlight": "Bridging premier healthcare access for East India and beyond.",
+    "hospitals": ["AMRI Hospitals", "Apollo Multispecialty Hospitals", "Fortis Hospital Kolkata"]
+  },
+  {
+    "city": "Chennai (Tamil Nadu)",
+    "slug": "chennai",
+    "country": "India",
+    "highlight": "Seamless clinical pathways in the healthcare capital of India.",
+    "hospitals": ["Apollo Hospitals Greams Road", "Fortis Malar Hospital", "MIOT International"]
+  },
+  {
+    "city": "Bangalore (Karnataka)",
+    "slug": "bangalore",
+    "country": "India",
+    "highlight": "Integrating digital health infrastructure with cutting-edge medical care.",
+    "hospitals": ["Manipal Hospital Old Airport Road", "Narayana Health City", "Aster CMI Hospital"]
+  },
+  {
+    "city": "Hyderabad (Telangana)",
+    "slug": "hyderabad",
+    "country": "India",
+    "highlight": "Zero-latency medical data sharing across prime diagnostic hubs.",
+    "hospitals": ["Apollo Hospitals Jubilee Hills", "Yashoda Hospitals", "KIMS Hospitals"]
+  },
+  {
+    "city": "Ahmedabad (Gujarat)",
+    "slug": "ahmedabad",
+    "country": "India",
+    "highlight": "Precision diagnostics and patient care coordination in Gujarat.",
+    "hospitals": ["Zydus Hospital", "Apollo Hospitals Ahmedabad", "Shelby Hospital"]
+  },
+  {
+    "city": "Pune (Maharashtra)",
+    "slug": "pune",
+    "country": "India",
+    "highlight": "Seamless health records and sample collection across Pune's clinics.",
+    "hospitals": ["Ruby Hall Clinic", "Jehangir Hospital", "Sahyadri Super Speciality Hospital"]
+  },
+  {
+    "city": "Surat (Gujarat)",
+    "slug": "surat",
+    "country": "India",
+    "highlight": "Advanced medical access and diagnostic pipelines in Surat.",
+    "hospitals": ["Kiran Multi Super Speciality Hospital", "Sunshine Global Hospital", "Apple Hospital"]
+  },
+  {
+    "city": "Jaipur (Rajasthan)",
+    "slug": "jaipur",
+    "country": "India",
+    "highlight": "Comprehensive digital healthcare coordination in Rajasthan.",
+    "hospitals": ["Fortis Escorts Hospital", "Eternal Hospital (EHCC)", "Manipal Hospital Jaipur"]
+  }
+]
