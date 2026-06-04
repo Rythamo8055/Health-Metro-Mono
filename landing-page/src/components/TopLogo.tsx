@@ -69,14 +69,16 @@ const advancedDiagnostics = [
 ];
 
 const citiesList = [
-  { name: "Maharashtra", slug: "mumbai" },
-  { name: "Delhi", slug: "delhi" },
-  { name: "West Bengal", slug: "kolkata" },
-  { name: "Tamil Nadu", slug: "chennai" },
-  { name: "Karnataka", slug: "bangalore" },
-  { name: "Telangana", slug: "hyderabad" },
-  { name: "Gujarat", slug: "ahmedabad" },
-  { name: "Rajasthan", slug: "jaipur" }
+  { name: "Mumbai (Maharashtra)", slug: "mumbai" },
+  { name: "Delhi (National Capital Region)", slug: "delhi" },
+  { name: "Kolkata (West Bengal)", slug: "kolkata" },
+  { name: "Chennai (Tamil Nadu)", slug: "chennai" },
+  { name: "Bangalore (Karnataka)", slug: "bangalore" },
+  { name: "Hyderabad (Telangana)", slug: "hyderabad" },
+  { name: "Ahmedabad (Gujarat)", slug: "ahmedabad" },
+  { name: "Pune (Maharashtra)", slug: "pune" },
+  { name: "Surat (Gujarat)", slug: "surat" },
+  { name: "Jaipur (Rajasthan)", slug: "jaipur" }
 ];
 
 export default function TopLogo() {
@@ -174,10 +176,10 @@ export default function TopLogo() {
               </button>
               
               {/* Services Dropdown Panel */}
-              <div className="absolute top-[85%] left-1/2 -translate-x-[40%] w-[640px] mt-2 bg-white border border-primary/10 rounded-[2rem] shadow-[0_20px_50px_rgba(2,116,115,0.12)] opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 p-6 grid grid-cols-2 gap-6">
+              <div className="absolute top-[85%] left-1/2 -translate-x-[40%] w-[680px] mt-2 bg-white border border-primary/10 rounded-[2rem] shadow-[0_20px_50px_rgba(2,116,115,0.12)] opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 p-8 grid grid-cols-2 gap-8">
                 {/* Core Doorstep Services */}
                 <div>
-                  <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-3 flex items-center gap-1.5">
+                  <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-4 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5" />
                     Core Doorstep Care
                   </h3>
@@ -187,9 +189,9 @@ export default function TopLogo() {
                         <Link
                           key={service.slug}
                           href={`/products/${service.slug}`}
-                          className="flex items-center gap-3 p-3 rounded-2xl hover:bg-primary/5 transition-all group/item"
+                          className="flex items-start gap-3 p-3 rounded-2xl hover:bg-primary/5 transition-all group/item"
                         >
-                          <div className="w-28 h-8 overflow-hidden flex-shrink-0 relative flex items-center justify-start group-hover/item:scale-105 transition-all duration-300">
+                          <div className="w-28 h-8 overflow-hidden flex-shrink-0 mt-0.5 relative flex items-center justify-start group-hover/item:scale-105 transition-all duration-300">
                             <Image
                               src={`/icons/${service.slug}.png`}
                               alt={service.name}
@@ -205,8 +207,13 @@ export default function TopLogo() {
                               className="h-full w-auto object-contain object-left absolute opacity-0 transition-all duration-300 group-hover/item:scale-105 group-hover/item:opacity-100"
                             />
                           </div>
-                          <div className="font-bold text-sm text-foreground group-hover/item:text-primary transition-colors">
-                            {service.name}
+                          <div>
+                            <div className="font-bold text-sm text-foreground group-hover/item:text-primary transition-colors">
+                              {service.name}
+                            </div>
+                            <div className="text-[11px] text-foreground/50 font-medium leading-normal mt-0.5">
+                              {service.description}
+                            </div>
                           </div>
                         </Link>
                       );
@@ -216,7 +223,7 @@ export default function TopLogo() {
 
                 {/* Advanced Diagnostics */}
                 <div>
-                  <h3 className="text-xs font-black uppercase tracking-widest text-secondary mb-3 flex items-center gap-1.5">
+                  <h3 className="text-xs font-black uppercase tracking-widest text-secondary mb-4 flex items-center gap-1.5">
                     <Activity className="w-3.5 h-3.5" />
                     Advanced Diagnostics
                   </h3>
@@ -227,13 +234,18 @@ export default function TopLogo() {
                         <Link
                           key={service.slug}
                           href={`/products/${service.slug}`}
-                          className="flex items-center gap-3 p-3 rounded-2xl hover:bg-secondary/5 transition-all group/item"
+                          className="flex items-start gap-3 p-3 rounded-2xl hover:bg-secondary/5 transition-all group/item"
                         >
-                          <div className="p-2 rounded-xl bg-secondary/5 text-secondary group-hover/item:bg-secondary group-hover/item:text-white transition-colors">
+                          <div className="p-2 rounded-xl bg-secondary/5 text-secondary group-hover/item:bg-secondary group-hover/item:text-white transition-colors mt-0.5">
                             <Icon className="w-4 h-4" />
                           </div>
-                          <div className="font-bold text-sm text-foreground group-hover/item:text-secondary transition-colors">
-                            {service.name}
+                          <div>
+                            <div className="font-bold text-sm text-foreground group-hover/item:text-secondary transition-colors">
+                              {service.name}
+                            </div>
+                            <div className="text-[11px] text-foreground/50 font-medium leading-normal mt-0.5">
+                              {service.description}
+                            </div>
                           </div>
                         </Link>
                       );
@@ -243,24 +255,24 @@ export default function TopLogo() {
               </div>
             </div>
 
-            {/* States Dropdown */}
+            {/* Cities Dropdown */}
             <div className="relative group h-full flex items-center">
-               <button
-                 className={`flex items-center gap-1 h-full font-semibold text-[15px] cursor-pointer transition-colors hover:text-primary ${
-                   pathname.startsWith("/cities") ? "text-primary" : "text-foreground/80"
-                 }`}
-                 aria-haspopup="true"
-               >
-                 States
-                 <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
-               </button>
+              <button
+                className={`flex items-center gap-1 h-full font-semibold text-[15px] cursor-pointer transition-colors hover:text-primary ${
+                  pathname.startsWith("/cities") ? "text-primary" : "text-foreground/80"
+                }`}
+                aria-haspopup="true"
+              >
+                Cities
+                <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
+              </button>
 
-               {/* States Panel */}
-               <div className="absolute top-[85%] left-1/2 -translate-x-1/2 w-[420px] mt-2 bg-white border border-primary/10 rounded-[2rem] shadow-[0_20px_50px_rgba(2,116,115,0.12)] opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 p-6">
-                 <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-3 px-3 flex items-center gap-1.5">
-                   <MapPin className="w-3.5 h-3.5" />
-                   States We Serve
-                 </h3>
+              {/* Cities Panel */}
+              <div className="absolute top-[85%] left-1/2 -translate-x-1/2 w-[420px] mt-2 bg-white border border-primary/10 rounded-[2rem] shadow-[0_20px_50px_rgba(2,116,115,0.12)] opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 p-6">
+                <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-3 px-3 flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5" />
+                  Cities We Serve
+                </h3>
                 <div className="grid grid-cols-2 gap-2">
                   {citiesList.map((city) => (
                     <Link
@@ -408,13 +420,13 @@ export default function TopLogo() {
               )}
             </div>
 
-            {/* States Accordion */}
+            {/* Cities Accordion */}
             <div className="border-b border-surface py-2">
               <button
                 onClick={() => toggleAccordion("cities")}
                 className="flex items-center justify-between w-full font-bold text-lg text-left"
               >
-                States
+                Cities
                 <ChevronDown
                   className={`w-5 h-5 transition-transform duration-200 ${
                     activeAccordion === "cities" ? "rotate-180 text-primary" : "text-foreground/50"
@@ -425,7 +437,7 @@ export default function TopLogo() {
               {activeAccordion === "cities" && (
                 <div className="mt-4 pl-3 animate-in fade-in slide-in-from-top-3 duration-200">
                   <h4 className="text-xs font-black uppercase tracking-wider text-primary mb-3">
-                    States We Serve
+                    Cities We Serve
                   </h4>
                   <div className="grid grid-cols-2 gap-2">
                     {citiesList.map((city) => (
