@@ -143,6 +143,43 @@ const services = [
 export default function Features() {
   const { openModal } = useModal();
 
+  const renderCard = (service: typeof services[0]) => (
+    <div
+      key={service.id}
+      id={service.id}
+      onClick={() => openModal("product", service.id)}
+      className="group bg-white rounded-2xl border border-border p-6 transition-all duration-300 cursor-pointer hover:border-border/80 hover:shadow-md hover:bg-surface flex flex-col justify-between"
+    >
+      <div>
+        {/* Bigger horizontal brand logo container */}
+        <div className="h-10 md:h-12 mb-5 transition-all duration-300 group-hover:scale-[1.03] relative flex items-center justify-start">
+          {service.icon ? (
+            <Image src={service.icon} alt={service.name} width={180} height={45} className="h-full w-auto object-contain object-left" />
+          ) : (
+            <div className={`w-12 h-12 rounded-xl ${service.color} flex items-center justify-center text-primary`}>
+              {(service as any).iconNode}
+            </div>
+          )}
+        </div>
+        
+        {/* Title & Description */}
+        <h3 className="text-lg font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+          {service.title}
+        </h3>
+        <p className="text-foreground/60 leading-snug text-sm mb-6 line-clamp-3">
+          {service.description}
+        </p>
+      </div>
+
+      <div className="flex items-center gap-1.5 text-sm font-semibold text-foreground/50 transition-all group-hover:text-primary">
+        Learn more
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </div>
+    </div>
+  );
+
   return (
     <section id="services" className="py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -161,97 +198,19 @@ export default function Features() {
           </p>
         </div>
 
-        {/* Primary Services (Top 2) */}
+        {/* Row 1: HM MOVE and HM EASY (2 columns) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {services.slice(0, 2).map((service) => (
-            <div
-              key={service.id}
-              id={service.id}
-              onClick={() => openModal("product", service.id)}
-              className={`
-                group relative bg-white rounded-[2rem] border border-border p-8 md:p-10 transition-all duration-300
-                cursor-pointer hover:border-primary/40
-              `}
-            >
-              {/* Icon Row - clean, larger horizontal full brand logo with text */}
-              <div className="flex items-center justify-between mb-8">
-                <div className="h-12 md:h-14 transition-all duration-300 group-hover:scale-[1.03] relative flex items-center justify-start">
-                  {service.icon ? (
-                    <Image src={service.icon} alt={service.name} width={240} height={60} className="h-full w-auto object-contain object-left" />
-                  ) : (
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">{(service as any).iconNode}</div>
-                  )}
-                </div>
-              </div>
-
-              {/* Title + Description */}
-              <h3 className="text-2xl md:text-3xl font-black text-foreground mb-5 leading-snug group-hover:text-primary transition-colors">
-                {service.title}
-              </h3>
-              <p className="text-foreground/70 leading-relaxed text-base md:text-lg mb-8">
-                {service.description}
-              </p>
-
-              {/* Feature list */}
-              <ul className="space-y-3 mb-10">
-                {service.features.map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-base text-foreground/80 font-medium">
-                    <span className={`flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center`}>
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M20 6L9 17l-5-5" />
-                      </svg>
-                    </span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA */}
-              <div className="flex items-center gap-2 text-primary font-bold transition-all group-hover:gap-3">
-                Explore {service.id === 'hm-move' ? 'Diagnostics' : 'Home Collection'}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-          ))}
+          {services.slice(0, 2).map(renderCard)}
         </div>
 
-        {/* Secondary Services (Remaining) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {services.slice(2).map((service) => (
-            <div
-              key={service.id}
-              id={service.id}
-              onClick={() => openModal("product", service.id)}
-              className="group bg-white rounded-2xl border border-border p-6 transition-all duration-300 cursor-pointer hover:border-border/80 hover:shadow-md hover:bg-surface"
-            >
-              {/* Bigger horizontal brand logo container */}
-              <div className="h-10 md:h-12 mb-5 transition-all duration-300 group-hover:scale-[1.03] relative flex items-center justify-start">
-                {service.icon ? (
-                  <Image src={service.icon} alt={service.name} width={180} height={45} className="h-full w-auto object-contain object-left" />
-                ) : (
-                  <div className={`w-12 h-12 rounded-xl ${service.color} flex items-center justify-center text-primary`}>
-                    {(service as any).iconNode}
-                  </div>
-                )}
-              </div>
-              
-              {/* Title & Description */}
-              <h3 className="text-lg font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-                {service.title}
-              </h3>
-              <p className="text-foreground/60 leading-snug text-sm mb-4 line-clamp-3">
-                {service.description}
-              </p>
-              <div className="flex items-center gap-1.5 text-sm font-semibold text-foreground/50 transition-all group-hover:text-primary">
-                Learn more
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-          ))}
+        {/* Row 2: Advanced Diagnostics (3 columns) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          {services.slice(2, 5).map(renderCard)}
+        </div>
+
+        {/* Row 3: HM TRUST and HM RELY (2 columns) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {services.slice(5).map(renderCard)}
         </div>
 
       </div>
