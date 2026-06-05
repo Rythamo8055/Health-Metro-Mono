@@ -7,6 +7,17 @@ export async function approveProvider(providerId: string, stateCode: string, pro
   const supabase = createAdminClient();
 
   try {
+    // Fetch provider details first so we have contact info for notifications
+    const { data: provider, error: fetchErr } = await supabase
+      .from('providers')
+      .select('provider_name, contact_name, email, mobile')
+      .eq('id', providerId)
+      .single();
+
+    if (fetchErr || !provider) {
+      throw new Error(`Failed to fetch provider details: ${fetchErr?.message || 'Provider not found'}`);
+    }
+
     const year = new Date().getFullYear();
     const typeCode = providerType === 'Hospital'          ? 'HOS'
                    : providerType === 'Clinic'            ? 'CLI'
@@ -69,8 +80,46 @@ export async function approveProvider(providerId: string, stateCode: string, pro
 
     if (qrDbError) {
       console.error('Error saving QR to DB:', qrDbError);
-      // We don't throw here to avoid failing the whole approval if just the mapping fails, 
-      // but in production we might want to.
+    }
+
+    // 5. Send WhatsApp Notification via Twilio
+    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    const from = process.env.WHATSAPP_FROM_NUMBER || '+14155238886';
+    const to = provider.mobile;
+
+    if (accountSid && authToken && to) {
+      try {
+        const whatsappMessage = `🟢 *Healthmetro®*\n\nDear *${provider.contact_name || provider.provider_name}*,\n\nYour registration has been *approved*! 🎉\n\n🆔 *Client ID:* ${clientId}\n🔗 *Registration Link:* ${registrationUrl}\n\nAttached is your unique Customer Registration QR Code. Please print and display this QR code at your desk so customers can scan it to book blood sample collections.\n\nThank you for partnering with Healthmetro®.`;
+
+        console.log(`[Twilio Approval Notification] Sending WhatsApp to: ${to}...`);
+        const twilioRes = await fetch(
+          `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString('base64')}`,
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+              To: `whatsapp:${to}`,
+              From: `whatsapp:${from}`,
+              Body: whatsappMessage,
+              MediaUrl: qrResult.imageUrl || '',
+            }),
+          }
+        );
+        const twilioData = await twilioRes.json();
+        if (!twilioRes.ok) {
+          console.error('[Twilio Approval Notification] Failed:', twilioData.message);
+        } else {
+          console.log('[Twilio Approval Notification] Sent successfully. SID:', twilioData.sid);
+        }
+      } catch (err: any) {
+        console.error('[Twilio Approval Notification] Exception:', err.message);
+      }
+    } else {
+      console.warn('[Twilio Approval Notification] Skipped: Twilio keys or provider mobile number missing.');
     }
 
     revalidatePath('/providers');
