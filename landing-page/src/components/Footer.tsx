@@ -75,7 +75,7 @@ export default function Footer() {
                 <Link href="/" className="w-full h-full flex items-center hover:text-secondary transition-colors">Home</Link>
               </li>
               <li className="h-8 flex items-center">
-                <Link href="#about" className="w-full h-full flex items-center hover:text-secondary transition-colors">About Us</Link>
+                <Link href="/#about" className="w-full h-full flex items-center hover:text-secondary transition-colors">About Us</Link>
               </li>
               <li className="h-8 flex items-center">
                 <Link href="/contact" className="w-full h-full flex items-center hover:text-secondary transition-colors">Contact</Link>

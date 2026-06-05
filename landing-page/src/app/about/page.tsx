@@ -12,10 +12,9 @@ export const metadata: Metadata = {
 };
 
 const milestones = [
-  { year: "2022", label: "Founded", desc: "Health Metro was built with one goal — make diagnostics accessible to everyone." },
-  { year: "2023", label: "Network Built", desc: "Launched our franchise network across major cities with trained collection specialists." },
-  { year: "2024", label: "Digital Launch", desc: "Introduced our online booking system and digital health records platform." },
-  { year: "2025", label: "Growing", desc: "Expanding to new cities with more services, more doctors, more reach." },
+  { year: "2025", label: "Founded", desc: "Health Metro was started with one goal — to connect health globally and make diagnostics accessible and affordable for everyone." },
+  { year: "2026", label: "Going Forward", desc: "Currently in 2026, we are actively expanding our local networks with trained specialists and clinical partners." },
+  { year: "2026", label: "Digital Launch", desc: "Our unified online booking system and digital health records platform — Coming Soon!" },
 ];
 
 const values = [
@@ -118,7 +117,7 @@ export default function AboutPage() {
               <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-[2px] bg-primary/10" />
               <div className="space-y-12">
                 {milestones.map((m, i) => (
-                  <div key={m.year} className={`relative flex gap-6 md:gap-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                  <div key={`${m.year}-${m.label}`} className={`relative flex gap-6 md:gap-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                     {/* Content */}
                     <div className={`md:w-1/2 pl-14 md:pl-0 ${i % 2 === 0 ? 'md:pr-16 md:text-right' : 'md:pl-16'}`}>
                       <div className="bg-white rounded-2xl border border-primary/10 p-6 shadow-sm hover:shadow-md transition-all">

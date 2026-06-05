@@ -57,11 +57,19 @@ export default function ContactModal() {
   
   const getInitialService = (productId: string) => {
     switch (productId) {
-      case "hm-move": return "diagnostic-test";
-      case "hm-easy": return "home-collection";
-      case "hm-trust": return "doctor-consultation";
-      case "hm-rely": return "nri-care";
-      default: return "";
+      case "hm-move":
+      case "metabolomics":
+      case "multi-omics":
+      case "genomics":
+        return "diagnostic-test";
+      case "hm-easy":
+        return "home-collection";
+      case "hm-trust":
+        return "doctor-consultation";
+      case "hm-rely":
+        return "nri-care";
+      default:
+        return "";
     }
   };
 
