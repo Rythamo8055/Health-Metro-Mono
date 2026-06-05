@@ -12,11 +12,7 @@ import {
   Activity, 
   Stethoscope, 
   HeartHandshake, 
-  Layers, 
-  Target, 
-  Dna,
-  Home as HomeIcon,
-  Sparkles
+  Home as HomeIcon
 } from "lucide-react";
 
 // Service / Product mapping for drop-downs
@@ -47,26 +43,6 @@ const coreServices = [
   }
 ];
 
-const advancedDiagnostics = [
-  {
-    name: "Genomics",
-    description: "Predictive blueprint forecasting",
-    slug: "genomics",
-    icon: Dna
-  },
-  {
-    name: "Metabolomics",
-    description: "Biochemical cellular activity signals",
-    slug: "metabolomics",
-    icon: Target
-  },
-  {
-    name: "Multi-Omics Solutions",
-    description: "Integrated biological system mapping",
-    slug: "multi-omics",
-    icon: Layers
-  }
-];
 
 const citiesList = [
   { name: "Maharashtra", slug: "mumbai" },
@@ -174,72 +150,33 @@ export default function TopLogo() {
               </button>
               
               {/* Services Dropdown Panel */}
-              <div className="absolute top-[85%] left-1/2 -translate-x-[40%] w-[640px] mt-2 bg-white border border-primary/10 rounded-[2rem] shadow-[0_20px_50px_rgba(2,116,115,0.12)] opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 p-6 grid grid-cols-2 gap-6">
-                {/* Core Doorstep Services */}
-                <div>
-                  <h3 className="text-xs font-black uppercase tracking-widest text-primary mb-3 flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    Core Doorstep Care
-                  </h3>
-                  <div className="space-y-1">
-                    {coreServices.map((service) => {
-                      return (
-                        <Link
-                          key={service.slug}
-                          href={`/products/${service.slug}`}
-                          className="flex items-center gap-3 p-3 rounded-2xl hover:bg-primary/5 transition-all group/item"
-                        >
-                          <div className="w-28 h-8 overflow-hidden flex-shrink-0 relative flex items-center justify-start group-hover/item:scale-105 transition-all duration-300">
-                            <Image
-                              src={`/icons/${service.slug}.png`}
-                              alt={service.name}
-                              width={120}
-                              height={32}
-                              className="h-full w-auto object-contain object-left absolute transition-all duration-300 group-hover/item:scale-95 group-hover/item:opacity-0"
-                            />
-                            <Image
-                              src={`/icons/${service.slug}-fill.png`}
-                              alt={service.name}
-                              width={120}
-                              height={32}
-                              className="h-full w-auto object-contain object-left absolute opacity-0 transition-all duration-300 group-hover/item:scale-105 group-hover/item:opacity-100"
-                            />
-                          </div>
-                          <div className="font-bold text-sm text-foreground group-hover/item:text-primary transition-colors">
-                            {service.name}
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Advanced Diagnostics */}
-                <div>
-                  <h3 className="text-xs font-black uppercase tracking-widest text-secondary mb-3 flex items-center gap-1.5">
-                    <Activity className="w-3.5 h-3.5" />
-                    Advanced Diagnostics
-                  </h3>
-                  <div className="space-y-1">
-                    {advancedDiagnostics.map((service) => {
-                      const Icon = service.icon;
-                      return (
-                        <Link
-                          key={service.slug}
-                          href={`/products/${service.slug}`}
-                          className="flex items-center gap-3 p-3 rounded-2xl hover:bg-secondary/5 transition-all group/item"
-                        >
-                          <div className="p-2 rounded-xl bg-secondary/5 text-secondary group-hover/item:bg-secondary group-hover/item:text-white transition-colors">
-                            <Icon className="w-4 h-4" />
-                          </div>
-                          <div className="font-bold text-sm text-foreground group-hover/item:text-secondary transition-colors">
-                            {service.name}
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
+              <div className="absolute top-[85%] left-1/2 -translate-x-1/2 w-[340px] mt-2 bg-white border border-primary/10 rounded-[2rem] shadow-[0_20px_50px_rgba(2,116,115,0.12)] opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 p-4 grid grid-cols-2 gap-2">
+                {coreServices.map((service) => {
+                  return (
+                    <Link
+                      key={service.slug}
+                      href={`/products/${service.slug}`}
+                      className="flex items-center justify-center p-3 rounded-2xl hover:bg-primary/5 transition-all group/item"
+                    >
+                      <div className="w-28 h-8 overflow-hidden flex-shrink-0 relative flex items-center justify-center group-hover/item:scale-105 transition-all duration-300">
+                        <Image
+                          src={`/icons/${service.slug}.png`}
+                          alt={service.name}
+                          width={120}
+                          height={32}
+                          className="h-full w-auto object-contain absolute transition-all duration-300 group-hover/item:scale-95 group-hover/item:opacity-0"
+                        />
+                        <Image
+                          src={`/icons/${service.slug}-fill.png`}
+                          alt={service.name}
+                          width={120}
+                          height={32}
+                          className="h-full w-auto object-contain absolute opacity-0 transition-all duration-300 group-hover/item:scale-105 group-hover/item:opacity-100"
+                        />
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
 
@@ -349,60 +286,32 @@ export default function TopLogo() {
               </button>
               
               {activeAccordion === "services" && (
-                <div className="mt-4 pl-3 space-y-5 animate-in fade-in slide-in-from-top-3 duration-200">
-                  {/* Core Services */}
-                  <div>
-                    <h4 className="text-xs font-black uppercase tracking-wider text-primary mb-3">
-                      Core Doorstep Care
-                    </h4>
-                    <div className="grid grid-cols-1 gap-2">
-                      {coreServices.map((service) => (
-                        <Link
-                          key={service.slug}
-                          href={`/products/${service.slug}`}
-                          className="flex items-center gap-3 p-2.5 rounded-xl bg-surface border border-primary/5 hover:border-primary/20 transition-all group"
-                        >
-                          <div className="w-24 h-7 overflow-hidden flex-shrink-0 relative flex items-center justify-start transition-all">
-                            <Image
-                              src={`/icons/${service.slug}.png`}
-                              alt={service.name}
-                              width={100}
-                              height={28}
-                              className="h-full w-auto object-contain object-left absolute transition-all duration-300 group-hover:opacity-0"
-                            />
-                            <Image
-                              src={`/icons/${service.slug}-fill.png`}
-                              alt={service.name}
-                              width={100}
-                              height={28}
-                              className="h-full w-auto object-contain object-left absolute opacity-0 transition-all duration-300 group-hover:opacity-100"
-                            />
-                          </div>
-                          <span className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">{service.name}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Advanced Diagnostics */}
-                  <div>
-                    <h4 className="text-xs font-black uppercase tracking-wider text-secondary mb-3">
-                      Advanced Diagnostics
-                    </h4>
-                    <div className="grid grid-cols-1 gap-2">
-                      {advancedDiagnostics.map((service) => (
-                        <Link
-                          key={service.slug}
-                          href={`/products/${service.slug}`}
-                          className="flex items-center gap-3 p-2.5 rounded-xl bg-surface border border-primary/5 hover:border-secondary/20 transition-all"
-                        >
-                          <div className="p-1.5 rounded-lg bg-secondary/5 text-secondary">
-                            <service.icon className="w-4 h-4" />
-                          </div>
-                          <span className="font-bold text-sm text-foreground">{service.name}</span>
-                        </Link>
-                      ))}
-                    </div>
+                <div className="mt-4 pl-3 animate-in fade-in slide-in-from-top-3 duration-200">
+                  <div className="grid grid-cols-2 gap-2">
+                    {coreServices.map((service) => (
+                      <Link
+                        key={service.slug}
+                        href={`/products/${service.slug}`}
+                        className="flex items-center justify-center p-2.5 rounded-xl bg-surface border border-primary/5 hover:border-primary/20 transition-all group"
+                      >
+                        <div className="w-24 h-7 overflow-hidden flex-shrink-0 relative flex items-center justify-center transition-all">
+                          <Image
+                            src={`/icons/${service.slug}.png`}
+                            alt={service.name}
+                            width={100}
+                            height={28}
+                            className="h-full w-auto object-contain absolute transition-all duration-300 group-hover:opacity-0"
+                          />
+                          <Image
+                            src={`/icons/${service.slug}-fill.png`}
+                            alt={service.name}
+                            width={100}
+                            height={28}
+                            className="h-full w-auto object-contain absolute opacity-0 transition-all duration-300 group-hover:opacity-100"
+                          />
+                        </div>
+                      </Link>
+                    ))}
                   </div>
                 </div>
               )}
