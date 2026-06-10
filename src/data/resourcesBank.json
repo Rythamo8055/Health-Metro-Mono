@@ -1,0 +1,82 @@
+{
+  "Arithmetic": {
+    "title": "Rodha: Complete Quant Playlist",
+    "url": "https://www.youtube.com/playlist?list=PLG4bwc5fquzgfMh4YFDnv7fttM0RIKiUQ",
+    "type": "video"
+  },
+  "Algebra": {
+    "title": "Rodha: Complete Quant Playlist",
+    "url": "https://www.youtube.com/playlist?list=PLG4bwc5fquzgfMh4YFDnv7fttM0RIKiUQ",
+    "type": "video"
+  },
+  "Geometry": {
+    "title": "Rodha: Complete Quant Playlist",
+    "url": "https://www.youtube.com/playlist?list=PLG4bwc5fquzgfMh4YFDnv7fttM0RIKiUQ",
+    "type": "video"
+  },
+  "Number System": {
+    "title": "Rodha: Complete Quant Playlist",
+    "url": "https://www.youtube.com/playlist?list=PLG4bwc5fquzgfMh4YFDnv7fttM0RIKiUQ",
+    "type": "video"
+  },
+  "DILR": {
+    "title": "Elites Grid: DILR Mastery",
+    "url": "https://www.youtube.com/c/ElitesGrid",
+    "type": "video"
+  },
+  "Reading Comprehension": {
+    "title": "Geeta Academy: VARC Strategies",
+    "url": "https://www.youtube.com/c/GeetaAcademy",
+    "type": "video"
+  },
+  "Para Jumbles": {
+    "title": "Geeta Academy: Para Jumbles Masterclass",
+    "url": "https://www.youtube.com/c/GeetaAcademy",
+    "type": "video"
+  },
+  "Programming & DS": {
+    "title": "Neso Academy: Data Structures",
+    "url": "https://www.youtube.com/playlist?list=PLBlnK6fEyqRj9lld8sWIUNwlKfdUoPd1Y",
+    "type": "video"
+  },
+  "Algorithms": {
+    "title": "Abdul Bari: Algorithms",
+    "url": "https://www.youtube.com/@abdul_bari",
+    "type": "video"
+  },
+  "OS": {
+    "title": "Gate Smashers: Operating Systems",
+    "url": "https://www.youtube.com/playlist?list=PLxCzCOWd7aiGz9donHRrE9I3Mwn6XdP8p",
+    "type": "video"
+  },
+  "DBMS": {
+    "title": "Gate Smashers: DBMS Complete Playlist",
+    "url": "https://www.youtube.com/playlist?list=PLxCzCOWd7aiFAN6I8CuViBuCdJgiOkT2Y",
+    "type": "video"
+  },
+  "Computer Networks": {
+    "title": "Neso Academy: Computer Networks",
+    "url": "https://www.youtube.com/playlist?list=PLBlnK6fEyqRgMCUAGOsZRrxxejKptjoSt",
+    "type": "video"
+  },
+  "TOC": {
+    "title": "Gate Smashers: Theory of Computation",
+    "url": "https://www.youtube.com/playlist?list=PLxCzCOWd7aiFM9Pt5faZXW6rTZ59AKoaS",
+    "type": "video"
+  },
+  "Compiler Design": {
+    "title": "Gate Smashers: Compiler Design",
+    "url": "https://www.youtube.com/playlist?list=PLxCzCOWd7aiEKtiAWKpQ8gI1v7uO0nB-z",
+    "type": "video"
+  },
+  "Machine Learning": {
+    "title": "Krish Naik: Machine Learning",
+    "url": "https://www.youtube.com/playlist?list=PLZoTAELRKSUZ5-vrvw3kITJZxG6zWpQoK",
+    "type": "video"
+  },
+  "Artificial Intelligence": {
+    "title": "Gate Smashers: Artificial Intelligence",
+    "url": "https://www.youtube.com/playlist?list=PLxCzCOWd7aiHGhOHV-nwb0HR5US5GFKFI",
+    "type": "video"
+  }
+}
